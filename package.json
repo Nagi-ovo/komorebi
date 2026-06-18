@@ -1,6 +1,6 @@
 {
   "name": "gh-everforest-theme",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Everforest theme for GitHub — a Chrome/Edge extension that restyles github.com with the warm, low-contrast Everforest palette.",
   "type": "module",
   "private": true,

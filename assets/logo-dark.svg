@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="9 4 92 92" width="96" height="96" role="img" aria-label="Everforest for GitHub logo">
+  <!-- "Contrast Ridges" — dark variant -->
+  <defs><clipPath id="ef-rcd"><circle cx="55" cy="50" r="42"/></clipPath></defs>
+  <circle cx="55" cy="50" r="42" fill="#272e33"/>
+  <g clip-path="url(#ef-rcd)">
+    <circle cx="71" cy="33" r="9" fill="#dbbc7f"/>
+    <path d="M13 64 L31 48 L45 60 L60 44 L74 58 L97 40 L97 92 L13 92 Z" fill="#475a4a"/>
+    <path d="M13 74 L28 60 L42 71 L58 56 L74 70 L97 54 L97 92 L13 92 Z" fill="#6f9a5d"/>
+    <path d="M13 84 L26 73 L41 82 L57 70 L73 81 L97 68 L97 92 L13 92 Z" fill="#a7c080"/>
+  </g>
+  <circle cx="55" cy="50" r="42" fill="none" stroke="#a7c080" stroke-width="2.4"/>
+</svg>

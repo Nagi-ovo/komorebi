@@ -1,81 +1,43 @@
 #!/usr/bin/env python3
-"""Generate the Everforest leaf icons (PNG) at the sizes the manifest needs.
+"""Everforest for GitHub — "Contrast Ridges" toolbar icons (PNG) for the manifest.
 
-Supersamples 4x and downscales with LANCZOS for clean edges. The mark is a
-single leaf in dark Everforest ink on a green->aqua rounded-square gradient,
-matching the popup logo.
+A layered forest horizon — three ridges for soft / medium / hard contrast — under
+a warm sun, on Everforest cream, in a rounded square. 4x supersampled, LANCZOS
+down. Imported from the Claude Design "Contrast Ridges" concept.
 """
-import math
 from PIL import Image, ImageDraw
 
-GREEN = (0xA7, 0xC0, 0x80)
-AQUA = (0x83, 0xC0, 0x92)
-INK = (0x2D, 0x35, 0x3B)
-VEIN = (0x3D, 0x48, 0x4D)
-
-
-def lerp(a, b, t):
-    return a + (b - a) * t
+BG = (0xFD, 0xF6, 0xE3)
+SUN = (0xDB, 0xBC, 0x7F)
+RIDGES = [
+    ([(0, 60), (22, 42), (40, 56), (58, 40), (78, 54), (100, 38), (100, 100), (0, 100)], (0xCF, 0xE0, 0xB0)),
+    ([(0, 72), (20, 56), (40, 70), (60, 53), (80, 68), (100, 52), (100, 100), (0, 100)], (0xA7, 0xC0, 0x80)),
+    ([(0, 84), (20, 71), (41, 82), (60, 69), (80, 81), (100, 67), (100, 100), (0, 100)], (0x6F, 0x9A, 0x5D)),
+]
 
 
 def make(S: int):
     ss = 4
     N = S * ss
-    img = Image.new("RGBA", (N, N), (0, 0, 0, 0))
-
-    # vertical green -> aqua gradient
-    grad = Image.new("RGBA", (N, N))
-    gp = grad.load()
-    for y in range(N):
-        t = y / (N - 1)
-        c = (round(lerp(GREEN[0], AQUA[0], t)),
-             round(lerp(GREEN[1], AQUA[1], t)),
-             round(lerp(GREEN[2], AQUA[2], t)), 255)
-        for x in range(N):
-            gp[x, y] = c
-
-    # clip gradient to a rounded square
+    k = N / 100
+    content = Image.new("RGBA", (N, N), BG + (255,))
+    d = ImageDraw.Draw(content)
+    # sun
+    cx, cy, r = 70 * k, 30 * k, 11 * k
+    d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=SUN)
+    # ridges, back to front
+    for pts, col in RIDGES:
+        d.polygon([(x * k, y * k) for x, y in pts], fill=col)
+    # clip to a rounded square
     mask = Image.new("L", (N, N), 0)
-    ImageDraw.Draw(mask).rounded_rectangle([0, 0, N - 1, N - 1], radius=round(N * 0.225), fill=255)
-    img.paste(grad, (0, 0), mask)
-
-    d = ImageDraw.Draw(img)
-
-    # leaf: a curved midrib from stem (lower-left) to tip (upper-right),
-    # with a sinusoidal width profile so it tapers to points at both ends.
-    P0 = (N * 0.31, N * 0.73)
-    C = (N * 0.40, N * 0.40)
-    P1 = (N * 0.72, N * 0.29)
-
-    def bez(t):
-        u = 1 - t
-        return (u * u * P0[0] + 2 * u * t * C[0] + t * t * P1[0],
-                u * u * P0[1] + 2 * u * t * C[1] + t * t * P1[1])
-
-    amp = N * 0.17
-    steps = 96
-    pos, neg = [], []
-    for i in range(steps + 1):
-        t = i / steps
-        x, y = bez(t)
-        ax, ay = bez(min(1, t + 1e-3))
-        bx, by = bez(max(0, t - 1e-3))
-        dx, dy = ax - bx, ay - by
-        L = math.hypot(dx, dy) or 1.0
-        nx, ny = -dy / L, dx / L
-        w = amp * (math.sin(math.pi * t) ** 0.7)
-        pos.append((x + nx * w, y + ny * w))
-        neg.append((x - nx * w, y - ny * w))
-    d.polygon(pos + neg[::-1], fill=INK)
-
-    # center vein
-    d.line([bez(i / 48) for i in range(49)], fill=VEIN, width=max(1, round(N * 0.02)))
-
-    img.resize((S, S), Image.LANCZOS).save(f"icons/icon-{S}.png")
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, N - 1, N - 1], radius=round(N * 0.22), fill=255)
+    out = Image.new("RGBA", (N, N), (0, 0, 0, 0))
+    out.paste(content, (0, 0), mask)
+    out.resize((S, S), Image.LANCZOS).save(f"icons/icon-{S}.png")
     print(f"  icon-{S}.png")
 
 
 if __name__ == "__main__":
-    print("generating icons:")
+    print("generating Contrast Ridges icons:")
     for S in (16, 32, 48, 128):
         make(S)

@@ -1,4 +1,12 @@
-# Everforest for GitHub
+<p align="center">
+  <img src="assets/logo.svg" width="104" alt="Everforest for GitHub" />
+</p>
+
+<h1 align="center">Everforest for GitHub</h1>
+
+<p align="center">
+  <b>English</b> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.ja.md">日本語</a>
+</p>
 
 <p align="center">
   <img src="demo/preview.svg" alt="Everforest for GitHub — light and dark" width="860" />

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Everforest for GitHub",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Restyle GitHub with the warm, low-contrast Everforest palette. Light & dark, soft / medium / hard contrast.",
   "author": "Jesse Zhang",
   "homepage_url": "https://github.com/Nagi-ovo/gh-everforest-theme",

@@ -169,7 +169,10 @@ async function build(): Promise<void> {
   await cp(path.join(ROOT, "popup/popup.html"), path.join(DIST, "popup.html"));
   await cp(path.join(ROOT, "popup/popup.css"), path.join(DIST, "popup.css"));
   if (existsSync(path.join(ROOT, "icons"))) {
-    await cp(path.join(ROOT, "icons"), path.join(DIST, "icons"), { recursive: true });
+    await cp(path.join(ROOT, "icons"), path.join(DIST, "icons"), {
+      recursive: true,
+      filter: (src) => !src.endsWith(".py"), // ship the PNGs, not the generator
+    });
   }
 
   // 4. companion browser themes
