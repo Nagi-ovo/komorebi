@@ -23,6 +23,9 @@ themed coherently, not just the page background.
 - 🎯 **Token-level, not brute force** — overrides GitHub's Primer design tokens
   (`--bgColor-*`, `--fgColor-*`, `--borderColor-*`, `--color-prettylights-*`, …),
   so the theme cascades cleanly through GitHub's own component system.
+- 🪟 **Companion browser themes** — matching Everforest themes for the Chrome UI
+  itself (tabs, toolbar, new-tab), generated from the same palette. See
+  [Match the whole browser](#match-the-whole-browser-optional).
 
 ## Install (unpacked)
 
@@ -41,6 +44,25 @@ bun run build      # produces dist/
 
 To update after pulling changes: `bun run build`, then hit **Reload** on the
 extension card.
+
+## Match the whole browser (optional)
+
+`bun run build` also emits two standalone **Chrome browser themes** that recolor
+the browser UI (tabs, toolbar, address bar, new-tab page) to match — so the
+chrome around the page is Everforest too, not just GitHub.
+
+> A Chrome theme can't be combined with a content-script extension in one
+> package, and only one theme can be active at a time — so these are separate,
+> and you pick light **or** dark.
+
+Load one the same way (**Load unpacked**):
+
+- Dark:  `chrome-themes/everforest-dark`
+- Light: `chrome-themes/everforest-light`
+
+They're generated from the same `palette.ts`, so the browser UI and the
+github.com restyle stay in lockstep. To revert, remove the theme from
+`chrome://extensions` (or set Chrome back to its default/classic theme).
 
 ## Usage
 

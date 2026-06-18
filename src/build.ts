@@ -13,7 +13,7 @@
 import { mkdir, rm, cp, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { resolve, type Contrast } from "./palette";
+import { resolve, type Contrast, type Mode } from "./palette";
 import { buildTokens } from "./mapping";
 
 const ROOT = path.resolve(import.meta.dir, "..");
@@ -87,6 +87,62 @@ function generateCss(): string {
   return parts.join("\n");
 }
 
+// ── Companion Chrome *browser* themes ─────────────────────────────────────
+// A Chrome theme can't live in the same package as a content-script extension,
+// so we emit standalone theme packages (loaded separately) from the same
+// palette, keeping the browser UI and the github.com restyle in lockstep.
+function hexToRgb(hex: string): [number, number, number] {
+  const h = hex.replace("#", "");
+  return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+}
+
+function chromeThemeManifest(mode: Mode): unknown {
+  const p = resolve(mode, "medium");
+  return {
+    manifest_version: 3,
+    name: `Everforest ${mode === "dark" ? "Dark" : "Light"}`,
+    version: "1.0.0",
+    description:
+      `A warm, low-contrast Everforest theme for the Chrome browser UI — ` +
+      `companion to "Everforest for GitHub".`,
+    icons: { "128": "icon-128.png" },
+    theme: {
+      colors: {
+        frame: hexToRgb(p.bg_dim),
+        frame_inactive: hexToRgb(p.bg_dim),
+        toolbar: hexToRgb(p.bg0),
+        tab_text: hexToRgb(p.fg),
+        tab_background_text: hexToRgb(p.grey1),
+        bookmark_text: hexToRgb(p.fg),
+        toolbar_text: hexToRgb(p.fg),
+        omnibox_background: hexToRgb(p.bg1),
+        omnibox_text: hexToRgb(p.fg),
+        ntp_background: hexToRgb(p.bg0),
+        ntp_text: hexToRgb(p.fg),
+        ntp_link: hexToRgb(p.blue),
+        button_background: hexToRgb(p.bg0),
+      },
+      // Tint toolbar button icons toward light (dark theme) / dark (light theme).
+      tints: { buttons: mode === "dark" ? [-1, -1, 0.8] : [-1, -1, 0.25] },
+      properties: { ntp_logo_alternate: mode === "dark" ? 1 : 0 },
+    },
+  };
+}
+
+async function buildChromeThemes(): Promise<void> {
+  for (const mode of ["dark", "light"] as Mode[]) {
+    const dir = path.join(ROOT, "chrome-themes", `everforest-${mode}`);
+    await mkdir(dir, { recursive: true });
+    await writeFile(
+      path.join(dir, "manifest.json"),
+      JSON.stringify(chromeThemeManifest(mode), null, 2) + "\n",
+    );
+    if (existsSync(path.join(ROOT, "icons/icon-128.png"))) {
+      await cp(path.join(ROOT, "icons/icon-128.png"), path.join(dir, "icon-128.png"));
+    }
+  }
+}
+
 async function build(): Promise<void> {
   const t0 = performance.now();
   await rm(DIST, { recursive: true, force: true });
@@ -116,8 +172,11 @@ async function build(): Promise<void> {
     await cp(path.join(ROOT, "icons"), path.join(DIST, "icons"), { recursive: true });
   }
 
+  // 4. companion browser themes
+  await buildChromeThemes();
+
   const ms = (performance.now() - t0).toFixed(0);
-  console.log(`✓ built dist/ in ${ms}ms`);
+  console.log(`✓ built dist/ + chrome-themes/ in ${ms}ms`);
 }
 
 await build();
