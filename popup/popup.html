@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>Everforest for GitHub</title>
+  </head>
+  <body>
+    <header class="ef-header">
+      <span class="ef-logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <path
+            fill="currentColor"
+            d="M6.05 8.05c-2.73 2.73-2.73 7.15-.02 9.88 1.47-3.4 4.09-6.24 7.36-7.93-2.77 2.34-4.71 5.61-5.39 9.32 2.6 1.23 5.8.78 7.95-1.37C19.43 14.47 20 4 20 4S9.53 4.57 6.05 8.05z"
+          />
+        </svg>
+      </span>
+      <span class="ef-titles">
+        <span class="ef-title">Everforest</span>
+        <span class="ef-sub">for GitHub</span>
+      </span>
+      <label class="ef-switch" title="Enable theme">
+        <input type="checkbox" id="enabled" />
+        <span class="ef-track"><span class="ef-thumb"></span></span>
+      </label>
+    </header>
+
+    <main class="ef-body">
+      <section class="ef-field">
+        <div class="ef-label">Appearance</div>
+        <div class="ef-seg" role="radiogroup" data-setting="mode">
+          <button type="button" role="radio" data-value="sync">Sync</button>
+          <button type="button" role="radio" data-value="light">Light</button>
+          <button type="button" role="radio" data-value="dark">Dark</button>
+        </div>
+        <p class="ef-hint" id="mode-hint">Follows your GitHub appearance.</p>
+      </section>
+
+      <section class="ef-field">
+        <div class="ef-label">Contrast</div>
+        <div class="ef-seg" role="radiogroup" data-setting="contrast">
+          <button type="button" role="radio" data-value="soft">Soft</button>
+          <button type="button" role="radio" data-value="medium">Medium</button>
+          <button type="button" role="radio" data-value="hard">Hard</button>
+        </div>
+      </section>
+
+      <section class="ef-preview" aria-hidden="true">
+        <span class="ef-swatch" data-c="bg"></span>
+        <span class="ef-swatch" data-c="red"></span>
+        <span class="ef-swatch" data-c="orange"></span>
+        <span class="ef-swatch" data-c="yellow"></span>
+        <span class="ef-swatch" data-c="green"></span>
+        <span class="ef-swatch" data-c="aqua"></span>
+        <span class="ef-swatch" data-c="blue"></span>
+        <span class="ef-swatch" data-c="purple"></span>
+      </section>
+    </main>
+
+    <footer class="ef-footer">
+      <span class="ef-status" id="status">Theme on</span>
+      <button type="button" class="ef-reset" id="reset">Reset</button>
+    </footer>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

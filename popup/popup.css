@@ -1,0 +1,145 @@
+/* Popup UI — themed with Everforest itself. Defaults to the OS scheme; a
+   forced Appearance choice re-themes the popup live via [data-preview]. */
+
+:root {
+  /* Everforest light (medium) */
+  --bg: #fdf6e3;
+  --elev: #f4f0d9;
+  --inset: #efebd4;
+  --fg: #5c6a72;
+  --muted: #939f91;
+  --border: #e0dcc7;
+  --accent: #8da101;
+  --accent-ink: #fdf6e3;
+  --danger: #f85552;
+  --shadow: 0 1px 2px #5c6a7218;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #2d353b;
+    --elev: #343f44;
+    --inset: #232a2e;
+    --fg: #d3c6aa;
+    --muted: #859289;
+    --border: #4f585e;
+    --accent: #a7c080;
+    --accent-ink: #2d353b;
+    --danger: #e67e80;
+    --shadow: 0 1px 2px #00000033;
+    color-scheme: dark;
+  }
+}
+
+/* Forced previews (override the media query) */
+:root[data-preview="light"] {
+  --bg: #fdf6e3; --elev: #f4f0d9; --inset: #efebd4; --fg: #5c6a72;
+  --muted: #939f91; --border: #e0dcc7; --accent: #8da101; --accent-ink: #fdf6e3;
+  --danger: #f85552; --shadow: 0 1px 2px #5c6a7218; color-scheme: light;
+}
+:root[data-preview="dark"] {
+  --bg: #2d353b; --elev: #343f44; --inset: #232a2e; --fg: #d3c6aa;
+  --muted: #859289; --border: #4f585e; --accent: #a7c080; --accent-ink: #2d353b;
+  --danger: #e67e80; --shadow: 0 1px 2px #00000033; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  width: 288px;
+  font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.ef-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.ef-logo { display: flex; color: var(--accent); }
+.ef-titles { display: flex; flex-direction: column; line-height: 1.15; margin-right: auto; }
+.ef-title { font-weight: 650; letter-spacing: 0.2px; }
+.ef-sub { font-size: 11px; color: var(--muted); }
+
+/* Master toggle switch */
+.ef-switch { position: relative; display: inline-flex; cursor: pointer; }
+.ef-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.ef-track {
+  width: 38px; height: 22px; border-radius: 11px;
+  background: var(--inset); border: 1px solid var(--border);
+  transition: background 0.16s ease, border-color 0.16s ease;
+  display: inline-flex; align-items: center; padding: 0 2px;
+}
+.ef-thumb {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--muted); box-shadow: var(--shadow);
+  transition: transform 0.16s ease, background 0.16s ease;
+}
+.ef-switch input:checked + .ef-track { background: var(--accent); border-color: var(--accent); }
+.ef-switch input:checked + .ef-track .ef-thumb { transform: translateX(16px); background: var(--accent-ink); }
+.ef-switch input:focus-visible + .ef-track { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Body */
+.ef-body { padding: 14px 16px 4px; display: flex; flex-direction: column; gap: 14px; }
+.ef-field { display: flex; flex-direction: column; gap: 7px; }
+.ef-label {
+  font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.6px; color: var(--muted);
+}
+
+/* Segmented control */
+.ef-seg {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  gap: 3px; padding: 3px; border-radius: 9px;
+  background: var(--inset); border: 1px solid var(--border);
+}
+.ef-seg button {
+  appearance: none; border: 0; cursor: pointer;
+  padding: 6px 4px; border-radius: 6px;
+  font: inherit; font-size: 12px; font-weight: 550;
+  color: var(--fg); background: transparent;
+  transition: background 0.13s ease, color 0.13s ease;
+}
+.ef-seg button:hover { background: color-mix(in srgb, var(--fg) 9%, transparent); }
+.ef-seg button[aria-checked="true"] {
+  background: var(--accent); color: var(--accent-ink);
+}
+.ef-seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.ef-hint { margin: 0; font-size: 11px; color: var(--muted); min-height: 14px; }
+
+/* Palette preview */
+.ef-preview {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  gap: 5px; padding: 4px 0 2px;
+}
+.ef-swatch {
+  height: 16px; border-radius: 5px;
+  border: 1px solid color-mix(in srgb, var(--fg) 14%, transparent);
+}
+
+/* Footer */
+.ef-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 11px 16px; margin-top: 8px;
+  border-top: 1px solid var(--border);
+}
+.ef-status { font-size: 11px; color: var(--muted); }
+.ef-reset {
+  appearance: none; border: 0; background: transparent; cursor: pointer;
+  font: inherit; font-size: 11px; color: var(--muted);
+  padding: 3px 6px; border-radius: 6px;
+  transition: color 0.13s ease, background 0.13s ease;
+}
+.ef-reset:hover { color: var(--danger); background: color-mix(in srgb, var(--danger) 12%, transparent); }
+.ef-reset:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* Disabled state dims the controls */
+body[data-off="true"] .ef-body { opacity: 0.5; pointer-events: none; }
