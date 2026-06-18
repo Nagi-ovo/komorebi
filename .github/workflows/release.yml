@@ -1,0 +1,47 @@
+name: release
+
+# Cut a release by pushing a tag, e.g. `git tag v0.1.0 && git push origin v0.1.0`.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write # create the GitHub Release + upload assets
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+      - run: bun run typecheck
+      - run: bun run build
+
+      - name: Package extension + browser themes
+        run: |
+          mkdir -p release
+          ( cd dist && zip -qr ../release/everforest-for-github.zip . )
+          ( cd chrome-themes/everforest-dark && zip -qr ../../release/everforest-browser-dark.zip . )
+          ( cd chrome-themes/everforest-light && zip -qr ../../release/everforest-browser-light.zip . )
+          ls -lh release
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: release/*.zip
+          generate_release_notes: true
+          body: |
+            **Install — load unpacked** (Chrome / Edge, Developer mode):
+
+            1. Download a zip below and unzip it.
+            2. Open `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, pick the unzipped folder.
+
+            | Zip | What it themes |
+            | --- | --- |
+            | `everforest-for-github.zip` | the GitHub website |
+            | `everforest-browser-dark.zip` | the browser UI (dark) — manage under Settings → Appearance |
+            | `everforest-browser-light.zip` | the browser UI (light) |

@@ -20,14 +20,15 @@ applies instantly. That's it.
 
 <br/>
 
-Not on the Web Store yet, so load it unpacked:
+Not on the Web Store yet. **Easiest:** grab `everforest-for-github.zip` from
+[**Releases**](../../releases), unzip it, then in `chrome://extensions` enable **Developer mode** →
+**Load unpacked** → pick the unzipped folder.
+
+Or build from source:
 
 ```bash
-bun install && bun run build
+bun install && bun run build   # then load unpacked dist/
 ```
-
-In `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, and choose `dist/`.
-After pulling changes, run `bun run build` again and hit **Reload** on the extension card.
 
 </details>
 
@@ -36,14 +37,12 @@ After pulling changes, run `bun run build` again and hit **Reload** on the exten
 
 <br/>
 
-`bun run build` also emits matching browser themes. Load **one** unpacked, same as above:
-
-- `chrome-themes/everforest-dark`
-- `chrome-themes/everforest-light`
+Matching browser themes ship alongside the extension — `everforest-browser-dark.zip` /
+`everforest-browser-light.zip` in [Releases](../../releases) (or `bun run build` → `chrome-themes/`).
+Load **one** unpacked.
 
 A browser theme applies immediately and lives under **Settings → Appearance**
-(`chrome://settings/appearance`), not the extensions list. Only one can be active at a time;
-loading the other replaces it.
+(`chrome://settings/appearance`), not the extensions list — only one can be active at a time.
 
 </details>
 
