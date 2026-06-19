@@ -168,6 +168,8 @@ async function build(): Promise<void> {
   await cp(path.join(ROOT, "manifest.json"), path.join(DIST, "manifest.json"));
   await cp(path.join(ROOT, "popup/popup.html"), path.join(DIST, "popup.html"));
   await cp(path.join(ROOT, "popup/popup.css"), path.join(DIST, "popup.css"));
+  await cp(path.join(ROOT, "src/google.css"), path.join(DIST, "google.css"));
+  await cp(path.join(ROOT, "src/x.css"), path.join(DIST, "x.css"));
   if (existsSync(path.join(ROOT, "icons"))) {
     await cp(path.join(ROOT, "icons"), path.join(DIST, "icons"), {
       recursive: true,

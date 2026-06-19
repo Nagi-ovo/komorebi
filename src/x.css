@@ -1,0 +1,45 @@
+/* Everforest for X (x.com / twitter) — best-effort, element/testid-targeted.
+   X is a React app with hashed class names, so this is broader and more fragile
+   than the GitHub theme: it recolors the main surfaces, text and borders, and
+   tints in-tweet links. Gated on html:not([data-ef="off"]); mode = popup or OS. */
+
+html:not([data-ef="off"]) {
+  --ef-bg: #fdf6e3; --ef-bg1: #f4f0d9; --ef-fg: #5c6a72; --ef-muted: #828a78;
+  --ef-border: #e0dcc7; --ef-blue: #3a94c5;
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --ef-bg: #2d353b; --ef-bg1: #343f44; --ef-fg: #d3c6aa; --ef-muted: #9da9a0;
+  --ef-border: #4f585e; --ef-blue: #7fbbb3;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --ef-bg: #2d353b; --ef-bg1: #343f44; --ef-fg: #d3c6aa; --ef-muted: #9da9a0;
+    --ef-border: #4f585e; --ef-blue: #7fbbb3;
+    color-scheme: dark;
+  }
+}
+
+/* surfaces: app background, columns, header */
+html:not([data-ef="off"]) body,
+html:not([data-ef="off"]) [data-testid="primaryColumn"],
+html:not([data-ef="off"]) [data-testid="sidebarColumn"],
+html:not([data-ef="off"]) header[role="banner"],
+html:not([data-ef="off"]) [role="main"] { background-color: var(--ef-bg) !important; }
+
+/* text: recolor the sea of hashed-class spans to the Everforest foreground */
+html:not([data-ef="off"]) [role="main"] :where(span, div, h1, h2, a[role="link"]),
+html:not([data-ef="off"]) [data-testid="sidebarColumn"] :where(span, div) { color: var(--ef-fg) !important; }
+
+/* accent: in-tweet mentions, hashtags and links */
+html:not([data-ef="off"]) [data-testid="tweetText"] a,
+html:not([data-ef="off"]) a[href^="/hashtag"],
+html:not([data-ef="off"]) a[href*="//"] { color: var(--ef-blue) !important; }
+
+/* borders between tweets / sections */
+html:not([data-ef="off"]) [data-testid="cellInnerDiv"],
+html:not([data-ef="off"]) [style*="border-bottom-color"] {
+  border-color: var(--ef-border) !important;
+  border-bottom-color: var(--ef-border) !important;
+}

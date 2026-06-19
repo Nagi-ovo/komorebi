@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  Restyle GitHub with the <a href="https://github.com/sainnhe/everforest">Everforest</a> palette —
+  Restyle GitHub, Google Search &amp; X with the <a href="https://github.com/sainnhe/everforest">Everforest</a> palette —
   warm, low-contrast, easy on the eyes.<br/>
   Light &amp; dark, in soft / medium / hard contrast, with matching themes for the browser itself.
 </p>

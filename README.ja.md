@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/sainnhe/everforest">Everforest</a> のパレットで GitHub を塗り替え——
+  <a href="https://github.com/sainnhe/everforest">Everforest</a> のパレットで GitHub・Google 検索・X を塗り替え——
   暖かく、低コントラストで、目にやさしく。<br/>
   ライト &amp; ダーク、soft / medium / hard の 3 段階コントラスト、ブラウザ本体用のテーマも同梱。
 </p>

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Everforest for GitHub",
-  "version": "0.2.0",
-  "description": "Restyle GitHub with the warm, low-contrast Everforest palette. Light & dark, soft / medium / hard contrast.",
+  "version": "0.3.0",
+  "description": "Restyle GitHub, Google Search & X with the warm, low-contrast Everforest palette — light & dark.",
   "author": "Jesse Zhang",
   "homepage_url": "https://github.com/Nagi-ovo/gh-everforest-theme",
   "icons": {
@@ -17,8 +17,19 @@
       "matches": ["https://github.com/*", "https://gist.github.com/*"],
       "css": ["theme.css"],
       "js": ["content.js"],
-      "run_at": "document_start",
-      "all_frames": false
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.google.com/search*", "https://www.google.co.uk/search*"],
+      "css": ["google.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "css": ["x.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
     }
   ],
   "action": {

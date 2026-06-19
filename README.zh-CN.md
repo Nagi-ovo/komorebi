@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  用 <a href="https://github.com/sainnhe/everforest">Everforest</a> 配色重绘 GitHub——
+  用 <a href="https://github.com/sainnhe/everforest">Everforest</a> 配色重绘 GitHub、Google 搜索和 X——
   温暖、低对比、护眼。<br/>
   明暗双色,soft / medium / hard 三档对比度,并附带同款浏览器主题。
 </p>
