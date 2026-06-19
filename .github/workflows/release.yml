@@ -25,9 +25,9 @@ jobs:
       - name: Package extension + browser themes
         run: |
           mkdir -p release
-          ( cd dist && zip -qr ../release/everforest-for-github.zip . )
-          ( cd chrome-themes/everforest-dark && zip -qr ../../release/everforest-browser-dark.zip . )
-          ( cd chrome-themes/everforest-light && zip -qr ../../release/everforest-browser-light.zip . )
+          ( cd dist && zip -qr ../release/komorebi.zip . )
+          ( cd chrome-themes/komorebi-dark && zip -qr ../../release/komorebi-browser-dark.zip . )
+          ( cd chrome-themes/komorebi-light && zip -qr ../../release/komorebi-browser-light.zip . )
           ls -lh release
 
       - uses: softprops/action-gh-release@v2
@@ -42,6 +42,6 @@ jobs:
 
             | Zip | What it themes |
             | --- | --- |
-            | `everforest-for-github.zip` | the GitHub website |
-            | `everforest-browser-dark.zip` | the browser UI (dark) — manage under Settings → Appearance |
-            | `everforest-browser-light.zip` | the browser UI (light) |
+            | `komorebi.zip` | the websites (GitHub, Google, X) |
+            | `komorebi-browser-dark.zip` | the browser UI (dark) — manage under Settings → Appearance |
+            | `komorebi-browser-light.zip` | the browser UI (light) |

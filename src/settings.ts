@@ -5,27 +5,41 @@
 
 export type ThemeMode = "sync" | "light" | "dark";
 export type Contrast = "soft" | "medium" | "hard";
+export type Site = "github" | "google" | "x";
 
 export interface Settings {
-  /** Master switch. Off = leave GitHub's native theme untouched. */
+  /** Master switch. Off = leave every site's native theme untouched. */
   enabled: boolean;
-  /** "sync" follows GitHub's own appearance; light/dark force a variant. */
+  /** "sync" follows GitHub's appearance (or the OS elsewhere); light/dark force it. */
   mode: ThemeMode;
-  /** Everforest background contrast. */
+  /** Everforest background contrast (GitHub only). */
   contrast: Contrast;
+  /** Per-site toggles — turn the theme off on individual sites. */
+  sites: Record<Site, boolean>;
 }
+
+export const SITES: Site[] = ["github", "google", "x"];
 
 export const DEFAULTS: Settings = {
   enabled: true,
   mode: "sync",
   contrast: "medium",
+  sites: { github: true, google: true, x: true },
 };
 
 const KEY = "ef-settings";
 
+function merge(stored: Partial<Settings> | undefined): Settings {
+  return {
+    ...DEFAULTS,
+    ...stored,
+    sites: { ...DEFAULTS.sites, ...(stored?.sites ?? {}) },
+  };
+}
+
 export async function loadSettings(): Promise<Settings> {
   const stored = await chrome.storage.sync.get(KEY);
-  return { ...DEFAULTS, ...(stored?.[KEY] as Partial<Settings> | undefined) };
+  return merge(stored?.[KEY] as Partial<Settings> | undefined);
 }
 
 export async function saveSettings(patch: Partial<Settings>): Promise<Settings> {
@@ -38,7 +52,15 @@ export async function saveSettings(patch: Partial<Settings>): Promise<Settings> 
 export function onSettingsChanged(cb: (s: Settings) => void): void {
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area === "sync" && changes[KEY]) {
-      cb({ ...DEFAULTS, ...(changes[KEY].newValue as Partial<Settings> | undefined) });
+      cb(merge(changes[KEY].newValue as Partial<Settings> | undefined));
     }
   });
+}
+
+/** Which supported site is this hostname, if any. */
+export function siteForHost(hostname: string): Site | null {
+  if (hostname === "github.com" || hostname === "gist.github.com") return "github";
+  if (hostname.startsWith("www.google.")) return "google";
+  if (hostname === "x.com" || hostname === "twitter.com" || hostname === "mobile.x.com") return "x";
+  return null;
 }

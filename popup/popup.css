@@ -115,6 +115,23 @@ body {
 
 .ef-hint { margin: 0; font-size: 11px; color: var(--muted); min-height: 14px; }
 
+/* Per-site toggle chips */
+.ef-sites {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  gap: 3px; padding: 3px; border-radius: 9px;
+  background: var(--inset); border: 1px solid var(--border);
+}
+.ef-sites button {
+  appearance: none; border: 0; cursor: pointer;
+  padding: 6px 4px; border-radius: 6px;
+  font: inherit; font-size: 12px; font-weight: 550;
+  color: var(--muted); background: transparent;
+  transition: background 0.13s ease, color 0.13s ease;
+}
+.ef-sites button:hover { background: color-mix(in srgb, var(--fg) 9%, transparent); }
+.ef-sites button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.ef-sites button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
 /* Palette preview */
 .ef-preview {
   display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;

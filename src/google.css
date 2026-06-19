@@ -1,74 +1,48 @@
 /* Everforest for Google Search — element-targeted (Google has no design tokens).
-   Colors mirror the GitHub theme. Gated on html:not([data-ef="off"]); the mode
-   follows the popup (forced light/dark) or the OS when on "sync".
-   Hand-tuned + fragile by nature — Google's class names change. */
+   We flatten the result/panel surfaces to the Everforest background (which also
+   catches the white AI-overview source cards) and recolor links, urls, snippets
+   and tabs. Best-effort + fragile by nature. Mode = popup, or the OS on "sync". */
 
-/* ── palette vars: light by default, dark when forced or (sync + OS dark) ── */
 html:not([data-ef="off"]) {
-  --ef-bg: #fdf6e3; --ef-bg1: #f4f0d9; --ef-bg2: #efebd4; --ef-dim: #efebd4;
-  --ef-fg: #5c6a72; --ef-muted: #828a78; --ef-faint: #a6b0a0; --ef-border: #e0dcc7;
-  --ef-blue: #3a94c5; --ef-purple: #df69ba; --ef-green: #8da101; --ef-red: #f85552;
+  --ef-bg: #fdf6e3; --ef-fg: #5c6a72; --ef-muted: #828a78;
+  --ef-blue: #3a94c5; --ef-purple: #df69ba; --ef-green: #8da101; --ef-border: #e0dcc7;
   color-scheme: light;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
-  --ef-bg: #2d353b; --ef-bg1: #343f44; --ef-bg2: #3d484d; --ef-dim: #232a2e;
-  --ef-fg: #d3c6aa; --ef-muted: #9da9a0; --ef-faint: #859289; --ef-border: #4f585e;
-  --ef-blue: #7fbbb3; --ef-purple: #d699b6; --ef-green: #a7c080; --ef-red: #e67e80;
+  --ef-bg: #2d353b; --ef-fg: #d3c6aa; --ef-muted: #9da9a0;
+  --ef-blue: #7fbbb3; --ef-purple: #d699b6; --ef-green: #a7c080; --ef-border: #4f585e;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
-    --ef-bg: #2d353b; --ef-bg1: #343f44; --ef-bg2: #3d484d; --ef-dim: #232a2e;
-    --ef-fg: #d3c6aa; --ef-muted: #9da9a0; --ef-faint: #859289; --ef-border: #4f585e;
-    --ef-blue: #7fbbb3; --ef-purple: #d699b6; --ef-green: #a7c080; --ef-red: #e67e80;
+    --ef-bg: #2d353b; --ef-fg: #d3c6aa; --ef-muted: #9da9a0;
+    --ef-blue: #7fbbb3; --ef-purple: #d699b6; --ef-green: #a7c080; --ef-border: #4f585e;
     color-scheme: dark;
   }
 }
 
-/* ── page surface ── */
+/* page + flatten every result / panel / card surface to the Everforest bg */
 html:not([data-ef="off"]) body { background: var(--ef-bg) !important; color: var(--ef-fg) !important; }
-html:not([data-ef="off"]) #main, html:not([data-ef="off"]) #cnt, html:not([data-ef="off"]) #rcnt,
-html:not([data-ef="off"]) #appbar, html:not([data-ef="off"]) #center_col, html:not([data-ef="off"]) #search,
-html:not([data-ef="off"]) #rso, html:not([data-ef="off"]) #rhs, html:not([data-ef="off"]) .e9EfHf {
-  background: transparent !important;
-}
+html:not([data-ef="off"]) #rcnt div,
+html:not([data-ef="off"]) #appbar div,
+html:not([data-ef="off"]) #rhs div,
+html:not([data-ef="off"]) .RNNXgb { background-color: var(--ef-bg) !important; }
 
-/* ── top search bar ── */
-html:not([data-ef="off"]) .RNNXgb {
-  background: var(--ef-bg1) !important; box-shadow: none !important; border: 1px solid var(--ef-border) !important;
-}
-html:not([data-ef="off"]) #searchform input, html:not([data-ef="off"]) #searchform textarea,
+/* search box text */
+html:not([data-ef="off"]) #searchform input,
+html:not([data-ef="off"]) #searchform textarea,
 html:not([data-ef="off"]) .gLFyf { color: var(--ef-fg) !important; }
 
-/* ── result links, titles, urls, snippets ── */
-html:not([data-ef="off"]) #search h3, html:not([data-ef="off"]) #rso h3 { color: var(--ef-blue) !important; }
+/* result titles + links + visited */
+html:not([data-ef="off"]) #search h3, html:not([data-ef="off"]) #rso h3,
 html:not([data-ef="off"]) #search a, html:not([data-ef="off"]) #rso a { color: var(--ef-blue) !important; }
 html:not([data-ef="off"]) #search a:visited, html:not([data-ef="off"]) #search a:visited h3,
 html:not([data-ef="off"]) #rso a:visited, html:not([data-ef="off"]) #rso a:visited h3 { color: var(--ef-purple) !important; }
+
+/* url (cite), snippet body, bold matches */
 html:not([data-ef="off"]) cite, html:not([data-ef="off"]) #search cite { color: var(--ef-green) !important; }
-html:not([data-ef="off"]) #search .VwiC3b, html:not([data-ef="off"]) #rso span,
-html:not([data-ef="off"]) #rso .VwiC3b { color: var(--ef-fg) !important; }
+html:not([data-ef="off"]) #search .VwiC3b, html:not([data-ef="off"]) #rso .VwiC3b { color: var(--ef-fg) !important; }
 html:not([data-ef="off"]) #search em, html:not([data-ef="off"]) #rso em { color: var(--ef-fg) !important; font-style: normal; font-weight: 600; }
 
-/* ── tabs (All / Images / …) ── */
-html:not([data-ef="off"]) div[role="navigation"] a, html:not([data-ef="off"]) .crJ18e a { color: var(--ef-muted) !important; }
-html:not([data-ef="off"]) .YmvwI, html:not([data-ef="off"]) a[aria-current] { color: var(--ef-blue) !important; }
-
-/* ── cards / panels / chips that ship a white background ── */
-html:not([data-ef="off"]) .ULSxyf, html:not([data-ef="off"]) g-card, html:not([data-ef="off"]) .related-question-pair,
-html:not([data-ef="off"]) .cUnQKe, html:not([data-ef="off"]) .yEMjwd, html:not([data-ef="off"]) .vt6azd,
-html:not([data-ef="off"]) .dFd2Tb, html:not([data-ef="off"]) .RqBzHd, html:not([data-ef="off"]) .EyBRub {
-  background: var(--ef-bg1) !important; border-color: var(--ef-border) !important;
-}
-/* "Tools" / chips / buttons with light fills */
-html:not([data-ef="off"]) .nfdoRb, html:not([data-ef="off"]) .O9ez4d, html:not([data-ef="off"]) g-scrolling-carousel {
-  background: transparent !important; color: var(--ef-fg) !important;
-}
-
-/* ── footer ── */
-html:not([data-ef="off"]) #footcnt, html:not([data-ef="off"]) #fbar, html:not([data-ef="off"]) .gXdNDc {
-  background: var(--ef-dim) !important; border-color: var(--ef-border) !important;
-}
-html:not([data-ef="off"]) #fbar a, html:not([data-ef="off"]) #footcnt a, html:not([data-ef="off"]) #footcnt {
-  color: var(--ef-muted) !important;
-}
+/* tabs (All / Images / …) */
+html:not([data-ef="off"]) div[role="navigation"] a { color: var(--ef-muted) !important; }

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="popup.css" />
-    <title>Everforest for GitHub</title>
+    <title>Komorebi</title>
   </head>
   <body>
     <header class="ef-header">
@@ -22,8 +22,8 @@
         </svg>
       </span>
       <span class="ef-titles">
-        <span class="ef-title">Everforest</span>
-        <span class="ef-sub">for GitHub</span>
+        <span class="ef-title">Komorebi</span>
+        <span class="ef-sub">for the web</span>
       </span>
       <label class="ef-switch" title="Enable theme">
         <input type="checkbox" id="enabled" />
@@ -49,6 +49,16 @@
           <button type="button" role="radio" data-value="medium">Medium</button>
           <button type="button" role="radio" data-value="hard">Hard</button>
         </div>
+      </section>
+
+      <section class="ef-field">
+        <div class="ef-label">Sites</div>
+        <div class="ef-sites">
+          <button type="button" data-site="github">GitHub</button>
+          <button type="button" data-site="google">Google</button>
+          <button type="button" data-site="x">X</button>
+        </div>
+        <p class="ef-hint">Turn the theme on or off per site.</p>
       </section>
 
       <section class="ef-preview" aria-hidden="true">

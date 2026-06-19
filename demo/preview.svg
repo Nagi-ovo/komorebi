@@ -11,7 +11,7 @@
   <circle cx="614" cy="24" r="11" fill="#a7c080"/>
   <text x="24" y="84" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="16" fill="#7fbbb3">Nagi-ovo</text>
   <text x="94" y="84" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="16" fill="#859289">/</text>
-  <text x="104" y="84" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="16" font-weight="650" fill="#7fbbb3">everforest-demo</text>
+  <text x="104" y="84" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="16" font-weight="650" fill="#7fbbb3">komorebi</text>
   <rect x="244" y="71" width="52" height="18" rx="9" fill="none" stroke="#4f585e"/>
   <text x="270" y="84" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="11" text-anchor="middle" fill="#859289">Public</text>
   <text x="24" y="116" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="13.5" font-weight="600" fill="#d3c6aa">Code</text>
@@ -67,7 +67,7 @@
   <circle cx="1254" cy="24" r="11" fill="#8da101"/>
   <text x="664" y="84" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="16" fill="#3a94c5">Nagi-ovo</text>
   <text x="734" y="84" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="16" fill="#939f91">/</text>
-  <text x="744" y="84" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="16" font-weight="650" fill="#3a94c5">everforest-demo</text>
+  <text x="744" y="84" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="16" font-weight="650" fill="#3a94c5">komorebi</text>
   <rect x="884" y="71" width="52" height="18" rx="9" fill="none" stroke="#e0dcc7"/>
   <text x="910" y="84" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="11" text-anchor="middle" fill="#939f91">Public</text>
   <text x="664" y="116" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, system-ui, sans-serif" font-size="13.5" font-weight="600" fill="#5c6a72">Code</text>

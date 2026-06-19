@@ -53,7 +53,7 @@ function page(ox: number, mode: Mode): string {
   const LX = ox + 24;
   txt(LX, 84, "Nagi-ovo", p.blue, `font-size="16"`);
   txt(LX + 70, 84, "/", p.grey1, `font-size="16"`);
-  txt(LX + 80, 84, "everforest-demo", p.blue, `font-size="16" font-weight="650"`);
+  txt(LX + 80, 84, "komorebi", p.blue, `font-size="16" font-weight="650"`);
   rect(LX + 220, 71, 52, 18, 9, "none", p.bg4);
   txt(LX + 246, 84, "Public", p.grey1, `font-size="11" text-anchor="middle"`);
 

@@ -7,7 +7,7 @@
 import { everforest, type Mode } from "../src/palette";
 import {
   loadSettings, saveSettings, onSettingsChanged, DEFAULTS,
-  type Settings, type ThemeMode,
+  type Settings, type ThemeMode, type Site,
 } from "../src/settings";
 
 const $ = <T extends HTMLElement>(sel: string): T => document.querySelector(sel) as T;
@@ -18,6 +18,7 @@ const statusEl = $("#status");
 const resetEl = $("#reset");
 const segs = Array.from(document.querySelectorAll<HTMLDivElement>(".ef-seg"));
 const swatches = Array.from(document.querySelectorAll<HTMLSpanElement>(".ef-swatch"));
+const siteEls = Array.from(document.querySelectorAll<HTMLButtonElement>(".ef-sites button"));
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
 const MODE_HINTS: Record<ThemeMode, string> = {
@@ -44,6 +45,8 @@ function render(s: Settings): void {
   }
   modeHint.textContent = MODE_HINTS[s.mode];
 
+  for (const b of siteEls) b.setAttribute("aria-pressed", String(s.sites[b.dataset.site as Site] !== false));
+
   // Re-theme popup chrome + preview swatches to the resolved variant.
   const pm = resolvedMode(s.mode);
   document.documentElement.dataset.preview = pm;
@@ -67,6 +70,13 @@ for (const seg of segs) {
 }
 
 resetEl.addEventListener("click", () => void saveSettings({ ...DEFAULTS }));
+
+document.querySelector(".ef-sites")?.addEventListener("click", (e) => {
+  const btn = (e.target as HTMLElement).closest("button");
+  if (!btn) return;
+  const site = btn.dataset.site as Site;
+  void loadSettings().then((s) => saveSettings({ sites: { ...s.sites, [site]: !s.sites[site] } }));
+});
 prefersDark.addEventListener("change", () => void loadSettings().then(render));
 onSettingsChanged(render);
 void loadSettings().then(render);
