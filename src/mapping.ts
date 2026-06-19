@@ -30,14 +30,15 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   const dark = mode === "dark";
 
   // Ink used on top of "emphasis" surfaces. In dark mode those surfaces are
-  // pastel accents → dark ink reads best; in light mode they're saturated
-  // accents → a warm white reads best.
-  const onEmphasis = dark ? bg_dim : "#fffbef";
+  // pastel accents; in light mode Everforest greens/oranges still need dark
+  // ink for readable buttons.
   const warmWhite = "#fffbef";
   // A dark Everforest ink for the rare "black text" / inverse-surface cases.
-  const darkInk = dark ? bg_dim : "#383f44";
+  const darkInk = dark ? bg_dim : "#1e2326";
+  const onEmphasis = darkInk;
   // Solid neutral pill (counters, tooltips, neutral emphasis).
-  const neutralEmphasisBg = dark ? grey1 : fg;
+  const neutralEmphasisBg = dark ? grey1 : bg5;
+  const inverseBg = dark ? grey1 : fg;
 
   const t: Record<string, string> = {};
 
@@ -48,7 +49,7 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--bgColor-muted"] = bg_dim;         // recessed panels, code wells
   t["--bgColor-inset"] = bg_dim;         // inputs/wells
   t["--bgColor-emphasis"] = neutralEmphasisBg;
-  t["--bgColor-inverse"] = neutralEmphasisBg;
+  t["--bgColor-inverse"] = inverseBg;
   t["--bgColor-disabled"] = bg2;
   t["--bgColor-transparent"] = "#00000000";
   t["--bgColor-white"] = warmWhite;
@@ -101,7 +102,7 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--fgColor-neutral"] = grey1;
   t["--fgColor-draft"] = grey0;
   t["--fgColor-onEmphasis"] = onEmphasis;
-  t["--fgColor-onInverse"] = onEmphasis;
+  t["--fgColor-onInverse"] = dark ? onEmphasis : warmWhite;
   t["--fgColor-white"] = warmWhite;
   t["--fgColor-black"] = darkInk;
 
@@ -162,11 +163,11 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--color-prettylights-syntax-markup-italic"] = fg;
   t["--color-prettylights-syntax-markup-heading"] = blue;
   t["--color-prettylights-syntax-markup-list"] = yellow;
-  t["--color-prettylights-syntax-markup-inserted-text"] = green;
+  t["--color-prettylights-syntax-markup-inserted-text"] = fg;
   t["--color-prettylights-syntax-markup-inserted-bg"] = bg_green;
-  t["--color-prettylights-syntax-markup-deleted-text"] = red;
+  t["--color-prettylights-syntax-markup-deleted-text"] = fg;
   t["--color-prettylights-syntax-markup-deleted-bg"] = bg_red;
-  t["--color-prettylights-syntax-markup-changed-text"] = orange;
+  t["--color-prettylights-syntax-markup-changed-text"] = fg;
   t["--color-prettylights-syntax-markup-changed-bg"] = bg_yellow;
   t["--color-prettylights-syntax-markup-ignored-text"] = fg;
   t["--color-prettylights-syntax-markup-ignored-bg"] = a(blue, "40");
@@ -182,6 +183,17 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--codeMirror-syntax-fgColor-string"] = aqua;
   t["--codeMirror-syntax-fgColor-support"] = blue;
   t["--codeMirror-syntax-fgColor-variable"] = orange;
+  t["--codeMirror-bgColor"] = bg0;
+  t["--codeMirror-fgColor"] = fg;
+  t["--codeMirror-gutters-bgColor"] = bg_dim;
+  t["--codeMirror-gutterMarker-fgColor-default"] = grey1;
+  t["--codeMirror-lineNumber-fgColor"] = grey1;
+  t["--codeMirror-cursor-fgColor"] = fg;
+  t["--codeMirror-selection-bgColor"] = a(blue, "40");
+  t["--codeMirror-activeline-bgColor"] = a(grey1, "1a");
+  t["--codeMirror-matchingBracket-bgColor"] = a(yellow, "26");
+  t["--codeMirror-tooltip-bgColor"] = bg1;
+  t["--codeMirror-tooltip-borderColor"] = bg4;
 
   // ──────────────────────────────────────────────────────────────────
   // Diff view — --diffBlob-*
@@ -216,6 +228,7 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--control-bgColor-active"] = bg2;
   t["--control-bgColor-disabled"] = a(grey0, "1a");
   t["--control-fgColor-rest"] = fg;
+  t["--control-fgColor-disabled"] = grey0;
   t["--control-fgColor-placeholder"] = grey0;
   t["--control-checked-bgColor-rest"] = blue;
   t["--control-checked-bgColor-hover"] = blue;
@@ -257,14 +270,22 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--button-primary-borderColor-rest"] = a(fg, "1a");
   t["--button-default-bgColor-hover"] = bg2;
   t["--button-default-bgColor-active"] = bg3;
+  t["--button-default-fgColor-disabled"] = grey0;
+  t["--button-default-bgColor-disabled"] = a(grey0, "1a");
+  t["--button-default-borderColor-disabled"] = a(grey0, "26");
   t["--button-danger-fgColor-rest"] = red;
-  t["--button-danger-fgColor-hover"] = warmWhite;
-  t["--button-danger-iconColor-hover"] = warmWhite;
+  t["--button-danger-fgColor-hover"] = onEmphasis;
+  t["--button-danger-iconColor-hover"] = onEmphasis;
   t["--button-danger-bgColor-hover"] = red;
   t["--button-danger-bgColor-active"] = a(red, "cc");
+  t["--button-danger-fgColor-disabled"] = a(red, "80");
+  t["--button-danger-bgColor-disabled"] = a(red, "1a");
   t["--button-outline-fgColor-rest"] = blue;
   t["--button-outline-bgColor-hover"] = blue;
   t["--button-outline-fgColor-hover"] = onEmphasis;
+  t["--button-outline-fgColor-disabled"] = grey0;
+  t["--button-outline-bgColor-disabled"] = "#00000000";
+  t["--button-outline-borderColor-disabled"] = a(grey0, "26");
   t["--button-inactive-bgColor"] = bg2;
   t["--button-inactive-fgColor"] = grey1;
   t["--button-star-iconColor"] = yellow;
@@ -293,6 +314,7 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--overlay-bgColor"] = dark ? bg1 : warmWhite;
   t["--overlay-borderColor"] = bg4;
   t["--overlay-backdrop-bgColor"] = a(darkInk, "66");
+  t["--overlay-shadow"] = `0 8px 24px ${a(darkInk, dark ? "66" : "1f")}`;
 
   // ──────────────────────────────────────────────────────────────────
   // Misc chrome
@@ -316,6 +338,13 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--reactionButton-selected-fgColor-hover"] = blue;
   t["--selectMenu-bgColor-active"] = a(blue, "26");
   t["--selectMenu-borderColor"] = "#00000000";
+  t["--actionListItem-default-hover-bgColor"] = a(grey1, "1a");
+  t["--actionListItem-default-hover-fgColor"] = fg;
+  t["--actionListItem-default-active-bgColor"] = a(grey1, "26");
+  t["--actionListItem-default-selected-bgColor"] = a(blue, "26");
+  t["--actionListItem-default-selected-fgColor"] = fg;
+  t["--actionListItem-danger-hover-bgColor"] = a(red, "1a");
+  t["--actionListItem-danger-hover-fgColor"] = red;
   t["--sideNav-bgColor-selected"] = bg2;
   t["--topicTag-borderColor"] = "#00000000";
   t["--treeViewItem-leadingVisual-iconColor-rest"] = blue;
@@ -361,6 +390,53 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--color-user-mention-bg"] = a(yellow, "26");
   t["--color-project-header-bg"] = bg_dim;
   t["--color-project-sidebar-bg"] = bg0;
+  Object.assign(t, {
+    "--color-canvas-default": bg0,
+    "--color-canvas-overlay": dark ? bg1 : warmWhite,
+    "--color-canvas-inset": bg_dim,
+    "--color-canvas-subtle": bg_dim,
+    "--color-fg-default": fg,
+    "--color-fg-muted": grey1,
+    "--color-fg-subtle": grey0,
+    "--color-fg-on-emphasis": onEmphasis,
+    "--color-border-default": bg4,
+    "--color-border-muted": bg3,
+    "--color-border-subtle": a(fg, "1a"),
+    "--color-shadow-small": `0 1px 0 ${a(darkInk, "1a")}`,
+    "--color-shadow-medium": `0 3px 6px ${a(darkInk, "26")}`,
+    "--color-shadow-large": `0 8px 24px ${a(darkInk, "33")}`,
+    "--color-shadow-extra-large": `0 12px 48px ${a(darkInk, "40")}`,
+    "--color-accent-fg": blue,
+    "--color-accent-emphasis": blue,
+    "--color-accent-muted": a(blue, "26"),
+    "--color-accent-subtle": a(blue, "1a"),
+    "--color-success-fg": green,
+    "--color-success-emphasis": green,
+    "--color-success-muted": a(green, "26"),
+    "--color-success-subtle": a(green, "1a"),
+    "--color-open-fg": green,
+    "--color-open-emphasis": green,
+    "--color-danger-fg": red,
+    "--color-danger-emphasis": red,
+    "--color-danger-muted": a(red, "26"),
+    "--color-danger-subtle": a(red, "1a"),
+    "--color-closed-fg": red,
+    "--color-closed-emphasis": red,
+    "--color-attention-fg": yellow,
+    "--color-attention-emphasis": dark ? yellow : orange,
+    "--color-attention-muted": a(yellow, "26"),
+    "--color-attention-subtle": a(yellow, "1a"),
+    "--color-severe-fg": orange,
+    "--color-severe-emphasis": orange,
+    "--color-done-fg": purple,
+    "--color-done-emphasis": purple,
+    "--color-done-muted": a(purple, "26"),
+    "--color-sponsors-fg": purple,
+    "--color-sponsors-emphasis": purple,
+    "--color-neutral-emphasis": neutralEmphasisBg,
+    "--color-neutral-muted": a(grey1, "26"),
+    "--color-primer-canvas-backdrop": a(darkInk, "66"),
+  });
 
   return t;
 }

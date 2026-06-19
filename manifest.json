@@ -26,7 +26,7 @@
       "run_at": "document_start"
     },
     {
-      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "matches": ["https://x.com/*", "https://twitter.com/*", "https://mobile.x.com/*"],
       "css": ["x.css"],
       "js": ["content.js"],
       "run_at": "document_start"

@@ -6,38 +6,75 @@
 html:not([data-ef="off"]) {
   --ef-bg: #fdf6e3; --ef-fg: #5c6a72; --ef-muted: #828a78;
   --ef-blue: #3a94c5; --ef-purple: #df69ba; --ef-green: #8da101; --ef-border: #e0dcc7;
+  --ef-header: var(--ef-muted);
   color-scheme: light;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-bg: #2d353b; --ef-fg: #d3c6aa; --ef-muted: #9da9a0;
   --ef-blue: #7fbbb3; --ef-purple: #d699b6; --ef-green: #a7c080; --ef-border: #4f585e;
+  --ef-header: var(--ef-fg);
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
     --ef-bg: #2d353b; --ef-fg: #d3c6aa; --ef-muted: #9da9a0;
     --ef-blue: #7fbbb3; --ef-purple: #d699b6; --ef-green: #a7c080; --ef-border: #4f585e;
+    --ef-header: var(--ef-fg);
     color-scheme: dark;
   }
 }
 
-/* page + flatten every result / panel / card surface to the Everforest bg */
+/* page + known Google chrome surfaces; do not blanket #rcnt or image grids vanish */
 html:not([data-ef="off"]) body { background: var(--ef-bg) !important; color: var(--ef-fg) !important; }
-html:not([data-ef="off"]) #rcnt div,
+html:not([data-ef="off"]) #searchform,
+html:not([data-ef="off"]) #search,
+html:not([data-ef="off"]) #rso,
+html:not([data-ef="off"]) #rso > div,
+html:not([data-ef="off"]) #rso > div > div,
+html:not([data-ef="off"]) #rso > div > div > div,
+html:not([data-ef="off"]) footer,
+html:not([data-ef="off"]) #fbar,
+html:not([data-ef="off"]) #searchform div:has([role="listbox"]),
+html:not([data-ef="off"]) #searchform [role="listbox"],
+html:not([data-ef="off"]) #searchform [role="option"],
+html:not([data-ef="off"]) .RDmXvc,
+html:not([data-ef="off"]) .RNNXgb { background: var(--ef-bg) !important; }
 html:not([data-ef="off"]) #appbar div,
-html:not([data-ef="off"]) #rhs div,
-html:not([data-ef="off"]) .RNNXgb { background-color: var(--ef-bg) !important; }
+html:not([data-ef="off"]) #rhs div { background-color: var(--ef-bg) !important; }
 
 /* search box text */
 html:not([data-ef="off"]) #searchform input,
 html:not([data-ef="off"]) #searchform textarea,
+html:not([data-ef="off"]) #searchform [role="option"],
 html:not([data-ef="off"]) .gLFyf { color: var(--ef-fg) !important; }
+html:not([data-ef="off"]) #searchform [role="option"]:is(:hover, [aria-selected="true"], .sbhl) {
+  background: color-mix(in srgb, var(--ef-blue) 14%, var(--ef-bg)) !important;
+}
+
+/* Google dims header controls aggressively in dark mode. */
+html:not([data-ef="off"]) #searchform :where(button, [role="button"], svg, path),
+html:not([data-ef="off"]) div[role="navigation"] :where(a, button, [role="button"], span, svg, path),
+html:not([data-ef="off"]) a[href*="/save"] {
+  color: var(--ef-header) !important;
+  fill: currentColor !important;
+  opacity: 1 !important;
+}
+
+/* broad copy inside rich panels, especially AI Overview */
+html:not([data-ef="off"]) #rcnt :where(div, span, p, li, h1, h2, h3, h4),
+html:not([data-ef="off"]) #rhs :where(div, span, p, li, h1, h2, h3, h4) {
+  color: var(--ef-fg) !important;
+}
 
 /* result titles + links + visited */
 html:not([data-ef="off"]) #search h3, html:not([data-ef="off"]) #rso h3,
-html:not([data-ef="off"]) #search a, html:not([data-ef="off"]) #rso a { color: var(--ef-blue) !important; }
+html:not([data-ef="off"]) #search a, html:not([data-ef="off"]) #search a span,
+html:not([data-ef="off"]) #rso a, html:not([data-ef="off"]) #rso a span,
+html:not([data-ef="off"]) #rhs a, html:not([data-ef="off"]) #rhs a span { color: var(--ef-blue) !important; }
 html:not([data-ef="off"]) #search a:visited, html:not([data-ef="off"]) #search a:visited h3,
-html:not([data-ef="off"]) #rso a:visited, html:not([data-ef="off"]) #rso a:visited h3 { color: var(--ef-purple) !important; }
+html:not([data-ef="off"]) #search a:visited span,
+html:not([data-ef="off"]) #rso a:visited, html:not([data-ef="off"]) #rso a:visited h3,
+html:not([data-ef="off"]) #rso a:visited span { color: var(--ef-purple) !important; }
 
 /* url (cite), snippet body, bold matches */
 html:not([data-ef="off"]) cite, html:not([data-ef="off"]) #search cite { color: var(--ef-green) !important; }
@@ -46,3 +83,21 @@ html:not([data-ef="off"]) #search em, html:not([data-ef="off"]) #rso em { color:
 
 /* tabs (All / Images / …) */
 html:not([data-ef="off"]) div[role="navigation"] a { color: var(--ef-muted) !important; }
+html:not([data-ef="off"]) div[role="navigation"] :is(
+  a[aria-current="page"],
+  a[aria-selected="true"],
+  a[aria-disabled="true"],
+  [aria-current="page"],
+  [aria-current="page"] *,
+  [selected],
+  [selected] *
+) {
+  color: var(--ef-blue) !important;
+  fill: currentColor !important;
+}
+html:not([data-ef="off"]) :is(footer, #fbar, footer a, #fbar a) { color: var(--ef-muted) !important; }
+html:not([data-ef="off"]) ::selection { background: color-mix(in srgb, var(--ef-blue) 35%, transparent); }
+html:not([data-ef="off"]) #rcnt :where(a, button, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid var(--ef-blue) !important;
+  outline-offset: 2px;
+}

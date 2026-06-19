@@ -60,7 +60,7 @@ export function onSettingsChanged(cb: (s: Settings) => void): void {
 /** Which supported site is this hostname, if any. */
 export function siteForHost(hostname: string): Site | null {
   if (hostname === "github.com" || hostname === "gist.github.com") return "github";
-  if (hostname.startsWith("www.google.")) return "google";
+  if (hostname === "www.google.com" || hostname === "www.google.co.uk") return "google";
   if (hostname === "x.com" || hostname === "twitter.com" || hostname === "mobile.x.com") return "x";
   return null;
 }

@@ -31,6 +31,7 @@ const withContrast = (sel: string, contrast: string): string =>
 const syncLight = (c: string) => withContrast(`${ON}${SYNC}[data-color-mode="light"]`, c);
 const syncAuto = (c: string) => withContrast(`${ON}${SYNC}[data-color-mode="auto"]`, c);
 const syncDark = (c: string) => withContrast(`${ON}${SYNC}[data-color-mode="dark"]`, c);
+const syncUnset = (c: string) => withContrast(`${ON}${SYNC}:not([data-color-mode])`, c);
 const forceLight = (c: string) => withContrast(`${ON}[data-ef-mode="light"]`, c);
 const forceDark = (c: string) => withContrast(`${ON}[data-ef-mode="dark"]`, c);
 
@@ -66,9 +67,9 @@ function generateCss(): string {
   ];
 
   // ── LIGHT — sync(light|auto) + forced light ──
-  parts.push(declBlock([syncLight(""), syncAuto(""), forceLight("")], lightMed, { "color-scheme": "light" }));
+  parts.push(declBlock([syncLight(""), syncAuto(""), syncUnset(""), forceLight("")], lightMed, { "color-scheme": "light" }));
   for (const c of contrasts) {
-    parts.push(declBlock([syncLight(c), syncAuto(c), forceLight(c)], lightDiff(c)));
+    parts.push(declBlock([syncLight(c), syncAuto(c), syncUnset(c), forceLight(c)], lightDiff(c)));
   }
 
   // ── DARK — sync(dark) + forced dark ──
@@ -79,8 +80,8 @@ function generateCss(): string {
 
   // ── DARK via sync + auto + OS dark (overrides the light-from-auto block) ──
   const media: string[] = [
-    declBlock([syncAuto("")], darkMed, { "color-scheme": "dark" }),
-    ...contrasts.map((c) => declBlock([syncAuto(c)], darkDiff(c))),
+    declBlock([syncAuto(""), syncUnset("")], darkMed, { "color-scheme": "dark" }),
+    ...contrasts.map((c) => declBlock([syncAuto(c), syncUnset(c)], darkDiff(c))),
   ];
   parts.push(`@media (prefers-color-scheme: dark) {\n${media.join("")}}\n`);
 
