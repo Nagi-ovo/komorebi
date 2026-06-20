@@ -11,6 +11,12 @@
 </p>
 
 <p align="center">
+  <a href="https://chromewebstore.google.com/detail/komorebi/neffpnembhpgfdhfpodffkoefklmodoi">
+    <img src="https://img.shields.io/chrome-web-store/v/neffpnembhpgfdhfpodffkoefklmodoi?label=Chrome%20Web%20Store&labelColor=2D353B&color=8DA101&logo=googlechrome&logoColor=A7C080" alt="Chrome ウェブストアで入手" />
+  </a>
+</p>
+
+<p align="center">
   <img src="demo/preview.svg" alt="Komorebi — ライトとダーク" width="860" />
 </p>
 
@@ -30,9 +36,11 @@
 
 <br/>
 
-まだ Web ストアには出していません。**最も簡単な方法:** [**Releases**](../../releases) から
-`komorebi.zip` をダウンロードして展開し、`chrome://extensions` で**デベロッパーモード**を有効化 →
-**パッケージ化されていない拡張機能を読み込む** → 展開したフォルダを選択。
+**[Chrome ウェブストアからインストール](https://chromewebstore.google.com/detail/komorebi/neffpnembhpgfdhfpodffkoefklmodoi)** —— ワンクリックで導入、自動更新。
+
+自分で読み込みたい場合は [**Releases**](../../releases) から `komorebi.zip` をダウンロードして展開し、
+`chrome://extensions` で**デベロッパーモード**を有効化 → **パッケージ化されていない拡張機能を読み込む**
+→ 展開したフォルダを選択。
 
 またはソースからビルド:
 

@@ -11,6 +11,12 @@
 </p>
 
 <p align="center">
+  <a href="https://chromewebstore.google.com/detail/komorebi/neffpnembhpgfdhfpodffkoefklmodoi">
+    <img src="https://img.shields.io/chrome-web-store/v/neffpnembhpgfdhfpodffkoefklmodoi?label=Chrome%20Web%20Store&labelColor=2D353B&color=8DA101&logo=googlechrome&logoColor=A7C080" alt="Chrome 应用商店" />
+  </a>
+</p>
+
+<p align="center">
   <img src="demo/preview.svg" alt="Komorebi — 明暗效果" width="860" />
 </p>
 
@@ -30,8 +36,10 @@
 
 <br/>
 
-还没上架 Web Store。**最省事:**从 [**Releases**](../../releases) 下载 `komorebi.zip`,解压,
-然后在 `chrome://extensions` 打开**开发者模式** → **加载已解压的扩展程序** → 选择解压出的文件夹。
+**[从 Chrome 应用商店安装](https://chromewebstore.google.com/detail/komorebi/neffpnembhpgfdhfpodffkoefklmodoi)** —— 一键装好,自动更新。
+
+想自己加载?从 [**Releases**](../../releases) 下载 `komorebi.zip`,解压,然后在
+`chrome://extensions` 打开**开发者模式** → **加载已解压的扩展程序** → 选择解压出的文件夹。
 
 或者从源码构建:
 

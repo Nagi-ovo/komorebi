@@ -11,6 +11,12 @@
 </p>
 
 <p align="center">
+  <a href="https://chromewebstore.google.com/detail/komorebi/neffpnembhpgfdhfpodffkoefklmodoi">
+    <img src="https://img.shields.io/chrome-web-store/v/neffpnembhpgfdhfpodffkoefklmodoi?label=Chrome%20Web%20Store&labelColor=2D353B&color=8DA101&logo=googlechrome&logoColor=A7C080" alt="Available in the Chrome Web Store" />
+  </a>
+</p>
+
+<p align="center">
   <img src="demo/preview.svg" alt="Komorebi — light and dark" width="860" />
 </p>
 
@@ -30,9 +36,10 @@ site (GitHub / Google / X), and it applies instantly.
 
 <br/>
 
-Not on the Web Store yet. **Easiest:** grab `komorebi.zip` from [**Releases**](../../releases),
-unzip it, then in `chrome://extensions` enable **Developer mode** → **Load unpacked** → pick the
-unzipped folder.
+**[Install from the Chrome Web Store](https://chromewebstore.google.com/detail/komorebi/neffpnembhpgfdhfpodffkoefklmodoi)** — one click, auto-updates.
+
+Prefer to load it yourself? Grab `komorebi.zip` from [**Releases**](../../releases), unzip it, then
+in `chrome://extensions` enable **Developer mode** → **Load unpacked** → pick the unzipped folder.
 
 Or build from source:
 
