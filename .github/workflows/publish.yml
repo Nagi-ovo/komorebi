@@ -1,0 +1,42 @@
+name: Publish to Chrome Web Store
+
+# Push a version tag (e.g. `git tag v0.7.1 && git push origin v0.7.1`) and this
+# builds, zips and publishes dist/ to the Chrome Web Store automatically.
+# A one-time secret setup is required — see PUBLISHING.md.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch: {} # also runnable by hand from the Actions tab
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install
+
+      - run: bun run build
+
+      - run: bun run zip # produces komorebi.zip from dist/
+
+      - name: Upload & publish to the Chrome Web Store
+        run: |
+          bunx chrome-webstore-upload-cli@3 upload \
+            --source komorebi.zip \
+            --extension-id "$EXTENSION_ID" \
+            --client-id "$CLIENT_ID" \
+            --client-secret "$CLIENT_SECRET" \
+            --refresh-token "$REFRESH_TOKEN" \
+            --auto-publish
+        env:
+          EXTENSION_ID: ${{ secrets.CWS_EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CWS_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.CWS_REFRESH_TOKEN }}
