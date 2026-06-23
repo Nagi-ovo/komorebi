@@ -1,7 +1,7 @@
 {
   "name": "komorebi",
-  "version": "0.4.1",
-  "description": "Komorebi — a calm theme for the web (GitHub, Google, X), based on the Everforest palette.",
+  "version": "0.7.0",
+  "description": "Komorebi — a calm Everforest theme for the web (AI chats, mail, GitHub, Google, Drive, Docs, Cloudflare, YouTube, Bilibili, arXiv & more).",
   "type": "module",
   "private": true,
   "scripts": {

@@ -22,7 +22,7 @@ const siteEls = Array.from(document.querySelectorAll<HTMLButtonElement>(".ef-sit
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
 const MODE_HINTS: Record<ThemeMode, string> = {
-  sync: "Follows your GitHub appearance.",
+  sync: "Follows each site, or your OS.",
   light: "Always Everforest Light.",
   dark: "Always Everforest Dark.",
 };

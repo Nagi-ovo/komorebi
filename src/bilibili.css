@@ -1,0 +1,62 @@
+/* Everforest for Bilibili (bilibili.com) — token-level retheme.
+   Bilibili's design system paints from --bg1/2/3, --text1..4, --brand_*, --line_*
+   and --graph_* tokens (its own light/dark ramps). We redefine them to Everforest
+   and the site follows: the brand blue maps to Everforest blue, the iconic pink to
+   Everforest's magenta. Mode follows the popup, or the OS on "sync". */
+
+html:not([data-ef="off"]) {
+  --ef-bg1: #fdf6e3; --ef-bg1-float: #fffbef; --ef-bg2: #f4f0d9; --ef-bg3: #efebd4;
+  --ef-t1: #5c6a72; --ef-t2: #708089; --ef-t3: #829181; --ef-t4: #939f91;
+  --ef-blue: #3a94c5; --ef-blue-thin: #e9f0e9; --ef-pink: #df69ba; --ef-pink-thin: #fae8e2;
+  --ef-line: #e0dcc7; --ef-line-bold: #bdc3af;
+  --ef-graph-thick: #e6e2cc; --ef-graph-weak: #939f91; --ef-graph-icon: #708089;
+  --ef-white-surface: #fdf6e3;
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --ef-bg1: #2d353b; --ef-bg1-float: #343f44; --ef-bg2: #272e33; --ef-bg3: #232a2e;
+  --ef-t1: #d3c6aa; --ef-t2: #9da9a0; --ef-t3: #859289; --ef-t4: #7a8478;
+  --ef-blue: #7fbbb3; --ef-blue-thin: #3a515d; --ef-pink: #d699b6; --ef-pink-thin: #4a444e;
+  --ef-line: #4f585e; --ef-line-bold: #56635f;
+  --ef-graph-thick: #3d484d; --ef-graph-weak: #7a8478; --ef-graph-icon: #9da9a0;
+  --ef-white-surface: #2d353b;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --ef-bg1: #2d353b; --ef-bg1-float: #343f44; --ef-bg2: #272e33; --ef-bg3: #232a2e;
+    --ef-t1: #d3c6aa; --ef-t2: #9da9a0; --ef-t3: #859289; --ef-t4: #7a8478;
+    --ef-blue: #7fbbb3; --ef-blue-thin: #3a515d; --ef-pink: #d699b6; --ef-pink-thin: #4a444e;
+    --ef-line: #4f585e; --ef-line-bold: #56635f;
+    --ef-graph-thick: #3d484d; --ef-graph-weak: #7a8478; --ef-graph-icon: #9da9a0;
+    --ef-white-surface: #2d353b;
+    color-scheme: dark;
+  }
+}
+
+html:not([data-ef="off"]) {
+  --bg1: var(--ef-bg1) !important;
+  --bg1_float: var(--ef-bg1-float) !important;
+  --bg2: var(--ef-bg2) !important;
+  --bg3: var(--ef-bg3) !important;
+  --bg4: var(--ef-bg3) !important;
+  --text1: var(--ef-t1) !important;
+  --text2: var(--ef-t2) !important;
+  --text3: var(--ef-t3) !important;
+  --text4: var(--ef-t4) !important;
+  --brand_blue: var(--ef-blue) !important;
+  --brand_blue_thin: var(--ef-blue-thin) !important;
+  --brand_pink: var(--ef-pink) !important;
+  --brand_pink_thin: var(--ef-pink-thin) !important;
+  --line_regular: var(--ef-line) !important;
+  --line_bold: var(--ef-line-bold) !important;
+  --graph_bg_thick: var(--ef-graph-thick) !important;
+  --graph_bg_regular: var(--ef-bg3) !important;
+  --graph_bg_thin: var(--ef-bg2) !important;
+  --graph_weak: var(--ef-graph-weak) !important;
+  --graph_icon: var(--ef-graph-icon) !important;
+  --graph_white: var(--ef-white-surface) !important;
+}
+
+/* safety paint — the page background reads var(--bg3) inline on <body> */
+html:not([data-ef="off"]) body { background-color: var(--ef-bg3) !important; }

@@ -1,0 +1,353 @@
+/* Everforest for Google Docs / Sheets / Slides (docs.google.com).
+
+   Two distinct surfaces live under this host:
+   1. The home / picker pages (docs.google.com/presentation, /document, …) are
+      the same Material app as Drive — their --gm3-* tokens resolve to a base
+      --dt-* layer, so overriding --dt-* on the theme host cascades everywhere.
+   2. The EDITORS (Slides "Punch", Docs "Kix", Sheets "Ritz") are the older
+      Closure UI — hardcoded colours on stable #docs-chrome / .docs-material /
+      goog-* / jfk-* / punch-* classes, with the slide/doc canvas drawn as SVG.
+      We repaint only the chrome (header, toolbar, menus, filmstrip, workspace,
+      notes, dialogs) and LEAVE the canvas — the slide/document is the user's
+      real content, like an email body. In dark mode the sprite-image toolbar
+      icons are inverted so they stay visible on the dark chrome.
+
+   Mode follows the popup, or the OS on "sync". */
+
+/* ── internal Everforest palette (inherits from the root) ─────────────────── */
+html:not([data-ef="off"]) {
+  --ef-page: #fdf6e3; --ef-surface: #fdf6e3; --ef-bright: #fffbef;
+  --ef-c-lowest: #fffbef; --ef-c-low: #fdf6e3; --ef-c: #f4f0d9;
+  --ef-c-high: #efebd4; --ef-c-highest: #e6e2cc; --ef-dim: #e0dcc7; --ef-variant: #e6e2cc;
+  --ef-fg: #5c6a72; --ef-fg-sec: #708089; --ef-fg-var: #708089;
+  /* editor-chrome text/icons: crisp near-native ink in light (the muted --ef-fg
+     reads as washed-out on dense menus/toolbars); Everforest fg in dark. */
+  --ef-ink: #3c4043;
+  --ef-outline: #939f91; --ef-outline-var: #e0dcc7;
+  --ef-blue: #3a94c5; --ef-blue-c: #e9f0e9; --ef-on-blue: #fffbef; --ef-on-blue-c: #2f7da8;
+  --ef-green: #8da101; --ef-green-c: #e6ead0; --ef-on-green: #fffbef; --ef-on-green-c: #687d3e;
+  --ef-red: #f85552; --ef-red-c: #fde3da; --ef-on-red: #fffbef;
+  --ef-neutral: #708089; --ef-neutral-c: #efebd4;
+  --ef-inv: #2d353b; --ef-on-inv: #fdf6e3;
+  --ef-hover: #efebd4; --ef-selected: #e9f0e9;
+  --ef-icon-filter: none;
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --ef-page: #2d353b; --ef-surface: #2d353b; --ef-bright: #343f44;
+  --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
+  --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-dim: #232a2e; --ef-variant: #3d484d;
+  --ef-fg: #d3c6aa; --ef-fg-sec: #9da9a0; --ef-fg-var: #9da9a0;
+  --ef-ink: #d3c6aa;
+  --ef-outline: #859289; --ef-outline-var: #4f585e;
+  --ef-blue: #7fbbb3; --ef-blue-c: #3a515d; --ef-on-blue: #2d353b; --ef-on-blue-c: #cfe0e0;
+  --ef-green: #a7c080; --ef-green-c: #425047; --ef-on-green: #2d353b; --ef-on-green-c: #cfe0b0;
+  --ef-red: #e67e80; --ef-red-c: #514045; --ef-on-red: #2d353b;
+  --ef-neutral: #9da9a0; --ef-neutral-c: #3d484d;
+  --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
+  --ef-hover: #3d484d; --ef-selected: #3a515d;
+  /* sprite-image toolbar icons are near-black; invert+hue-rotate keeps colour
+     icons roughly recognisable while turning monochrome glyphs light. */
+  --ef-icon-filter: invert(0.9) hue-rotate(180deg) brightness(1.05);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --ef-page: #2d353b; --ef-surface: #2d353b; --ef-bright: #343f44;
+    --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
+    --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-dim: #232a2e; --ef-variant: #3d484d;
+    --ef-fg: #d3c6aa; --ef-fg-sec: #9da9a0; --ef-fg-var: #9da9a0;
+    --ef-ink: #d3c6aa;
+    --ef-outline: #859289; --ef-outline-var: #4f585e;
+    --ef-blue: #7fbbb3; --ef-blue-c: #3a515d; --ef-on-blue: #2d353b; --ef-on-blue-c: #cfe0e0;
+    --ef-green: #a7c080; --ef-green-c: #425047; --ef-on-green: #2d353b; --ef-on-green-c: #cfe0b0;
+    --ef-red: #e67e80; --ef-red-c: #514045; --ef-on-red: #2d353b;
+    --ef-neutral: #9da9a0; --ef-neutral-c: #3d484d;
+    --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
+    --ef-hover: #3d484d; --ef-selected: #3a515d;
+    --ef-icon-filter: invert(0.9) hue-rotate(180deg) brightness(1.05);
+    color-scheme: dark;
+  }
+}
+
+/* ════ 1. HOME / PICKER pages — Material --dt-* token layer (same as Drive) ══ */
+html:not([data-ef="off"]) :is(body, .KkxPLb, .LgGVmb) {
+  --dt-background: var(--ef-page) !important;
+  --dt-surface: var(--ef-surface) !important;
+  --dt-surface-bright: var(--ef-bright) !important;
+  --dt-surface-container-lowest: var(--ef-c-lowest) !important;
+  --dt-surface-container-low: var(--ef-c-low) !important;
+  --dt-surface-container: var(--ef-c) !important;
+  --dt-surface-container-high: var(--ef-c-high) !important;
+  --dt-surface-container-highest: var(--ef-c-highest) !important;
+  --dt-surface-dim: var(--ef-dim) !important;
+  --dt-surface-variant: var(--ef-variant) !important;
+  --dt-surface-tint: var(--ef-blue) !important;
+  --dt-on-surface: var(--ef-fg) !important;
+  --dt-on-surface-secondary: var(--ef-fg-sec) !important;
+  --dt-on-surface-variant: var(--ef-fg-var) !important;
+  --dt-on-background: var(--ef-fg) !important;
+  --dt-on-background-secondary: var(--ef-fg-sec) !important;
+  --dt-neutral: var(--ef-fg-sec) !important;
+  --dt-neutral-action: var(--ef-fg) !important;
+  --dt-neutral-container: var(--ef-neutral-c) !important;
+  --dt-neutral-outline: var(--ef-outline) !important;
+  --dt-gray-fill: var(--ef-fg-sec) !important;
+  --dt-gray-tonal: var(--ef-neutral-c) !important;
+  --dt-outline: var(--ef-outline) !important;
+  --dt-outline-variant: var(--ef-outline-var) !important;
+  --dt-gray-outline: var(--ef-outline-var) !important;
+  --dt-primary: var(--ef-blue) !important;
+  --dt-primary-action: var(--ef-blue) !important;
+  --dt-on-primary: var(--ef-on-blue) !important;
+  --dt-primary-container: var(--ef-blue-c) !important;
+  --dt-on-primary-container: var(--ef-on-blue-c) !important;
+  --dt-blue-fill: var(--ef-blue) !important;
+  --dt-blue-tonal: var(--ef-blue-c) !important;
+  --dt-secondary: var(--ef-blue) !important;
+  --dt-secondary-container: var(--ef-blue-c) !important;
+  --dt-on-secondary-container: var(--ef-on-blue-c) !important;
+  --dt-tertiary: var(--ef-green) !important;
+  --dt-tertiary-container: var(--ef-green-c) !important;
+  --dt-on-tertiary-container: var(--ef-on-green-c) !important;
+  --dt-green-fill: var(--ef-green) !important;
+  --dt-green-tonal: var(--ef-green-c) !important;
+  --dt-error: var(--ef-red) !important;
+  --dt-error-container: var(--ef-red-c) !important;
+  --dt-inverse-surface: var(--ef-inv) !important;
+  --dt-inverse-on-surface: var(--ef-on-inv) !important;
+}
+
+/* The home / picker pages read Material-3 --gm3-sys-color-* and Workspace
+   --ws-sys-color-* tokens (with white fallbacks). Define them on the root so
+   token-driven buttons / list rows / menus turn Everforest. */
+html:not([data-ef="off"]) {
+  --gm3-sys-color-surface: var(--ef-surface) !important;
+  --gm3-sys-color-surface-dim: var(--ef-dim) !important;
+  --gm3-sys-color-surface-bright: var(--ef-bright) !important;
+  --gm3-sys-color-surface-container-lowest: var(--ef-c-lowest) !important;
+  --gm3-sys-color-surface-container-low: var(--ef-c-low) !important;
+  --gm3-sys-color-surface-container: var(--ef-c) !important;
+  --gm3-sys-color-surface-container-high: var(--ef-c-high) !important;
+  --gm3-sys-color-surface-container-highest: var(--ef-c-highest) !important;
+  --gm3-sys-color-surface-variant: var(--ef-variant) !important;
+  --gm3-sys-color-on-surface: var(--ef-fg) !important;
+  --gm3-sys-color-on-surface-variant: var(--ef-fg-var) !important;
+  --gm3-sys-color-background: var(--ef-page) !important;
+  --gm3-sys-color-on-background: var(--ef-fg) !important;
+  --gm3-sys-color-primary: var(--ef-blue) !important;
+  --gm3-sys-color-on-primary: var(--ef-on-blue) !important;
+  --gm3-sys-color-primary-container: var(--ef-blue-c) !important;
+  --gm3-sys-color-on-primary-container: var(--ef-on-blue-c) !important;
+  --gm3-sys-color-secondary-container: var(--ef-blue-c) !important;
+  --gm3-sys-color-on-secondary-container: var(--ef-on-blue-c) !important;
+  --gm3-sys-color-tertiary: var(--ef-green) !important;
+  --gm3-sys-color-tertiary-container: var(--ef-green-c) !important;
+  --gm3-sys-color-outline: var(--ef-outline) !important;
+  --gm3-sys-color-outline-variant: var(--ef-outline-var) !important;
+  --gm3-sys-color-error: var(--ef-red) !important;
+  --gm3-sys-color-error-container: var(--ef-red-c) !important;
+  --gm3-sys-color-on-error: var(--ef-on-red) !important;
+  --gm3-sys-color-inverse-surface: var(--ef-inv) !important;
+  --gm3-sys-color-inverse-on-surface: var(--ef-on-inv) !important;
+  --gm3-sys-color-inverse-primary: var(--ef-blue) !important;
+  /* Workspace token layer mirrors the same names */
+  --ws-sys-color-surface: var(--ef-surface) !important;
+  --ws-sys-color-surface-container: var(--ef-c) !important;
+  --ws-sys-color-surface-container-low: var(--ef-c-low) !important;
+  --ws-sys-color-surface-container-high: var(--ef-c-high) !important;
+  --ws-sys-color-surface-container-highest: var(--ef-c-highest) !important;
+  --ws-sys-color-surface-container-lowest: var(--ef-c-lowest) !important;
+  --ws-sys-color-surface-bright: var(--ef-bright) !important;
+  --ws-sys-color-surface-dim: var(--ef-dim) !important;
+  --ws-sys-color-surface-variant: var(--ef-variant) !important;
+  --ws-sys-color-on-surface: var(--ef-fg) !important;
+  --ws-sys-color-on-surface-variant: var(--ef-fg-var) !important;
+  --ws-sys-color-background: var(--ef-page) !important;
+  --ws-sys-color-primary: var(--ef-blue) !important;
+  --ws-sys-color-on-primary: var(--ef-on-blue) !important;
+  --ws-sys-color-primary-container: var(--ef-blue-c) !important;
+  --ws-sys-color-on-primary-container: var(--ef-on-blue-c) !important;
+  --ws-sys-color-secondary-container: var(--ef-blue-c) !important;
+  --ws-sys-color-outline: var(--ef-outline) !important;
+  --ws-sys-color-outline-variant: var(--ef-outline-var) !important;
+}
+
+/* home / picker shell — hardcoded docs-homescreen-* + Google bar surfaces */
+html:not([data-ef="off"]) :is(.docs-homescreen-container, .docs-homescreen-templates-view,
+  .docs-homescreen-body) {
+  background-color: var(--ef-page) !important;
+}
+html:not([data-ef="off"]) :is(.docs-homescreen-fcc-content, .docs-homescreen-fcc-flex-content-wrapper,
+  .docs-homescreen-templates-carousel, .docs-homescreen-template-card-section) {
+  background-color: var(--ef-surface) !important;
+}
+html:not([data-ef="off"]) :is(.docs-homescreen-drawer, .docs-homescreen-drawer-content,
+  .goog-menu.docs-homescreen-drawer, .gb_fd, .gb_cd) {
+  background-color: var(--ef-bright) !important;
+}
+html:not([data-ef="off"]) :is(.docs-homescreen-grid-item-title, .docs-homescreen-fcc-content,
+  .docs-homescreen-floater-header-cell, .docs-homescreen-templates-view-header) {
+  color: var(--ef-fg) !important;
+}
+
+/* ════ 2. EDITOR chrome (Slides / Docs / Sheets) ═══════════════════════════ */
+/* base canvas behind everything */
+html:not([data-ef="off"]) body { background-color: var(--ef-page) !important; }
+
+/* workspace backdrop (the area around the slide / page / grid) */
+html:not([data-ef="off"]) :is(#docs-editor-container, #docs-editor, #workspace-container,
+  .workspace-container, .punch-workspace, .kix-appview-editor, #waffle-grid-container,
+  .punch-editor-canvas-container) {
+  background-color: var(--ef-dim) !important;
+}
+
+/* top chrome: header, menu bar, title bar */
+html:not([data-ef="off"]) :is(#docs-chrome, .docs-material, #docs-header, .docs-titlebar-buttons,
+  .docs-title-outer, #docs-menubar, .docs-menubar, .docs-menubar-container) {
+  background-color: var(--ef-surface) !important;
+}
+
+/* toolbar row */
+html:not([data-ef="off"]) :is(#docs-toolbar, #docs-toolbar-wrapper, .docs-main-toolbars,
+  .docs-toolbar, .punch-toolbar) {
+  background-color: var(--ef-c) !important;
+  border-color: var(--ef-outline-var) !important;
+}
+
+/* slide thumbnail rail + speaker-notes chrome (Slides) */
+html:not([data-ef="off"]) :is(.filmstrip, .punch-filmstrip-wrapper, #filmstrip,
+  #speakernotes-container, #speakernotes-workspace-container, #speakernotes, #speakernotes-dragger,
+  .punch-editor-notes, .punch-notes-container) {
+  background-color: var(--ef-surface) !important;
+}
+/* the notes text is drawn as SVG (like the slide) — keep its canvas on a light
+   card in both modes so the dark note text stays readable, the way we float
+   email bodies on a light card in dark mode. */
+html:not([data-ef="off"]) :is(#speakernotes-workspace, .punch-editor-notetextview) {
+  background-color: #fdf6e3 !important;
+}
+
+/* right "insert" rail (Slide / Image / Templates / … — appsSketchy* component) */
+html:not([data-ef="off"]) :is([class*="ContentLibraryRailContainer"],
+  [class*="ContentLibraryRailToolbar"], #content-library-rail-server-rendered-refreshed) {
+  background-color: var(--ef-surface) !important;
+}
+html:not([data-ef="off"]) [class*="ContentLibraryRailToolbarButtonLabel"] { color: var(--ef-fg) !important; }
+html:not([data-ef="off"]) [class*="ContentLibraryRailToolbarButtonContainer"]:hover {
+  background-color: var(--ef-hover) !important;
+}
+
+/* text across the chrome — crisp ink (so menus/toolbars don't look washed) */
+html:not([data-ef="off"]) :is(#docs-chrome, .docs-menubar, #docs-toolbar-wrapper) :is(*, *::before) {
+  color: var(--ef-ink) !important;
+}
+html:not([data-ef="off"]) :is(.docs-title-input, .docs-title-outer, #docs-title-widget) {
+  color: var(--ef-ink) !important;
+}
+/* The title widget has a hidden, absolutely-positioned "sizer" label that
+   mirrors the title text to auto-size the input; Google paints it transparent.
+   Our chrome-text colouring would make it opaque and render it ON TOP of the
+   real input (the doubled / overlapping title). Force it back to transparent —
+   the #docs-chrome id keeps this ahead of the broad chrome-text rule. */
+html:not([data-ef="off"]) #docs-chrome :is(.docs-title-input-label, .docs-title-input-label-inner) {
+  color: transparent !important;
+}
+
+/* menubar hover + open state */
+html:not([data-ef="off"]) :is(.menu-button-hover, .menu-button-open, .goog-control-hover,
+  .docs-menubar .goog-control-hover, .docs-menubar .goog-control-open) {
+  background-color: var(--ef-hover) !important;
+}
+
+/* toolbar buttons: these hardcode the native toolbar colour, so once the
+   toolbar goes dark they'd read as light boxes — let them blend (transparent),
+   and surface only on hover / checked. */
+html:not([data-ef="off"]) :is(.goog-toolbar-button, .goog-toolbar-menu-button,
+  .goog-toolbar-combo-button, .goog-flat-menu-button, .docs-toolbar-text-button,
+  .punch-dynamic-toolbar-button) {
+  background-color: transparent !important;
+}
+html:not([data-ef="off"]) :is(.goog-toolbar-button-hover, .goog-toolbar-menu-button-hover,
+  .goog-toolbar-combo-button-hover, .goog-toolbar-button-checked, .goog-toolbar-button-active,
+  .goog-flat-menu-button-hover) {
+  background-color: var(--ef-hover) !important;
+  border-color: var(--ef-outline-var) !important;
+}
+/* the toolbar search + zoom are borderless icon/text controls in native Slides
+   — keep them transparent, don't box them like form fields (boxing them is the
+   "broken UI" artefact). Their dropdown menus are styled by the menu rules. */
+html:not([data-ef="off"]) :is(.docs-toolbar-zoom-combobox, #zoomSelect,
+  .goog-toolbar-combo-button-outer-box, .goog-toolbar-combo-button-inner-box,
+  .docs-omnibox-input, .docs-omnibox-container, #docs-omnibox-toolbar) {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+/* the Acrobat "Convert to PDF" promo + light-blue quick-action chips */
+html:not([data-ef="off"]) .acrobat-convert-to-pdf-touch-point {
+  background-color: var(--ef-c-high) !important;
+}
+html:not([data-ef="off"]) :is(#scb-quick-actions-menu-button, [class*="quick-actions-menu-button"]) {
+  background-color: var(--ef-blue-c) !important;
+}
+
+/* jfk buttons (Slideshow, Share, dialog actions) */
+html:not([data-ef="off"]) .jfk-button-standard {
+  background-color: var(--ef-c-high) !important;
+  color: var(--ef-fg) !important;
+  border-color: var(--ef-outline-var) !important;
+  box-shadow: none !important;
+}
+html:not([data-ef="off"]) :is(.jfk-button-action, .jfk-button-primary, .jfk-button-clear-outline.jfk-button-action) {
+  background-color: var(--ef-blue) !important;
+  color: var(--ef-on-blue) !important;
+  border-color: transparent !important;
+}
+
+/* menus, dropdowns, dialogs, bubbles, tooltips */
+html:not([data-ef="off"]) :is(.goog-menu, .goog-menu-vertical, .docs-material-menu,
+  .goog-menuitem, .docs-menu-content, .jfk-bubble, .docs-explore-bubble,
+  .modal-dialog, .docs-dialog, .jfk-tooltip, .docs-material-dialog, .apps-menu-button-menu) {
+  background-color: var(--ef-bright) !important;
+  color: var(--ef-fg) !important;
+  border-color: var(--ef-outline-var) !important;
+}
+html:not([data-ef="off"]) :is(.goog-menuitem-highlight, .goog-menuitem-hover,
+  .goog-menuitem-active, .docs-material-menu-button-hover) {
+  background-color: var(--ef-hover) !important;
+}
+html:not([data-ef="off"]) :is(.goog-menuseparator, .docs-menu-separator) {
+  border-color: var(--ef-outline-var) !important;
+}
+html:not([data-ef="off"]) :is(.modal-dialog-title, .docs-dialog-title) {
+  background-color: var(--ef-surface) !important; color: var(--ef-fg) !important;
+}
+
+/* text inputs inside dialogs / bubbles get a real surface (scoped to dialogs so
+   we never re-box the borderless toolbar search, which is also a .jfk-textinput) */
+html:not([data-ef="off"]) :is(.docs-textinput,
+  .modal-dialog .jfk-textinput, .docs-dialog .jfk-textinput, .docs-material-dialog .jfk-textinput,
+  .modal-dialog input[type="text"], .docs-dialog input[type="text"], .punch-link-bubble input) {
+  background-color: var(--ef-bright) !important; color: var(--ef-fg) !important;
+  border-color: var(--ef-outline-var) !important;
+}
+
+/* rulers (blend into the workspace instead of reading as a light strip) */
+html:not([data-ef="off"]) :is(.docs-ruler, #sketchy-horizontal-ruler, .docs-horizontal-ruler,
+  .docs-vertical-ruler, .docs-ruler-background-inner) {
+  background-color: var(--ef-dim) !important;
+  border-color: var(--ef-outline-var) !important;
+}
+html:not([data-ef="off"]) .app-switcher-button-icon-background { background-color: transparent !important; }
+
+/* sprite-image toolbar / menu icons — recolour for dark mode (no-op in light) */
+html:not([data-ef="off"]) :is(.docs-icon-img) { filter: var(--ef-icon-filter); }
+
+/* scrollbars */
+html:not([data-ef="off"]) ::-webkit-scrollbar { width: 12px; height: 12px; }
+html:not([data-ef="off"]) ::-webkit-scrollbar-thumb {
+  background-color: var(--ef-dim); border-radius: 8px;
+  border: 3px solid var(--ef-page); background-clip: padding-box;
+}
+html:not([data-ef="off"]) ::-webkit-scrollbar-track { background-color: var(--ef-page); }

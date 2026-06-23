@@ -1,0 +1,161 @@
+/* Everforest for Claude (claude.ai) — token-level retheme.
+   Claude is a token-driven app: every surface/text/border reads an HSL *component
+   triplet* via hsl(var(--bg-100)), hsl(var(--text-100) / .5), etc. So we don't
+   chase selectors — we just redefine those triplets to Everforest and the whole
+   UI follows. Values below are "H S% L%" (no hsl() wrapper, to keep the alpha
+   forms working). The Settings dialog and other CDS-based surfaces use a parallel
+   full-colour namespace (--cds-* / --surface-*), themed in the second block.
+   The override also reaches nested theme hosts ([data-theme]/[data-mode]) so
+   portals like Settings follow. Mode follows the popup, or the OS on "sync". */
+
+/* ── internal palette — triplets (--ef-*) + full colours (--efc-*) ─────────── */
+html:not([data-ef="off"]) {
+  --ef-s0: 45 100% 97%; --ef-s1: 44 87% 94%; --ef-s2: 51 55% 90%;
+  --ef-s3: 51 46% 88%; --ef-s4: 51 34% 85%; --ef-s5: 50 29% 83%;
+  --ef-t0: 202 11% 40%; --ef-t1: 202 10% 49%; --ef-t2: 116 7% 54%;
+  --ef-bd: 50 29% 83%;
+  --ef-accent: 201 55% 50%; --ef-accent-fade: 120 19% 93%;
+  --ef-brand: 15 63% 60%; --ef-on: 0 0% 100%;  /* Claude's own coral #d97757 — keep the logo/brand orange, not Everforest green */
+  --ef-danger: 1 92% 65%; --ef-danger-fade: 15 90% 92%;
+  --ef-success: 68 99% 32%; --ef-success-fade: 62 53% 88%;
+  --ef-warning: 43 100% 44%; --ef-warning-fade: 43 82% 89%;
+  --ef-pro: 319 65% 64%; --ef-pro-fade: 15 71% 93%;
+  --efc-s0: #efebd4; --efc-s1: #fdf6e3; --efc-s2: #fffbef; --efc-s3: #fffbef;
+  --efc-panel: #fdf6e3; --efc-popover: #fffbef; --efc-page: #efebd4;
+  --efc-tprimary: #5c6a72; --efc-tsec: #708089; --efc-tmuted: #829181;
+  --efc-border: rgba(92,106,114,.18); --efc-border-strong: rgba(92,106,114,.30);
+  --efc-fill-control: rgba(92,106,114,.10); --efc-neutral: rgba(92,106,114,.06); --efc-neutral-hover: rgba(92,106,114,.10);
+  --efc-fill-primary: #8da101; --efc-fill-secondary: rgba(92,106,114,.10);
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --ef-s0: 199 13% 24%; --ef-s1: 206 13% 20%; --ef-s2: 205 13% 18%;
+  --ef-s3: 202 14% 16%; --ef-s4: 202 12% 13%; --ef-s5: 202 12% 13%;
+  --ef-t0: 41 32% 75%; --ef-t1: 135 7% 64%; --ef-t2: 138 6% 55%;
+  --ef-bd: 204 9% 34%;
+  --ef-accent: 172 31% 62%; --ef-accent-fade: 201 23% 30%;
+  --ef-brand: 16 66% 66%; --ef-on: 206 13% 20%;  /* Claude coral (lightened for dark) */
+  --ef-danger: 359 68% 70%; --ef-danger-fade: 342 12% 28%;
+  --ef-success: 83 34% 63%; --ef-success-fade: 141 10% 29%;
+  --ef-warning: 40 56% 68%; --ef-warning-fade: 54 7% 28%;
+  --ef-pro: 331 43% 72%; --ef-pro-fade: 276 7% 29%;
+  --efc-s0: #232a2e; --efc-s1: #2d353b; --efc-s2: #343f44; --efc-s3: #3d484d;
+  --efc-panel: #2d353b; --efc-popover: #3d484d; --efc-page: #232a2e;
+  --efc-tprimary: #d3c6aa; --efc-tsec: #9da9a0; --efc-tmuted: #859289;
+  --efc-border: rgba(211,198,170,.16); --efc-border-strong: rgba(211,198,170,.26);
+  --efc-fill-control: rgba(211,198,170,.10); --efc-neutral: rgba(211,198,170,.06); --efc-neutral-hover: rgba(211,198,170,.10);
+  --efc-fill-primary: #a7c080; --efc-fill-secondary: rgba(211,198,170,.10);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --ef-s0: 199 13% 24%; --ef-s1: 206 13% 20%; --ef-s2: 205 13% 18%;
+    --ef-s3: 202 14% 16%; --ef-s4: 202 12% 13%; --ef-s5: 202 12% 13%;
+    --ef-t0: 41 32% 75%; --ef-t1: 135 7% 64%; --ef-t2: 138 6% 55%;
+    --ef-bd: 204 9% 34%;
+    --ef-accent: 172 31% 62%; --ef-accent-fade: 201 23% 30%;
+    --ef-brand: 16 66% 66%; --ef-on: 206 13% 20%;  /* Claude coral (lightened for dark) */
+    --ef-danger: 359 68% 70%; --ef-danger-fade: 342 12% 28%;
+    --ef-success: 83 34% 63%; --ef-success-fade: 141 10% 29%;
+    --ef-warning: 40 56% 68%; --ef-warning-fade: 54 7% 28%;
+    --ef-pro: 331 43% 72%; --ef-pro-fade: 276 7% 29%;
+    --efc-s0: #232a2e; --efc-s1: #2d353b; --efc-s2: #343f44; --efc-s3: #3d484d;
+    --efc-panel: #2d353b; --efc-popover: #3d484d; --efc-page: #232a2e;
+    --efc-tprimary: #d3c6aa; --efc-tsec: #9da9a0; --efc-tmuted: #859289;
+    --efc-border: rgba(211,198,170,.16); --efc-border-strong: rgba(211,198,170,.26);
+    --efc-fill-control: rgba(211,198,170,.10); --efc-neutral: rgba(211,198,170,.06); --efc-neutral-hover: rgba(211,198,170,.10);
+    --efc-fill-primary: #a7c080; --efc-fill-secondary: rgba(211,198,170,.10);
+    color-scheme: dark;
+  }
+}
+
+/* ── map Claude's design tokens (also inside nested theme hosts) ───────────── */
+html:not([data-ef="off"]),
+html:not([data-ef="off"]) :is([data-theme], [data-mode]) {
+  /* background ladder (000 = most elevated → 500 = most sunken) */
+  --bg-000: var(--ef-s0) !important; --bg-100: var(--ef-s1) !important;
+  --bg-200: var(--ef-s2) !important; --bg-300: var(--ef-s3) !important;
+  --bg-400: var(--ef-s4) !important; --bg-500: var(--ef-s5) !important;
+  /* text ladder (000/100 primary → 400/500 muted) */
+  --text-000: var(--ef-t0) !important; --text-100: var(--ef-t0) !important;
+  --text-200: var(--ef-t1) !important; --text-300: var(--ef-t1) !important;
+  --text-400: var(--ef-t2) !important; --text-500: var(--ef-t2) !important;
+  /* borders */
+  --border-100: var(--ef-bd) !important; --border-200: var(--ef-bd) !important;
+  --border-300: var(--ef-bd) !important; --border-400: var(--ef-bd) !important;
+  /* blue accent — links, focus, info */
+  --accent-000: var(--ef-accent) !important; --accent-100: var(--ef-accent) !important;
+  --accent-200: var(--ef-accent) !important; --accent-900: var(--ef-accent-fade) !important;
+  /* brand — primary call-to-action (Everforest green) */
+  --brand-000: var(--ef-brand) !important; --brand-100: var(--ef-brand) !important;
+  --brand-200: var(--ef-brand) !important; --accent-brand: var(--ef-brand) !important;
+  --oncolor-100: var(--ef-on) !important;
+  /* semantic */
+  --danger-000: var(--ef-danger) !important; --danger-100: var(--ef-danger) !important;
+  --danger-200: var(--ef-danger) !important; --danger-900: var(--ef-danger-fade) !important;
+  --success-000: var(--ef-success) !important; --success-100: var(--ef-success) !important;
+  --success-200: var(--ef-success) !important; --success-900: var(--ef-success-fade) !important;
+  --warning-000: var(--ef-warning) !important; --warning-100: var(--ef-warning) !important;
+  --warning-200: var(--ef-warning) !important; --warning-900: var(--ef-warning-fade) !important;
+  /* "pro" purple accent */
+  --accent-pro-000: var(--ef-pro) !important; --accent-pro-100: var(--ef-pro) !important;
+  --accent-pro-200: var(--ef-pro) !important; --accent-pro-900: var(--ef-pro-fade) !important;
+  /* illustration highlights */
+  --pictogram-100: var(--ef-s5) !important; --pictogram-200: var(--ef-s4) !important;
+  --pictogram-300: var(--ef-s0) !important; --pictogram-400: var(--ef-s2) !important;
+
+  /* CDS / surface namespace (Settings dialog, menus, popovers) */
+  --cds-surface-0: var(--efc-s0) !important; --cds-surface-1: var(--efc-s1) !important;
+  --cds-surface-2: var(--efc-s2) !important; --cds-surface-3: var(--efc-s3) !important;
+  --cds-surface-panel: var(--efc-panel) !important; --cds-surface-popover: var(--efc-popover) !important;
+  --cds-page-bg: var(--efc-page) !important;
+  --surface-primary: var(--efc-s2) !important; --surface-panel: var(--efc-panel) !important; --surface-popover: var(--efc-popover) !important;
+  --cds-text-primary: var(--efc-tprimary) !important; --cds-text-secondary: var(--efc-tsec) !important; --cds-text-muted: var(--efc-tmuted) !important;
+  --cds-border: var(--efc-border) !important; --cds-border-strong: var(--efc-border-strong) !important;
+  --cds-fill-control: var(--efc-fill-control) !important; --cds-bg-neutral: var(--efc-neutral) !important; --cds-bg-neutral-hover: var(--efc-neutral-hover) !important;
+  --cds-fill-primary: var(--efc-fill-primary) !important; --cds-fill-secondary: var(--efc-fill-secondary) !important;
+}
+
+/* claude.ai/code runs inside a "dframe" desktop shell with its OWN --df-* token
+   layer (separate from the --bg-*/--cds-* layers above), declared on .dframe-root.
+   Redefine them there so the /code sidebar, page canvas and session cards follow
+   Everforest too. The greeting sunburst there is already Claude's coral. */
+html:not([data-ef="off"]) :is(.dframe-root, .dframe-sidebar, .dframe-content) {
+  --df-bg-page: hsl(var(--ef-s1)) !important;
+  --df-bg-page-hsl: var(--ef-s1) !important;
+  --df-sidebar-bg: hsl(var(--ef-s2)) !important;
+  --df-bg-sidebar: hsl(var(--ef-s2)) !important;
+  --df-surface-primary: var(--ef-s0) !important;
+  --df-hover: var(--efc-neutral-hover) !important;
+}
+
+/* claude.ai/code's newer pages (Routines, Dispatch, …) use yet a THIRD design
+   system — "epitaxy" — whose tokens (--surface-*/--fill-*/--border-*) are declared
+   on .epitaxy-root, distinct from the --bg-*/--cds-*/--df-* layers. Map its opaque
+   surfaces, cards and primary button onto Everforest (mode-aware via --efc-*/--ef-*).
+   Its translucent overlay fills (hsl(0 0% 4% / .04) etc.) read fine on either mode,
+   so we leave them; the numeric --text-000..500 are already mapped above. */
+html:not([data-ef="off"]) .epitaxy-root {
+  --surface-primary: var(--efc-s1) !important;
+  --surface-panel: var(--efc-panel) !important;
+  --surface-panel-elevated: var(--efc-s2) !important;
+  --surface-popover: var(--efc-popover) !important;
+  --surface-prompt-focus-hover: var(--efc-s2) !important;
+  --surface-toast: var(--efc-popover) !important;
+  --fill-contained-default: var(--efc-s2) !important;
+  --fill-primary-default: hsl(var(--ef-brand)) !important;
+  --fill-primary-hover: hsl(var(--ef-brand)) !important;
+  --text-assistant-primary: var(--efc-tprimary) !important;
+  --text-assistant-secondary: var(--efc-tsec) !important;
+  --border-default: var(--efc-border) !important;
+}
+
+/* search & input fields — keep them clearly delineated. Claude's field wrappers
+   sit on a translucent-white fill with a 0-width border, which washes out and
+   loses its edge on the dark theme; give them an inset fill + a real border. */
+html:not([data-ef="off"]) :is(div, label, fieldset):has(> .cds-input),
+html:not([data-ef="off"]) :is(div, label, fieldset):has(> svg.cds-input),
+html:not([data-ef="off"]) .cds-input:is(textarea) {
+  background-color: hsl(var(--ef-s3)) !important;
+  border: 1px solid var(--efc-border-strong) !important;
+}

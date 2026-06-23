@@ -1,0 +1,119 @@
+/* Everforest for Gmail (mail.google.com) — best-effort, class/role-targeted.
+   Gmail predates design tokens: surfaces are painted by hashed classes + inline
+   styles over a table layout, so this is structural and fragile by nature. We
+   repaint the shell (nav, list, toolbars, reading pane) to Everforest and leave
+   the actual email HTML alone — in dark mode the message body is kept on a light
+   card so emails stay readable. Mode follows the popup, or the OS on "sync". */
+
+html:not([data-ef="off"]) {
+  --ef-page: #efebd4; --ef-panel: #fdf6e3; --ef-elev: #fffbef;
+  --ef-row-read: #fdf6e3; --ef-row-unread: #fffbef; --ef-hover: #efebd4; --ef-selected: #e9f0e9;
+  --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-border: #e0dcc7;
+  --ef-blue: #3a94c5; --ef-green: #8da101; --ef-on-accent: #2d353b;
+  --ef-search: #efebd4;
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --ef-page: #1e2326; --ef-panel: #2d353b; --ef-elev: #343f44;
+  --ef-row-read: #2d353b; --ef-row-unread: #343f44; --ef-hover: #3d484d; --ef-selected: #3a515d;
+  --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-border: #4f585e;
+  --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
+  --ef-search: #343f44;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --ef-page: #1e2326; --ef-panel: #2d353b; --ef-elev: #343f44;
+    --ef-row-read: #2d353b; --ef-row-unread: #343f44; --ef-hover: #3d484d; --ef-selected: #3a515d;
+    --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-border: #4f585e;
+    --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
+    --ef-search: #343f44;
+    color-scheme: dark;
+  }
+}
+
+/* ── app shell: page + panels ─────────────────────────────────────────────── */
+html:not([data-ef="off"]) body,
+html:not([data-ef="off"]) .wl,
+html:not([data-ef="off"]) .aeN,
+html:not([data-ef="off"]) .bkK,
+html:not([data-ef="off"]) .ar5,
+html:not([data-ef="off"]) .bAw,
+html:not([data-ef="off"]) .brC-aT5-aOt-Jw,
+html:not([data-ef="off"]) [role="complementary"],
+html:not([data-ef="off"]) div[role="navigation"] { background-color: var(--ef-page) !important; }
+
+html:not([data-ef="off"]) .Tm,
+html:not([data-ef="off"]) .nH,
+html:not([data-ef="off"]) .ar4,
+html:not([data-ef="off"]) .aeF,
+html:not([data-ef="off"]) .G-atb,
+html:not([data-ef="off"]) [role="main"],
+html:not([data-ef="off"]) [gh="tl"] { background-color: var(--ef-panel) !important; }
+
+/* dropdowns, dialogs, hovercards, compose window */
+html:not([data-ef="off"]) .J-M,
+html:not([data-ef="off"]) .nH.aHU,
+html:not([data-ef="off"]) .b7.J-M,
+html:not([data-ef="off"]) .aS3,
+html:not([data-ef="off"]) .M9 { background-color: var(--ef-elev) !important; }
+
+/* ── search bar ───────────────────────────────────────────────────────────── */
+html:not([data-ef="off"]) form[role="search"],
+html:not([data-ef="off"]) .gssb_e,
+html:not([data-ef="off"]) .aRp,
+html:not([data-ef="off"]) .gb_kd,
+html:not([data-ef="off"]) .Xr { background-color: var(--ef-search) !important; }
+
+/* ── message list rows ────────────────────────────────────────────────────── */
+html:not([data-ef="off"]) .zA.yO { background-color: var(--ef-row-read) !important; }
+html:not([data-ef="off"]) .zA.zE { background-color: var(--ef-row-unread) !important; }
+html:not([data-ef="off"]) .zA:hover { background-color: var(--ef-hover) !important; box-shadow: none !important; }
+html:not([data-ef="off"]) .zA.x7,
+html:not([data-ef="off"]) .zA.aps { background-color: var(--ef-selected) !important; }
+
+/* ── text ─────────────────────────────────────────────────────────────────── */
+html:not([data-ef="off"]) body,
+html:not([data-ef="off"]) .nH,
+html:not([data-ef="off"]) .bog, html:not([data-ef="off"]) .y6,
+html:not([data-ef="off"]) .yW span, html:not([data-ef="off"]) .zF,
+html:not([data-ef="off"]) .bqe, html:not([data-ef="off"]) .qu .gD,
+html:not([data-ef="off"]) .hP, html:not([data-ef="off"]) .ha h2 { color: var(--ef-fg) !important; }
+html:not([data-ef="off"]) .y2, html:not([data-ef="off"]) .xW span,
+html:not([data-ef="off"]) .xY span, html:not([data-ef="off"]) .a4W .y2,
+html:not([data-ef="off"]) .aYS, html:not([data-ef="off"]) .gD .go { color: var(--ef-fg2) !important; }
+
+/* ── compose button → Everforest green ────────────────────────────────────── */
+html:not([data-ef="off"]) .T-I.T-I-KE.L3,
+html:not([data-ef="off"]) .z0 > .L3 { background-color: var(--ef-green) !important; color: var(--ef-on-accent) !important; box-shadow: none !important; }
+html:not([data-ef="off"]) .T-I.T-I-KE.L3 *,
+html:not([data-ef="off"]) .z0 > .L3 * { color: var(--ef-on-accent) !important; }
+
+/* selected folder / label in the left nav */
+html:not([data-ef="off"]) .TO.nZ .TN,
+html:not([data-ef="off"]) .TO.aiq .TN,
+html:not([data-ef="off"]) .aim.b3O .TO { background-color: var(--ef-selected) !important; }
+html:not([data-ef="off"]) .TO:hover .TN { background-color: var(--ef-hover) !important; }
+
+/* links / accents */
+html:not([data-ef="off"]) [role="main"] a span[dir],
+html:not([data-ef="off"]) .ar a, html:not([data-ef="off"]) a.gZ { color: var(--ef-blue) !important; }
+
+/* form fields (Settings, filters, search dialogs) — keep them legible */
+html:not([data-ef="off"]) :is(input[type="text"], input[type="search"], input[type="email"],
+  input[type="url"], input[type="number"], textarea, select):not(.gb_kd):not([class*="gb_"]) {
+  background-color: var(--ef-elev) !important; color: var(--ef-fg) !important;
+}
+
+/* ── keep the actual email readable ───────────────────────────────────────── */
+/* light mode: emails sit on the light panel untouched. dark mode: float them on
+   a light card so HTML mails (which assume a light background) don't break. */
+html:not([data-ef="off"])[data-ef-mode="dark"] :is(.a3s, .ii.gt, .gmail_quote, .adn .gs),
+html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(.a3s, .ii.gt, .gmail_quote, .adn .gs) {
+  background-color: #fdf6e3 !important;
+}
+@media (prefers-color-scheme: light) {
+  html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(.a3s, .ii.gt, .gmail_quote, .adn .gs) {
+    background-color: transparent !important;
+  }
+}

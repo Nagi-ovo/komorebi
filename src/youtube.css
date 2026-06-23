@@ -1,0 +1,86 @@
+/* Everforest for YouTube (youtube.com) — token-level retheme.
+   YouTube paints from --yt-sys-color-baseline--* (its Material-You layer) with a
+   legacy --yt-spec-* / --yt-deprecated-* set underneath, flipped by html[dark].
+   We redefine those tokens to Everforest so the whole site follows. The iconic
+   brand red (logo) is left alone. Mode follows the popup, or the OS on "sync". */
+
+html:not([data-ef="off"]) {
+  --ef-s1: #fdf6e3; --ef-s2: #fffbef; --ef-s3: #f4f0d9;
+  --ef-hover: #efebd4; --ef-tint: #e9f0e9;
+  --ef-fg1: #5c6a72; --ef-fg2: #708089; --ef-fg3: #939f91;
+  --ef-stroke: #e0dcc7; --ef-link: #3a94c5; --ef-link-inv: #7fbbb3; --ef-red: #f85552;
+  --ef-inv-bg: #2d353b; --ef-inv-hover: #3d484d; --ef-inv-fg: #fdf6e3;
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --ef-s1: #2d353b; --ef-s2: #343f44; --ef-s3: #272e33;
+  --ef-hover: #3d484d; --ef-tint: #3a515d;
+  --ef-fg1: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #7a8478;
+  --ef-stroke: #4f585e; --ef-link: #7fbbb3; --ef-link-inv: #3a94c5; --ef-red: #e67e80;
+  --ef-inv-bg: #fdf6e3; --ef-inv-hover: #efebd4; --ef-inv-fg: #2d353b;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --ef-s1: #2d353b; --ef-s2: #343f44; --ef-s3: #272e33;
+    --ef-hover: #3d484d; --ef-tint: #3a515d;
+    --ef-fg1: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #7a8478;
+    --ef-stroke: #4f585e; --ef-link: #7fbbb3; --ef-link-inv: #3a94c5; --ef-red: #e67e80;
+    --ef-inv-bg: #fdf6e3; --ef-inv-hover: #efebd4; --ef-inv-fg: #2d353b;
+    color-scheme: dark;
+  }
+}
+
+html:not([data-ef="off"]),
+html:not([data-ef="off"]) ytd-app,
+html:not([data-ef="off"]) :root {
+  /* Material-You baseline layer */
+  --yt-sys-color-baseline--base-background: var(--ef-s1) !important;
+  --yt-sys-color-baseline--raised-background: var(--ef-s2) !important;
+  --yt-sys-color-baseline--menu-background: var(--ef-s2) !important;
+  --yt-sys-color-baseline--inverted-background: var(--ef-inv-bg) !important;
+  --yt-sys-color-baseline--inverted-background-hover: var(--ef-inv-hover) !important;
+  --yt-sys-color-baseline--text-primary: var(--ef-fg1) !important;
+  --yt-sys-color-baseline--text-secondary: var(--ef-fg2) !important;
+  --yt-sys-color-baseline--text-disabled: var(--ef-fg3) !important;
+  --yt-sys-color-baseline--text-primary-inverse: var(--ef-inv-fg) !important;
+  --yt-sys-color-baseline--outline-opaque: var(--ef-stroke) !important;
+  --yt-sys-color-baseline--call-to-action: var(--ef-link) !important;
+  --yt-sys-color-baseline--call-to-action-inverse: var(--ef-link-inv) !important;
+  --yt-sys-color-baseline--suggested-action: var(--ef-tint) !important;
+  --yt-sys-color-baseline--error-indicator: var(--ef-red) !important;
+  --yt-sys-color-baseline--text-error: var(--ef-red) !important;
+  --yt-sys-color-baseline--wordmark-text: var(--ef-fg1) !important;
+
+  /* legacy --yt-spec-* */
+  --yt-spec-base-background: var(--ef-s1) !important;
+  --yt-spec-raised-background: var(--ef-s2) !important;
+  --yt-spec-menu-background: var(--ef-s2) !important;
+  --yt-spec-general-background-a: var(--ef-s1) !important;
+  --yt-spec-general-background-b: var(--ef-s2) !important;
+  --yt-spec-general-background-c: var(--ef-s3) !important;
+  --yt-spec-text-primary: var(--ef-fg1) !important;
+  --yt-spec-text-secondary: var(--ef-fg2) !important;
+  --yt-spec-text-disabled: var(--ef-fg3) !important;
+  --yt-spec-icon-active-other: var(--ef-fg1) !important;
+  --yt-spec-icon-inactive: var(--ef-fg3) !important;
+  --yt-spec-call-to-action: var(--ef-link) !important;
+  --yt-spec-brand-link-text: var(--ef-link) !important;
+  --yt-spec-badge-chip-background: var(--ef-s3) !important;
+  --yt-spec-outline: var(--ef-stroke) !important;
+  --yt-spec-inverted-background: var(--ef-inv-bg) !important;
+
+  /* deprecated aliases */
+  --yt-deprecated-general-background-a: var(--ef-s1) !important;
+  --yt-deprecated-general-background-b: var(--ef-s2) !important;
+  --yt-deprecated-general-background-c: var(--ef-s3) !important;
+}
+
+/* YouTube paints the root canvas with a hardcoded !important colour (not the
+   token), so repaint html + ytd-app explicitly to fill behind everything. */
+html:not([data-ef="off"]),
+html:not([data-ef="off"]) ytd-app { background-color: var(--ef-s1) !important; }
+
+/* feed / history / playlist page headers default to white */
+html:not([data-ef="off"]) div.ytd-tabbed-page-header,
+html:not([data-ef="off"]) .page-header-view-model-wiz { background-color: var(--ef-s1) !important; }

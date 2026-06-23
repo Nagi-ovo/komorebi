@@ -171,6 +171,18 @@ async function build(): Promise<void> {
   await cp(path.join(ROOT, "popup/popup.css"), path.join(DIST, "popup.css"));
   await cp(path.join(ROOT, "src/google.css"), path.join(DIST, "google.css"));
   await cp(path.join(ROOT, "src/x.css"), path.join(DIST, "x.css"));
+  await cp(path.join(ROOT, "src/chatgpt.css"), path.join(DIST, "chatgpt.css"));
+  await cp(path.join(ROOT, "src/claude.css"), path.join(DIST, "claude.css"));
+  await cp(path.join(ROOT, "src/gemini.css"), path.join(DIST, "gemini.css"));
+  await cp(path.join(ROOT, "src/gmail.css"), path.join(DIST, "gmail.css"));
+  await cp(path.join(ROOT, "src/drive.css"), path.join(DIST, "drive.css"));
+  await cp(path.join(ROOT, "src/docs.css"), path.join(DIST, "docs.css"));
+  await cp(path.join(ROOT, "src/cloudflare.css"), path.join(DIST, "cloudflare.css"));
+  await cp(path.join(ROOT, "src/outlook.css"), path.join(DIST, "outlook.css"));
+  await cp(path.join(ROOT, "src/bilibili.css"), path.join(DIST, "bilibili.css"));
+  await cp(path.join(ROOT, "src/youtube.css"), path.join(DIST, "youtube.css"));
+  await cp(path.join(ROOT, "src/arxiv.css"), path.join(DIST, "arxiv.css"));
+  await cp(path.join(ROOT, "src/grok.css"), path.join(DIST, "grok.css"));
   if (existsSync(path.join(ROOT, "icons"))) {
     await cp(path.join(ROOT, "icons"), path.join(DIST, "icons"), {
       recursive: true,

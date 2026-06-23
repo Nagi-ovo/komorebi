@@ -22,6 +22,18 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   }
 }
 
+/* startup shell */
+html:not([data-ef="off"]) #react-root,
+html:not([data-ef="off"]) #react-root > div:first-child,
+html:not([data-ef="off"]) #placeholder {
+  background-color: var(--ef-bg) !important;
+}
+html:not([data-ef="off"]) #placeholder svg,
+html:not([data-ef="off"]) body > svg[id^="loading-x-anim-"] {
+  color: var(--ef-green) !important;
+  fill: currentColor !important;
+}
+
 /* surfaces — repaint the columns + their nested cards to the Everforest bg */
 html:not([data-ef="off"]) body,
 html:not([data-ef="off"]) header[role="banner"],
@@ -44,6 +56,12 @@ html:not([data-ef="off"]) [data-testid="tweetPhoto"] *,
 html:not([data-ef="off"]) [data-testid="card.wrapper"] img,
 html:not([data-ef="off"]) video { background-color: transparent !important; }
 html:not([data-ef="off"]) [data-testid="card.wrapper"] {
+  background-color: var(--ef-bg1) !important;
+  border-color: var(--ef-border) !important;
+}
+/* empty states (protected account "These posts are protected", no-posts, etc.)
+   render as a white card — flatten it to the Everforest surface. */
+html:not([data-ef="off"]) [data-testid="emptyState"] {
   background-color: var(--ef-bg1) !important;
   border-color: var(--ef-border) !important;
 }

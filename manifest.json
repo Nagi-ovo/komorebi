@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Komorebi",
-  "version": "0.4.1",
-  "description": "Komorebi — a calm theme for GitHub, Google Search & X, based on the Everforest palette. Light & dark.",
+  "version": "0.7.0",
+  "description": "Komorebi — a calm Everforest theme for the web: AI chats, mail, GitHub, Google, Drive, Docs, Cloudflare, YouTube, Bilibili, arXiv & more. Light & dark.",
   "author": "Jesse Zhang",
   "homepage_url": "https://github.com/Nagi-ovo/komorebi",
   "icons": {
@@ -28,6 +28,83 @@
     {
       "matches": ["https://x.com/*", "https://twitter.com/*", "https://mobile.x.com/*"],
       "css": ["x.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://chatgpt.com/*", "https://chat.openai.com/*"],
+      "css": ["chatgpt.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://claude.ai/*"],
+      "css": ["claude.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "css": ["gemini.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "css": ["gmail.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://drive.google.com/*"],
+      "css": ["drive.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://docs.google.com/*"],
+      "css": ["docs.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://dash.cloudflare.com/*"],
+      "css": ["cloudflare.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://outlook.cloud.microsoft/*",
+        "https://outlook.office.com/*",
+        "https://outlook.office365.com/*",
+        "https://outlook.live.com/*"
+      ],
+      "css": ["outlook.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.bilibili.com/*", "https://bilibili.com/*"],
+      "css": ["bilibili.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
+      "css": ["youtube.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://arxiv.org/*", "https://www.arxiv.org/*", "https://info.arxiv.org/*"],
+      "css": ["arxiv.css"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://grok.com/*", "https://www.grok.com/*"],
+      "css": ["grok.css"],
       "js": ["content.js"],
       "run_at": "document_start"
     }

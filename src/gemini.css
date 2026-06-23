@@ -1,0 +1,180 @@
+/* Everforest for Gemini (gemini.google.com) — token-level retheme.
+   Gemini is a Material-3 Angular app: surfaces read --gem-sys-color--* tokens,
+   with a pile of --bard-color-* / --mat-sidenav-* hardcodes on top. Those tokens
+   live on <body> (the theme-host) and flip via body.light-theme / .dark-theme, so
+   we redefine them on body/.theme-host with enough weight to win. Mode follows the
+   popup, or the OS on "sync". */
+
+/* ── internal palette + token map, scoped to the theme host ───────────────── */
+html:not([data-ef="off"]) :is(body, .theme-host, .lm-component-theme) {
+  --ef-surface: #fdf6e3; --ef-bright: #fffbef; --ef-dim: #e0dcc7;
+  --ef-c-lowest: #fffbef; --ef-c-low: #fdf6e3; --ef-c: #f4f0d9;
+  --ef-c-high: #efebd4; --ef-c-highest: #e6e2cc; --ef-variant: #e6e2cc;
+  --ef-sidebar: #efebd4; --ef-sidebar-hover: #e6e2cc;
+  --ef-on: #5c6a72; --ef-on-var: #708089; --ef-on-low: #829181;
+  --ef-outline: #939f91; --ef-outline-var: #e0dcc7;
+  --ef-primary: #3a94c5; --ef-on-primary: #fffbef;
+  --ef-primary-c: #e9f0e9; --ef-on-primary-c: #3a94c5;
+  --ef-tertiary: #8da101; --ef-tertiary-c: #f0f1d2;
+  --ef-error: #f85552; --ef-error-c: #fde3da; --ef-on-error: #fffbef;
+  --ef-inv-surface: #2d353b; --ef-inv-on: #fdf6e3; --ef-inv-primary: #7fbbb3;
+  --ef-fixed-dim: #3a94c5; --ef-purple: #df69ba; --ef-purple-c: #fae8e2;
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] :is(body, .theme-host, .lm-component-theme) {
+  --ef-surface: #2d353b; --ef-bright: #343f44; --ef-dim: #232a2e;
+  --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
+  --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-variant: #3d484d;
+  --ef-sidebar: #232a2e; --ef-sidebar-hover: #343f44;
+  --ef-on: #d3c6aa; --ef-on-var: #9da9a0; --ef-on-low: #859289;
+  --ef-outline: #859289; --ef-outline-var: #4f585e;
+  --ef-primary: #7fbbb3; --ef-on-primary: #2d353b;
+  --ef-primary-c: #3a515d; --ef-on-primary-c: #7fbbb3;
+  --ef-tertiary: #a7c080; --ef-tertiary-c: #425047;
+  --ef-error: #e67e80; --ef-error-c: #514045; --ef-on-error: #2d353b;
+  --ef-inv-surface: #fdf6e3; --ef-inv-on: #2d353b; --ef-inv-primary: #3a94c5;
+  --ef-fixed-dim: #7fbbb3; --ef-purple: #d699b6; --ef-purple-c: #4a444e;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(body, .theme-host, .lm-component-theme) {
+    --ef-surface: #2d353b; --ef-bright: #343f44; --ef-dim: #232a2e;
+    --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
+    --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-variant: #3d484d;
+    --ef-sidebar: #232a2e; --ef-sidebar-hover: #343f44;
+    --ef-on: #d3c6aa; --ef-on-var: #9da9a0; --ef-on-low: #859289;
+    --ef-outline: #859289; --ef-outline-var: #4f585e;
+    --ef-primary: #7fbbb3; --ef-on-primary: #2d353b;
+    --ef-primary-c: #3a515d; --ef-on-primary-c: #7fbbb3;
+    --ef-tertiary: #a7c080; --ef-tertiary-c: #425047;
+    --ef-error: #e67e80; --ef-error-c: #514045; --ef-on-error: #2d353b;
+    --ef-inv-surface: #fdf6e3; --ef-inv-on: #2d353b; --ef-inv-primary: #3a94c5;
+    --ef-fixed-dim: #7fbbb3; --ef-purple: #d699b6; --ef-purple-c: #4a444e;
+    color-scheme: dark;
+  }
+}
+
+html:not([data-ef="off"]) :is(body, .theme-host, .lm-component-theme) {
+  /* Material surfaces */
+  --gem-sys-color--surface: var(--ef-surface) !important;
+  --gem-sys-color--surface-bright: var(--ef-bright) !important;
+  --gem-sys-color--surface-dim: var(--ef-dim) !important;
+  --gem-sys-color--surface-container-lowest: var(--ef-c-lowest) !important;
+  --gem-sys-color--surface-container-low: var(--ef-c-low) !important;
+  --gem-sys-color--surface-container: var(--ef-c) !important;
+  --gem-sys-color--surface-container-high: var(--ef-c-high) !important;
+  --gem-sys-color--surface-container-highest: var(--ef-c-highest) !important;
+  --gem-sys-color--surface-variant: var(--ef-variant) !important;
+  /* text + outline */
+  --gem-sys-color--on-surface: var(--ef-on) !important;
+  --gem-sys-color--on-surface-variant: var(--ef-on-var) !important;
+  --gem-sys-color--on-surface-low: var(--ef-on-low) !important;
+  --gem-sys-color--outline: var(--ef-outline) !important;
+  --gem-sys-color--outline-variant: var(--ef-outline-var) !important;
+  --gem-sys-color--outline-low: var(--ef-outline-var) !important;
+  /* primary (blue) + secondary (blue) */
+  --gem-sys-color--primary: var(--ef-primary) !important;
+  --gem-sys-color--on-primary: var(--ef-on-primary) !important;
+  --gem-sys-color--primary-container: var(--ef-primary-c) !important;
+  --gem-sys-color--on-primary-container: var(--ef-on-primary-c) !important;
+  --gem-sys-color--secondary: var(--ef-primary) !important;
+  --gem-sys-color--secondary-container: var(--ef-primary-c) !important;
+  --gem-sys-color--on-secondary-container: var(--ef-on-primary-c) !important;
+  /* tertiary (green) */
+  --gem-sys-color--tertiary: var(--ef-tertiary) !important;
+  --gem-sys-color--tertiary-container: var(--ef-tertiary-c) !important;
+  --gem-sys-color--on-tertiary-container: var(--ef-tertiary) !important;
+  /* error (red) */
+  --gem-sys-color--error: var(--ef-error) !important;
+  --gem-sys-color--error-container: var(--ef-error-c) !important;
+  --gem-sys-color--on-error: var(--ef-on-error) !important;
+  /* inverse (tooltips) + fixed accents */
+  --gem-sys-color--inverse-surface: var(--ef-inv-surface) !important;
+  --gem-sys-color--inverse-on-surface: var(--ef-inv-on) !important;
+  --gem-sys-color--inverse-primary: var(--ef-inv-primary) !important;
+  --gem-sys-color--primary-fixed-dim: var(--ef-fixed-dim) !important;
+  --gem-sys-color--secondary-fixed-dim: var(--ef-fixed-dim) !important;
+
+  /* bard / mat hardcoded surfaces */
+  --bard-color-sidenav-background-desktop: var(--ef-sidebar) !important;
+  --bard-color-sidenav-background-mobile: var(--ef-sidebar) !important;
+  --bard-color-synthetic--chat-window-surface: var(--ef-surface) !important;
+  --bard-color-synthetic--chat-window-surface-container: var(--ef-bright) !important;
+  --bard-color-synthetic--chat-window-surface-container-high: var(--ef-bright) !important;
+  --bard-color-synthetic--chat-window-surface-container-highest: var(--ef-bright) !important;
+  --bard-color-synthetic--mat-card-background: var(--ef-c-high) !important;
+  --bard-color-response-container-flipped-background: var(--ef-c-high) !important;
+  --bard-color-new-conversation-button: var(--ef-c-highest) !important;
+  --bard-color-on-new-conversation-button: var(--ef-on) !important;
+  --bard-color-onhover-conversation-metadata-button-v2: var(--ef-c-highest) !important;
+  --bard-color-neutral-90: var(--ef-variant) !important;
+  --bard-color-neutral-95: var(--ef-c) !important;
+  --bard-color-neutral-96: var(--ef-c-low) !important;
+  --bard-color-footer-background: var(--ef-surface) !important;
+  --bard-color-remy-surface: var(--ef-surface) !important;
+  --bard-color-surface-dim-tmp: var(--ef-dim) !important;
+  --bard-color-mode-switcher-container: var(--ef-c) !important;
+  --bard-color-mode-switcher-slider: var(--ef-bright) !important;
+  --bard-color-zero-state-prompt-chip-background: var(--ef-primary-c) !important;
+  --bard-color-zero-state-prompt-chip-text: var(--ef-on-primary-c) !important;
+  --bard-color-code-chip-background: var(--ef-purple-c) !important;
+  --bard-color-code-chip-foreground: var(--ef-purple) !important;
+  --bard-color-draft-chip-background: var(--ef-c-highest) !important;
+  --bard-color-custom-primary-container: var(--ef-primary-c) !important;
+  --bard-color-recitation-background: var(--ef-primary-c) !important;
+  --mat-sidenav-container-background-color: var(--ef-sidebar) !important;
+  --mat-sidenav-content-background-color: var(--ef-surface) !important;
+  --mat-sidenav-container-text-color: var(--ef-on-var) !important;
+  --mat-sidenav-content-text-color: var(--ef-on) !important;
+
+  /* lumi (lm-component-theme) — Gemini's newer token layer */
+  --lumi-sys-color--surface: var(--ef-surface) !important;
+  --lumi-sys-color--surface-background: var(--ef-surface) !important;
+  --lumi-sys-color--surface-bright: var(--ef-bright) !important;
+  --lumi-sys-color--surface-dim: var(--ef-c-high) !important;
+  --lumi-sys-color--surface-accent: var(--ef-primary-c) !important;
+  --lumi-sys-color--on-surface: var(--ef-on) !important;
+  --lumi-sys-color--on-surface-variant: var(--ef-on-var) !important;
+  --lumi-sys-color--error: var(--ef-error) !important;
+  --lumi-sys-color--error-container: var(--ef-error-c) !important;
+  --lumi-sys-color--on-error-container: var(--ef-error) !important;
+  --lumi-sys-color--positive: var(--ef-tertiary) !important;
+  --lumi-sys-color--positive-container: var(--ef-tertiary-c) !important;
+  --lumi-sys-color--on-positive-container: var(--ef-tertiary) !important;
+  --lumi-sys-color-acc-color--accent: var(--ef-primary-c) !important;
+  --lumi-sys-color-acc-color--accent-container: var(--ef-primary-c) !important;
+  --lumi-sys-color-acc-color--accent-fixed: var(--ef-primary) !important;
+  /* code blocks stay on a fixed dark Everforest surface in both modes */
+  --lumi-sys-color--code-background: #272e33 !important;
+  --lumi-sys-color--code-primary-text: #d3c6aa !important;
+  --lumi-sys-color--code-blue-text: #7fbbb3 !important;
+  --lumi-sys-color--code-green-text: #a7c080 !important;
+  --lumi-sys-color--code-red-text: #e67e80 !important;
+  --lumi-sys-color--code-yellow-text: #dbbc7f !important;
+  --lumi-sys-color--code-purple-text: #d699b6 !important;
+  --lumi-sys-color--code-pink-text: #d699b6 !important;
+  --lumi-sys-color--code-grey-text: #859289 !important;
+}
+
+/* ── code blocks ──────────────────────────────────────────────────────────
+   Gemini's "luminous" code block ships a fixed light Catppuccin theme (it
+   re-declares --lumi-sys-color--code-background locally), which clashes in dark
+   mode. Pin it to a dark Everforest surface and recolour the highlight.js spans
+   to the Everforest syntax palette — readable, and consistent in both modes. */
+html:not([data-ef="off"]) :is(.formatted-code-block-internal-container, .code-block pre, code-block .code-container) {
+  background-color: #272e33 !important;
+}
+html:not([data-ef="off"]) :is(code-block .code-block-decoration, .code-block .header, .code-block .header-formatted) {
+  background-color: #2d353b !important;
+}
+html:not([data-ef="off"]) :is(.code-block code, .formatted-code-block-internal-container) { color: #d3c6aa !important; }
+html:not([data-ef="off"]) :is(.hljs-comment, .hljs-quote) { color: #7a8478 !important; font-style: italic; }
+html:not([data-ef="off"]) :is(.hljs-keyword, .hljs-selector-tag, .hljs-built_in, .hljs-literal, .hljs-doctag) { color: #e67e80 !important; }
+html:not([data-ef="off"]) :is(.hljs-type, .hljs-class .hljs-title, .hljs-tag, .hljs-attribute) { color: #dbbc7f !important; }
+html:not([data-ef="off"]) :is(.hljs-string, .hljs-attr, .hljs-regexp, .hljs-meta-string, .hljs-addition) { color: #a7c080 !important; }
+html:not([data-ef="off"]) :is(.hljs-number, .hljs-symbol, .hljs-meta, .hljs-link) { color: #d699b6 !important; }
+html:not([data-ef="off"]) :is(.hljs-function .hljs-title, .hljs-title, .hljs-section, .hljs-name, .hljs-selector-id) { color: #83c092 !important; }
+html:not([data-ef="off"]) :is(.hljs-variable, .hljs-params, .hljs-template-variable) { color: #d3c6aa !important; }
+
+/* safety paint for the app shell */
+html:not([data-ef="off"]) body { background-color: var(--ef-surface) !important; }

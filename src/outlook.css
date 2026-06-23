@@ -1,0 +1,166 @@
+/* Everforest for Outlook on the web (outlook.cloud.microsoft & office.com) —
+   token-level retheme. OWA carries TWO design-token systems: Fluent UI v9
+   (--color*) for newer components, and the older Fluent v8 / OWA palette
+   (--white, --neutral*, --theme*, --header*) that paints the core mail shell.
+   Those palette vars are *read* (not redefined) by OWA's hashed classes, so
+   overriding them at the root cascades through the whole client. Mode follows
+   the popup, or the OS on "sync". */
+
+html:not([data-ef="off"]) {
+  --ef-s1: #fdf6e3; --ef-s2: #f4f0d9; --ef-s3: #efebd4; --ef-s4: #e6e2cc; --ef-s5: #e0dcc7;
+  --ef-hover: #efebd4; --ef-selected: #eaedc8; --ef-pressed: #e6e2cc;
+  --ef-fg1: #5c6a72; --ef-fg2: #708089; --ef-fg3: #829181; --ef-fg4: #939f91;
+  --ef-stroke1: #e0dcc7; --ef-stroke2: #e6e2cc;
+  --ef-brand: #3a94c5; --ef-brand-hover: #2f7da8; --ef-brand-pressed: #2b6b8f;
+  --ef-brand-tint: #e9f0e9; --ef-on-brand: #fffbef; --ef-link: #3a94c5;
+  --ef-inv-bg: #2d353b; --ef-inv-fg: #fdf6e3;
+  --ef-header: #2d353b; --ef-header-hover: #3d484d; --ef-header-fg: #fdf6e3; --ef-header-muted: #9da9a0;
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --ef-s1: #343f44; --ef-s2: #2d353b; --ef-s3: #272e33; --ef-s4: #232a2e; --ef-s5: #1e2326;
+  --ef-hover: #3d484d; --ef-selected: #3a515d; --ef-pressed: #475258;
+  --ef-fg1: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-fg4: #7a8478;
+  --ef-stroke1: #4f585e; --ef-stroke2: #3d484d;
+  --ef-brand: #7fbbb3; --ef-brand-hover: #6aa39b; --ef-brand-pressed: #5e9089;
+  --ef-brand-tint: #3a515d; --ef-on-brand: #2d353b; --ef-link: #7fbbb3;
+  --ef-inv-bg: #fdf6e3; --ef-inv-fg: #2d353b;
+  --ef-header: #232a2e; --ef-header-hover: #3d484d; --ef-header-fg: #d3c6aa; --ef-header-muted: #9da9a0;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --ef-s1: #343f44; --ef-s2: #2d353b; --ef-s3: #272e33; --ef-s4: #232a2e; --ef-s5: #1e2326;
+    --ef-hover: #3d484d; --ef-selected: #3a515d; --ef-pressed: #475258;
+    --ef-fg1: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-fg4: #7a8478;
+    --ef-stroke1: #4f585e; --ef-stroke2: #3d484d;
+    --ef-brand: #7fbbb3; --ef-brand-hover: #6aa39b; --ef-brand-pressed: #5e9089;
+    --ef-brand-tint: #3a515d; --ef-on-brand: #2d353b; --ef-link: #7fbbb3;
+    --ef-inv-bg: #fdf6e3; --ef-inv-fg: #2d353b;
+    --ef-header: #232a2e; --ef-header-hover: #3d484d; --ef-header-fg: #d3c6aa; --ef-header-muted: #9da9a0;
+    color-scheme: dark;
+  }
+}
+
+html:not([data-ef="off"]),
+html:not([data-ef="off"]) body,
+html:not([data-ef="off"]) [class*="fui-FluentProvider"] {
+  /* ── Fluent v9 (--color*) ─────────────────────────────────────────────── */
+  --colorNeutralBackground1: var(--ef-s1) !important;
+  --colorNeutralBackground1Hover: var(--ef-hover) !important;
+  --colorNeutralBackground1Pressed: var(--ef-pressed) !important;
+  --colorNeutralBackground1Selected: var(--ef-selected) !important;
+  --colorNeutralBackground2: var(--ef-s2) !important;
+  --colorNeutralBackground2Hover: var(--ef-hover) !important;
+  --colorNeutralBackground2Selected: var(--ef-selected) !important;
+  --colorNeutralBackground3: var(--ef-s3) !important;
+  --colorNeutralBackground3Hover: var(--ef-hover) !important;
+  --colorNeutralBackground3Selected: var(--ef-selected) !important;
+  --colorNeutralBackground4: var(--ef-s4) !important;
+  --colorNeutralBackground4Hover: var(--ef-hover) !important;
+  --colorNeutralBackground5: var(--ef-s5) !important;
+  --colorNeutralBackground6: var(--ef-s4) !important;
+  --colorNeutralBackground7: var(--ef-s2) !important;
+  --colorNeutralBackground8: var(--ef-s1) !important;
+  --colorNeutralBackgroundStatic: var(--ef-s3) !important;
+  --colorNeutralBackgroundDisabled: var(--ef-s3) !important;
+  --colorNeutralBackgroundInverted: var(--ef-inv-bg) !important;
+  --colorSubtleBackgroundHover: var(--ef-hover) !important;
+  --colorSubtleBackgroundPressed: var(--ef-pressed) !important;
+  --colorSubtleBackgroundSelected: var(--ef-selected) !important;
+  --colorNeutralForeground1: var(--ef-fg1) !important;
+  --colorNeutralForeground1Hover: var(--ef-fg1) !important;
+  --colorNeutralForeground1Selected: var(--ef-fg1) !important;
+  --colorNeutralForeground2: var(--ef-fg2) !important;
+  --colorNeutralForeground2Hover: var(--ef-fg2) !important;
+  --colorNeutralForeground2Link: var(--ef-link) !important;
+  --colorNeutralForeground3: var(--ef-fg3) !important;
+  --colorNeutralForeground4: var(--ef-fg4) !important;
+  --colorNeutralForegroundDisabled: var(--ef-fg4) !important;
+  --colorNeutralForegroundInverted: var(--ef-inv-fg) !important;
+  --colorNeutralForegroundOnBrand: var(--ef-on-brand) !important;
+  --colorNeutralStroke1: var(--ef-stroke1) !important;
+  --colorNeutralStroke2: var(--ef-stroke2) !important;
+  --colorNeutralStroke3: var(--ef-stroke2) !important;
+  --colorNeutralStrokeAccessible: var(--ef-fg3) !important;
+  --colorBrandBackground: var(--ef-brand) !important;
+  --colorBrandBackgroundHover: var(--ef-brand-hover) !important;
+  --colorBrandBackgroundPressed: var(--ef-brand-pressed) !important;
+  --colorBrandBackgroundSelected: var(--ef-brand-pressed) !important;
+  --colorBrandBackground2: var(--ef-brand-tint) !important;
+  --colorBrandForeground1: var(--ef-brand) !important;
+  --colorBrandForeground2: var(--ef-brand) !important;
+  --colorBrandForegroundLink: var(--ef-link) !important;
+  --colorBrandStroke1: var(--ef-brand) !important;
+  --colorCompoundBrandBackground: var(--ef-brand) !important;
+  --colorCompoundBrandBackgroundHover: var(--ef-brand-hover) !important;
+  --colorCompoundBrandForeground1: var(--ef-brand) !important;
+  --colorCompoundBrandStroke: var(--ef-brand) !important;
+
+  /* ── Fluent v8 / OWA palette ──────────────────────────────────────────── */
+  --white: var(--ef-s1) !important;
+  --neutralLighterAlt: var(--ef-s2) !important;
+  --neutralLighter: var(--ef-s3) !important;
+  --neutralLight: var(--ef-s4) !important;
+  --neutralQuaternaryAlt: var(--ef-s4) !important;
+  --neutralQuaternary: var(--ef-s5) !important;
+  --neutralPrimarySurface: var(--ef-s1) !important;
+  --neutralSecondarySurface: var(--ef-s2) !important;
+  --neutralTertiarySurface: var(--ef-s3) !important;
+  --neutralDark: var(--ef-fg1) !important;
+  --neutralPrimary: var(--ef-fg1) !important;
+  --neutralPrimaryAlt: var(--ef-fg2) !important;
+  --neutralSecondary: var(--ef-fg3) !important;
+  --neutralTertiary: var(--ef-fg4) !important;
+  --neutralTertiaryAlt: var(--ef-stroke1) !important;
+  --themePrimary: var(--ef-brand) !important;
+  --themeSecondary: var(--ef-brand) !important;
+  --themeTertiary: var(--ef-brand) !important;
+  --themeDark: var(--ef-brand-hover) !important;
+  --themeDarkAlt: var(--ef-brand-hover) !important;
+  --themeDarker: var(--ef-brand-pressed) !important;
+  --themeLight: var(--ef-selected) !important;
+  --themeLighter: var(--ef-hover) !important;
+  --themeLighterAlt: var(--ef-hover) !important;
+  --themeSecondarySurfaceSelected: var(--ef-selected) !important;
+  --customBrandBackgroundforSelected3: var(--ef-selected) !important;
+  --customBrandBackgroundforSelected4: var(--ef-selected) !important;
+  --customBrandBackground3Hover: var(--ef-hover) !important;
+  --customBrandBackground3Pressed: var(--ef-pressed) !important;
+  --customBrandBackground4Hover: var(--ef-hover) !important;
+  --customBrandBackground4Pressed: var(--ef-pressed) !important;
+
+  /* ── suite header (top bar) ───────────────────────────────────────────── */
+  --headerBackground: var(--ef-header) !important;
+  --headerBackgroundSearch: var(--ef-header) !important;
+  --headerButtonsBackground: var(--ef-header) !important;
+  --headerButtonsBackgroundSearch: var(--ef-header) !important;
+  --headerButtonsBackgroundHover: var(--ef-header-hover) !important;
+  --headerButtonsBackgroundSearchHover: var(--ef-header-hover) !important;
+  --headerSearchBoxBackground: var(--ef-header-hover) !important;
+  --headerSearchButtonBackground: var(--ef-brand) !important;
+  --headerSearchButtonBackgroundHover: var(--ef-brand-hover) !important;
+  --headerSearchFilters: var(--ef-brand) !important;
+  --headerSearchFiltersHover: var(--ef-brand-hover) !important;
+  --headerBadgeBackground: var(--ef-brand) !important;
+  --headerBrandText: var(--ef-header-fg) !important;
+  --headerTextIcons: var(--ef-header-fg) !important;
+  --headerSearchIcon: var(--ef-header-fg) !important;
+  --headerSearchButtonIcon: var(--ef-on-brand) !important;
+  --headerSearchPlaceholderText: var(--ef-header-muted) !important;
+  --headerSearchBoxIcon: var(--ef-header-muted) !important;
+}
+
+/* Paint the root + the boot/loading screen from the very first frame, so the
+   splash shown before the Fluent app renders isn't a white flash. OWA's served
+   HTML carries an inline <style> that paints a full-viewport "#loadingScreen"
+   (position:fixed; inset:0) #fff — sitting ON TOP of <html>/<body>, so theming
+   the root alone isn't enough; we have to override "#loadingScreen" by id. The
+   content script injects this at document_start, so it wins before first paint. */
+html:not([data-ef="off"]) { background-color: var(--ef-s2) !important; }
+html:not([data-ef="off"]) body { background-color: var(--ef-s2) !important; }
+html:not([data-ef="off"]) :is(#loadingScreen, #owaLoadingScreen, #initialLoadingScreen,
+  #appLoadingScreen, .loadingScreenContainer, [class*="loadingScreen"], [class*="LoadingScreen"],
+  .splashScreen, #renderingHostContainer, [class*="bootSplash"]) {
+  background-color: var(--ef-s2) !important;
+}

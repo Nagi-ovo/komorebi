@@ -1,0 +1,113 @@
+/* Everforest for ChatGPT (chatgpt.com) — token-level retheme.
+   ChatGPT paints every surface from CSS variables (--bg-*, --text-*, --border-*,
+   --main-surface-*, --sidebar-surface-*, …) flipped by html.light / html.dark.
+   We redefine those variables to Everforest, so the app re-themes wholesale.
+   The map is also applied to nested .light / .dark theme islands (popovers, code)
+   so they follow too. Mode follows the popup, or the OS on "sync". */
+
+/* ── internal palette — full colors, switched by mode ─────────────────────── */
+html:not([data-ef="off"]) {
+  --ef-canvas: #fdf6e3; --ef-canvas-blur: rgba(253, 246, 227, .95);
+  --ef-elev: #fffbef; --ef-elev2: #f4f0d9;
+  --ef-side: #efebd4; --ef-side-hover: #e6e2cc; --ef-side-active: #e0dcc7;
+  --ef-bubble: #efebd4; --ef-composer: #f4f0d9; --ef-tint-blue: #e9f0e9;
+  --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-fg3: #829181; --ef-fg4: #a6b0a0;
+  --ef-inv-bg: #2d353b; --ef-inv-fg: #fdf6e3;
+  --ef-blue: #3a94c5; --ef-blue-hover: #2f7da8; --ef-blue-fade: rgba(58, 148, 197, .10);
+  --ef-green: #8da101; --ef-orange: #f57d26; --ef-purple: #df69ba;
+  --ef-yellow: #dfa000; --ef-red: #f85552; --ef-grey: #829181;
+  --ef-bd-light: rgba(92, 106, 114, .07); --ef-bd: rgba(92, 106, 114, .15);
+  --ef-bd-heavy: rgba(92, 106, 114, .26); --ef-bd-xheavy: rgba(92, 106, 114, .38);
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --ef-canvas: #2d353b; --ef-canvas-blur: rgba(45, 53, 59, .9);
+  --ef-elev: #343f44; --ef-elev2: #232a2e;
+  --ef-side: #232a2e; --ef-side-hover: #343f44; --ef-side-active: #3d484d;
+  --ef-bubble: #3d484d; --ef-composer: #343f44; --ef-tint-blue: #3a515d;
+  --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-fg4: #7a8478;
+  --ef-inv-bg: #fdf6e3; --ef-inv-fg: #2d353b;
+  --ef-blue: #7fbbb3; --ef-blue-hover: #6aa39b; --ef-blue-fade: rgba(127, 187, 179, .14);
+  --ef-green: #a7c080; --ef-orange: #e69875; --ef-purple: #d699b6;
+  --ef-yellow: #dbbc7f; --ef-red: #e67e80; --ef-grey: #859289;
+  --ef-bd-light: rgba(211, 198, 170, .07); --ef-bd: rgba(211, 198, 170, .15);
+  --ef-bd-heavy: rgba(211, 198, 170, .24); --ef-bd-xheavy: rgba(211, 198, 170, .34);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --ef-canvas: #2d353b; --ef-canvas-blur: rgba(45, 53, 59, .9);
+    --ef-elev: #343f44; --ef-elev2: #232a2e;
+    --ef-side: #232a2e; --ef-side-hover: #343f44; --ef-side-active: #3d484d;
+    --ef-bubble: #3d484d; --ef-composer: #343f44; --ef-tint-blue: #3a515d;
+    --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-fg4: #7a8478;
+    --ef-inv-bg: #fdf6e3; --ef-inv-fg: #2d353b;
+    --ef-blue: #7fbbb3; --ef-blue-hover: #6aa39b; --ef-blue-fade: rgba(127, 187, 179, .14);
+    --ef-green: #a7c080; --ef-orange: #e69875; --ef-purple: #d699b6;
+    --ef-yellow: #dbbc7f; --ef-red: #e67e80; --ef-grey: #859289;
+    --ef-bd-light: rgba(211, 198, 170, .07); --ef-bd: rgba(211, 198, 170, .15);
+    --ef-bd-heavy: rgba(211, 198, 170, .24); --ef-bd-xheavy: rgba(211, 198, 170, .34);
+    color-scheme: dark;
+  }
+}
+
+/* ── map ChatGPT's tokens onto Everforest (also inside .light/.dark islands) ── */
+html:not([data-ef="off"]),
+html:not([data-ef="off"]) :is(.light, .dark) {
+  --bg-primary: var(--ef-canvas) !important;
+  --bg-secondary: var(--ef-side-hover) !important;
+  --bg-tertiary: var(--ef-elev2) !important;
+  --bg-elevated-primary: var(--ef-elev) !important;
+  --bg-elevated-secondary: var(--ef-elev2) !important;
+  --bg-primary-inverted: var(--ef-inv-bg) !important;
+  --main-surface-primary: var(--ef-canvas) !important;
+  --main-surface-secondary: var(--ef-canvas) !important;
+  --main-surface-tertiary: var(--ef-side-active) !important;
+  --main-surface-background: var(--ef-canvas-blur) !important;
+  --sidebar-surface-primary: var(--ef-side) !important;
+  --sidebar-surface-secondary: var(--ef-side-hover) !important;
+  --sidebar-surface-tertiary: var(--ef-side-active) !important;
+  --message-surface: var(--ef-bubble) !important;
+  --composer-surface: var(--ef-composer) !important;
+  --composer-surface-primary: var(--ef-composer) !important;
+  --composer-surface-secondary: var(--ef-elev2) !important;
+  --composer-blue-bg: var(--ef-tint-blue) !important;
+
+  --text-primary: var(--ef-fg) !important;
+  --text-secondary: var(--ef-fg2) !important;
+  --text-tertiary: var(--ef-fg3) !important;
+  --text-quaternary: var(--ef-fg4) !important;
+  --text-inverted: var(--ef-inv-fg) !important;
+  --text-accent: var(--ef-blue) !important;
+  --text-danger: var(--ef-red) !important;
+  --icon-primary: var(--ef-fg) !important;
+  --icon-secondary: var(--ef-fg2) !important;
+
+  --border-light: var(--ef-bd-light) !important;
+  --border-sharp: var(--ef-bd-light) !important;
+  --border-default: var(--ef-bd) !important;
+  --border-medium: var(--ef-bd) !important;
+  --border-heavy: var(--ef-bd-heavy) !important;
+  --border-xheavy: var(--ef-bd-xheavy) !important;
+
+  /* user message bubble (its own theme tokens) */
+  --theme-user-msg-bg: var(--ef-bubble) !important;
+  --theme-user-msg-text: var(--ef-fg) !important;
+
+  --link: var(--ef-blue) !important;
+  --link-hover: var(--ef-blue-hover) !important;
+  --bg-accent-static: var(--ef-blue) !important;
+  --interactive-bg-accent-hover: var(--ef-blue-fade) !important;
+  --interactive-label-accent-default: var(--ef-blue) !important;
+
+  --accent-blue: var(--ef-blue) !important;
+  --accent-green: var(--ef-green) !important;
+  --accent-orange: var(--ef-orange) !important;
+  --accent-pink: var(--ef-purple) !important;
+  --accent-purple: var(--ef-purple) !important;
+  --accent-yellow: var(--ef-yellow) !important;
+  --accent-default: var(--ef-grey) !important;
+}
+
+/* safety paint for the root canvas (some shells set body bg directly) */
+html:not([data-ef="off"]) body { background-color: var(--ef-canvas) !important; color: var(--ef-fg) !important; }

@@ -1,0 +1,166 @@
+/* Everforest for Google Drive (drive.google.com) — token-level retheme.
+   Drive is a Material app whose component tokens (--gm3-sys-color-*) all resolve
+   to a base "dynamic theme" layer, --dt-*  (e.g. --gm3-sys-color-primary =
+   var(--dt-primary-container, …)). So overriding the --dt-* colour tokens
+   cascades through the entire client. Those tokens are declared on the theme
+   host — <body> carries ".KkxPLb" (light) and nested dark panels carry ".LgGVmb"
+   (Drive's Material light/dark host markers) — so we redeclare them there with
+   enough weight to win. mime-type-* (file-type icon colours) and the decorative
+   chip palettes are left alone. Mode follows the popup, or the OS on "sync". */
+
+/* ── internal Everforest palette (inherits from the root) ─────────────────── */
+html:not([data-ef="off"]) {
+  --ef-page: #fdf6e3; --ef-surface: #fdf6e3; --ef-bright: #fffbef;
+  --ef-c-lowest: #fffbef; --ef-c-low: #fdf6e3; --ef-c: #f4f0d9;
+  --ef-c-high: #efebd4; --ef-c-highest: #e6e2cc; --ef-dim: #e0dcc7; --ef-variant: #e6e2cc;
+  --ef-fg: #5c6a72; --ef-fg-sec: #708089; --ef-fg-var: #708089;
+  --ef-outline: #939f91; --ef-outline-var: #e0dcc7;
+  --ef-blue: #3a94c5; --ef-blue-c: #e9f0e9; --ef-on-blue: #fffbef; --ef-on-blue-c: #2f7da8;
+  --ef-green: #8da101; --ef-green-c: #e6ead0; --ef-on-green: #fffbef; --ef-on-green-c: #687d3e;
+  --ef-red: #f85552; --ef-red-c: #fde3da; --ef-on-red: #fffbef;
+  --ef-neutral: #708089; --ef-neutral-c: #efebd4;
+  --ef-inv: #2d353b; --ef-on-inv: #fdf6e3;
+  --ef-hover: #efebd4; --ef-selected: #e9f0e9;
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --ef-page: #2d353b; --ef-surface: #2d353b; --ef-bright: #343f44;
+  --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
+  --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-dim: #232a2e; --ef-variant: #3d484d;
+  --ef-fg: #d3c6aa; --ef-fg-sec: #9da9a0; --ef-fg-var: #9da9a0;
+  --ef-outline: #859289; --ef-outline-var: #4f585e;
+  --ef-blue: #7fbbb3; --ef-blue-c: #3a515d; --ef-on-blue: #2d353b; --ef-on-blue-c: #cfe0e0;
+  --ef-green: #a7c080; --ef-green-c: #425047; --ef-on-green: #2d353b; --ef-on-green-c: #cfe0b0;
+  --ef-red: #e67e80; --ef-red-c: #514045; --ef-on-red: #2d353b;
+  --ef-neutral: #9da9a0; --ef-neutral-c: #3d484d;
+  --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
+  --ef-hover: #3d484d; --ef-selected: #3a515d;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --ef-page: #2d353b; --ef-surface: #2d353b; --ef-bright: #343f44;
+    --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
+    --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-dim: #232a2e; --ef-variant: #3d484d;
+    --ef-fg: #d3c6aa; --ef-fg-sec: #9da9a0; --ef-fg-var: #9da9a0;
+    --ef-outline: #859289; --ef-outline-var: #4f585e;
+    --ef-blue: #7fbbb3; --ef-blue-c: #3a515d; --ef-on-blue: #2d353b; --ef-on-blue-c: #cfe0e0;
+    --ef-green: #a7c080; --ef-green-c: #425047; --ef-on-green: #2d353b; --ef-on-green-c: #cfe0b0;
+    --ef-red: #e67e80; --ef-red-c: #514045; --ef-on-red: #2d353b;
+    --ef-neutral: #9da9a0; --ef-neutral-c: #3d484d;
+    --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
+    --ef-hover: #3d484d; --ef-selected: #3a515d;
+    color-scheme: dark;
+  }
+}
+
+/* ── map Drive's --dt-* dynamic-theme tokens onto Everforest ───────────────
+   Declared on the theme hosts (body + the .KkxPLb/.LgGVmb mode markers) so we
+   override both the light host and any nested dark-host panel. */
+html:not([data-ef="off"]) :is(body, .KkxPLb, .LgGVmb) {
+  /* surfaces */
+  --dt-background: var(--ef-page) !important;
+  --dt-surface: var(--ef-surface) !important;
+  --dt-surface-bright: var(--ef-bright) !important;
+  --dt-surface-container-lowest: var(--ef-c-lowest) !important;
+  --dt-surface-container-low: var(--ef-c-low) !important;
+  --dt-surface-container: var(--ef-c) !important;
+  --dt-surface-container-high: var(--ef-c-high) !important;
+  --dt-surface-container-highest: var(--ef-c-highest) !important;
+  --dt-surface-dim: var(--ef-dim) !important;
+  --dt-surface-variant: var(--ef-variant) !important;
+  --dt-surface-tint: var(--ef-blue) !important;
+  /* text */
+  --dt-on-surface: var(--ef-fg) !important;
+  --dt-on-surface-secondary: var(--ef-fg-sec) !important;
+  --dt-on-surface-variant: var(--ef-fg-var) !important;
+  --dt-on-background: var(--ef-fg) !important;
+  --dt-on-background-secondary: var(--ef-fg-sec) !important;
+  /* neutral family (toolbars, dividers, secondary buttons) */
+  --dt-neutral: var(--ef-fg-sec) !important;
+  --dt-neutral-action: var(--ef-fg) !important;
+  --dt-neutral-action-state-layer: var(--ef-fg) !important;
+  --dt-neutral-action-stateful: var(--ef-fg) !important;
+  --dt-neutral-container: var(--ef-neutral-c) !important;
+  --dt-neutral-container-icon: var(--ef-fg) !important;
+  --dt-neutral-container-link: var(--ef-fg) !important;
+  --dt-neutral-outline: var(--ef-outline) !important;
+  --dt-gray-fill: var(--ef-fg-sec) !important;
+  --dt-gray-tonal: var(--ef-neutral-c) !important;
+  --dt-on-gray-tonal: var(--ef-fg-sec) !important;
+  /* outline / borders */
+  --dt-outline: var(--ef-outline) !important;
+  --dt-outline-variant: var(--ef-outline-var) !important;
+  --dt-gray-outline: var(--ef-outline-var) !important;
+  /* primary (Google blue → Everforest blue) */
+  --dt-primary: var(--ef-blue) !important;
+  --dt-primary-action: var(--ef-blue) !important;
+  --dt-primary-action-state-layer: var(--ef-blue) !important;
+  --dt-primary-action-stateful: var(--ef-blue) !important;
+  --dt-primary-outline: var(--ef-blue) !important;
+  --dt-primary-icon: var(--ef-on-blue) !important;
+  --dt-primary-link: var(--ef-on-blue) !important;
+  --dt-on-primary: var(--ef-on-blue) !important;
+  --dt-primary-container: var(--ef-blue-c) !important;
+  --dt-on-primary-container: var(--ef-on-blue-c) !important;
+  --dt-primary-container-icon: var(--ef-on-blue-c) !important;
+  --dt-primary-container-link: var(--ef-on-blue-c) !important;
+  --dt-blue-fill: var(--ef-blue) !important;
+  --dt-blue-tonal: var(--ef-blue-c) !important;
+  --dt-blue-outline: var(--ef-blue-c) !important;
+  --dt-on-blue-fill: var(--ef-on-blue) !important;
+  --dt-on-blue-tonal: var(--ef-blue) !important;
+  --dt-on-blue-outline: var(--ef-blue) !important;
+  /* secondary (also bluish) */
+  --dt-secondary: var(--ef-blue) !important;
+  --dt-secondary-action: var(--ef-blue) !important;
+  --dt-secondary-action-state-layer: var(--ef-blue) !important;
+  --dt-secondary-action-stateful: var(--ef-blue) !important;
+  --dt-secondary-container: var(--ef-blue-c) !important;
+  --dt-on-secondary: var(--ef-on-blue) !important;
+  --dt-on-secondary-container: var(--ef-on-blue-c) !important;
+  /* tertiary (green) */
+  --dt-tertiary: var(--ef-green) !important;
+  --dt-tertiary-container: var(--ef-green-c) !important;
+  --dt-on-tertiary: var(--ef-on-green) !important;
+  --dt-on-tertiary-container: var(--ef-on-green-c) !important;
+  --dt-green-fill: var(--ef-green) !important;
+  --dt-green-tonal: var(--ef-green-c) !important;
+  --dt-green-outline: var(--ef-green-c) !important;
+  --dt-on-green-fill: var(--ef-on-green) !important;
+  --dt-on-green-tonal: var(--ef-green) !important;
+  --dt-on-green-outline: var(--ef-green) !important;
+  /* error (red) */
+  --dt-error: var(--ef-red) !important;
+  --dt-error-action: var(--ef-red) !important;
+  --dt-error-action-state-layer: var(--ef-red) !important;
+  --dt-error-action-stateful: var(--ef-red) !important;
+  --dt-error-outline: var(--ef-red) !important;
+  --dt-error-container: var(--ef-red-c) !important;
+  --dt-error-icon: var(--ef-on-red) !important;
+  --dt-error-link: var(--ef-on-red) !important;
+  --dt-red-fill: var(--ef-red) !important;
+  --dt-red-tonal: var(--ef-red-c) !important;
+  --dt-on-red-fill: var(--ef-on-red) !important;
+  --dt-on-red-tonal: var(--ef-red) !important;
+  --dt-on-red-outline: var(--ef-red) !important;
+  /* inverse (tooltips, snackbars) */
+  --dt-inverse-surface: var(--ef-inv) !important;
+  --dt-inverse-on-surface: var(--ef-on-inv) !important;
+}
+
+/* ── safety paints for shell surfaces not driven by --dt-* ─────────────────
+   The page canvas + the shared Google top bar (gb_*) sometimes paint from
+   hardcoded values; pin them to the Everforest page surface. */
+html:not([data-ef="off"]) body { background-color: var(--ef-page) !important; }
+html:not([data-ef="off"]) :is(header, .gb_Md, .gb_Ld, .gb_Jd, [role="banner"]) {
+  background-color: var(--ef-page) !important;
+}
+
+/* scrollbars */
+html:not([data-ef="off"]) ::-webkit-scrollbar { width: 12px; height: 12px; }
+html:not([data-ef="off"]) ::-webkit-scrollbar-thumb {
+  background-color: var(--ef-dim); border-radius: 8px;
+  border: 3px solid var(--ef-page); background-clip: padding-box;
+}
+html:not([data-ef="off"]) ::-webkit-scrollbar-track { background-color: var(--ef-page); }

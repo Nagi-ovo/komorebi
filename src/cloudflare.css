@@ -1,0 +1,116 @@
+/* Everforest for the Cloudflare dashboard (dash.cloudflare.com) — token-level
+   retheme. Cloudflare's design system has a primitive palette (--cf-{hue}-0..9,
+   --color-cl1-*) and a SEMANTIC layer (--color-* / --text-color-*) that the UI
+   actually reads — most via the CSS light-dark() function. We redefine the
+   semantic tokens to Everforest and pin color-scheme to the active mode so the
+   untouched light-dark() palette swatches resolve to the right side too. The
+   Cloudflare brand orange (--text-color-brand #f6821f) is left alone. Mode
+   follows the popup, or the OS on "sync". */
+
+/* ── internal Everforest palette ──────────────────────────────────────────── */
+html:not([data-ef="off"]) {
+  --ef-page: #fdf6e3; --ef-surface: #fdf6e3; --ef-bg2: #f4f0d9;
+  --ef-card: #fffbef; --ef-elev: #fffbef; --ef-fill: #efebd4;
+  --ef-hover: #e6e2cc; --ef-active: #e0dcc7; --ef-border: #e0dcc7;
+  --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-fg3: #829181; --ef-on-accent: #fffbef;
+  --ef-blue: #3a94c5; --ef-blue-fade: #dbe7eb;
+  --ef-red: #f85552; --ef-red-fade: #fde3da;
+  --ef-green: #8da101; --ef-green-fade: #e6ead0;
+  --ef-gold: #dfa000; --ef-gold-fade: #f0e9c8;
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --ef-page: #232a2e; --ef-surface: #2d353b; --ef-bg2: #272e33;
+  --ef-card: #343f44; --ef-elev: #343f44; --ef-fill: #3d484d;
+  --ef-hover: #3d484d; --ef-active: #475258; --ef-border: #4f585e;
+  --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-on-accent: #2d353b;
+  --ef-blue: #7fbbb3; --ef-blue-fade: #3a515d;
+  --ef-red: #e67e80; --ef-red-fade: #514045;
+  --ef-green: #a7c080; --ef-green-fade: #425047;
+  --ef-gold: #dbbc7f; --ef-gold-fade: #45433a;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --ef-page: #232a2e; --ef-surface: #2d353b; --ef-bg2: #272e33;
+    --ef-card: #343f44; --ef-elev: #343f44; --ef-fill: #3d484d;
+    --ef-hover: #3d484d; --ef-active: #475258; --ef-border: #4f585e;
+    --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-on-accent: #2d353b;
+    --ef-blue: #7fbbb3; --ef-blue-fade: #3a515d;
+    --ef-red: #e67e80; --ef-red-fade: #514045;
+    --ef-green: #a7c080; --ef-green-fade: #425047;
+    --ef-gold: #dbbc7f; --ef-gold-fade: #45433a;
+    color-scheme: dark;
+  }
+}
+
+/* ── map Cloudflare's semantic --color-* tokens ───────────────────────────── */
+html:not([data-ef="off"]) {
+  /* surfaces */
+  --color-bg-primary: var(--ef-page) !important;
+  --color-bg-secondary: var(--ef-bg2) !important;
+  --color-surface: var(--ef-surface) !important;
+  --color-secondary: var(--ef-card) !important;
+  --color-layer-card-primary: var(--ef-card) !important;
+  --color-elevated: var(--ef-elev) !important;
+  --color-kumo-elevated: var(--ef-elev) !important;
+  --color-overlay: var(--ef-card) !important;
+  --color-kumo-overlay: var(--ef-card) !important;
+  --color-subtle: var(--ef-bg2) !important;
+  --color-muted: var(--ef-fill) !important;
+  --color-accent: var(--ef-fill) !important;
+  --color-fill: var(--ef-fill) !important;
+  --color-color: var(--ef-fill) !important;
+  --color-kumo-fill: var(--ef-fill) !important;
+  --color-kumo-fill-hover: var(--ef-hover) !important;
+  --color-kumo-base: var(--ef-card) !important;
+  --color-kumo-base-hover: var(--ef-hover) !important;
+  --color-kumo-control: var(--ef-elev) !important;
+  --color-kumo-control-hover: var(--ef-hover) !important;
+  --color-kumo-subtle: var(--ef-bg2) !important;
+  --color-kumo-muted: var(--ef-fill) !important;
+  --color-surface-elevated: var(--ef-elev) !important;
+  --color-hover: var(--ef-hover) !important;
+  --color-active: var(--ef-active) !important;
+  /* borders */
+  --color-border: var(--ef-border) !important;
+  --color-divider: var(--ef-border) !important;
+  --color-input: var(--ef-elev) !important;
+  /* accents — primary/info = Everforest blue */
+  --color-primary: var(--ef-blue) !important;
+  --color-primary-hover: var(--ef-blue) !important;
+  --color-info: var(--ef-blue) !important;
+  --color-info-selection: var(--ef-blue-fade) !important;
+  --color-kumo-brand: var(--ef-blue) !important;
+  --color-kumo-brand-hover: var(--ef-blue) !important;
+  /* semantic colours */
+  --color-error: var(--ef-red) !important;
+  --color-error-selection: var(--ef-red-fade) !important;
+  --color-success: var(--ef-green) !important;
+  --color-warning: var(--ef-gold) !important;
+  --color-alert-selection: var(--ef-gold-fade) !important;
+
+  /* ── text tokens (--text-color-*) ─────────────────────────────────────── */
+  --text-color-primary: var(--ef-fg) !important;
+  --text-color-secondary: var(--ef-fg2) !important;
+  --text-color-tertiary: var(--ef-fg3) !important;
+  --text-color-muted: var(--ef-fg3) !important;
+  --text-color-disabled: var(--ef-fg3) !important;
+  --text-color-info: var(--ef-blue) !important;
+  --text-color-error: var(--ef-red) !important;
+  --text-color-success: var(--ef-green) !important;
+  --text-color-alert: var(--ef-gold) !important;
+  /* --text-color-brand stays Cloudflare orange (#f6821f) */
+}
+
+/* ── paint the shell + loading splash so first paint isn't a white flash ──── */
+html:not([data-ef="off"]) { background-color: var(--ef-page) !important; }
+html:not([data-ef="off"]) body { background-color: var(--ef-page) !important; color: var(--ef-fg) !important; }
+
+/* scrollbars */
+html:not([data-ef="off"]) ::-webkit-scrollbar { width: 12px; height: 12px; }
+html:not([data-ef="off"]) ::-webkit-scrollbar-thumb {
+  background-color: var(--ef-fill); border-radius: 8px;
+  border: 3px solid var(--ef-page); background-clip: padding-box;
+}
+html:not([data-ef="off"]) ::-webkit-scrollbar-track { background-color: var(--ef-page); }

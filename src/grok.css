@@ -1,0 +1,94 @@
+/* Everforest for Grok (grok.com) — token-level retheme.
+   Grok mixes two token formats: HSL component triplets consumed via hsl(var(--x))
+   (--fg-*, --surface-l*, --muted, --border, …) and oklch() full-colour tokens
+   (--background, --card, --button-*, --input-*, …). We redefine each in its own
+   format so values stay valid. --eft-* are triplets, --efh-* are full colours.
+   The primary action button maps to Everforest green. Theme flips via html.light
+   /.dark; we force it with the popup mode. Mode follows the popup, or the OS. */
+
+html:not([data-ef="off"]) {
+  /* triplets */
+  --eft-bg: 44 87% 94%; --eft-s1: 45 100% 97%; --eft-s2: 51 55% 90%; --eft-s3: 51 46% 88%; --eft-s4: 51 34% 85%;
+  --eft-inset: 51 46% 88%; --eft-muted: 51 55% 90%; --eft-accent: 51 55% 90%; --eft-border: 50 29% 83%;
+  --eft-fg: 202 11% 40%; --eft-fg2: 202 10% 49%; --eft-fg3: 116 7% 54%; --eft-invert: 44 87% 94%;
+  --eft-link: 201 55% 50%; --eft-green: 68 99% 32%; --eft-red: 1 92% 65%; --eft-yellow: 43 100% 44%;
+  /* full colours */
+  --efh-bg: #fdf6e3; --efh-bg2: #fffbef; --efh-card: #fffbef; --efh-popover: #fffbef; --efh-input: #fffbef;
+  --efh-ring: #3a94c5; --efh-border-faint: rgba(92,106,114,.10); --efh-border: rgba(92,106,114,.20);
+  --efh-btn: #8da101; --efh-btn-hover: #798a00; --efh-btn-secondary: #f4f0d9;
+  --efh-hover: rgba(92,106,114,.06); --efh-toggle: rgba(92,106,114,.10);
+  color-scheme: light;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] {
+  --eft-bg: 206 13% 20%; --eft-s1: 205 13% 18%; --eft-s2: 199 13% 24%; --eft-s3: 199 12% 27%; --eft-s4: 201 11% 31%;
+  --eft-inset: 202 12% 13%; --eft-muted: 199 13% 24%; --eft-accent: 199 13% 24%; --eft-border: 204 9% 34%;
+  --eft-fg: 41 32% 75%; --eft-fg2: 135 7% 64%; --eft-fg3: 138 6% 55%; --eft-invert: 206 13% 20%;
+  --eft-link: 172 31% 62%; --eft-green: 83 34% 63%; --eft-red: 359 68% 70%; --eft-yellow: 40 56% 68%;
+  --efh-bg: #2d353b; --efh-bg2: #232a2e; --efh-card: #343f44; --efh-popover: #3d484d; --efh-input: #343f44;
+  --efh-ring: #7fbbb3; --efh-border-faint: rgba(211,198,170,.10); --efh-border: rgba(211,198,170,.16);
+  --efh-btn: #a7c080; --efh-btn-hover: #b6cd93; --efh-btn-secondary: #3d484d;
+  --efh-hover: rgba(211,198,170,.06); --efh-toggle: rgba(211,198,170,.10);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) {
+    --eft-bg: 206 13% 20%; --eft-s1: 205 13% 18%; --eft-s2: 199 13% 24%; --eft-s3: 199 12% 27%; --eft-s4: 201 11% 31%;
+    --eft-inset: 202 12% 13%; --eft-muted: 199 13% 24%; --eft-accent: 199 13% 24%; --eft-border: 204 9% 34%;
+    --eft-fg: 41 32% 75%; --eft-fg2: 135 7% 64%; --eft-fg3: 138 6% 55%; --eft-invert: 206 13% 20%;
+    --eft-link: 172 31% 62%; --eft-green: 83 34% 63%; --eft-red: 359 68% 70%; --eft-yellow: 40 56% 68%;
+    --efh-bg: #2d353b; --efh-bg2: #232a2e; --efh-card: #343f44; --efh-popover: #3d484d; --efh-input: #343f44;
+    --efh-ring: #7fbbb3; --efh-border-faint: rgba(211,198,170,.10); --efh-border: rgba(211,198,170,.16);
+    --efh-btn: #a7c080; --efh-btn-hover: #b6cd93; --efh-btn-secondary: #3d484d;
+    --efh-hover: rgba(211,198,170,.06); --efh-toggle: rgba(211,198,170,.10);
+    color-scheme: dark;
+  }
+}
+
+html:not([data-ef="off"]),
+html:not([data-ef="off"]) :is(.light, .dark) {
+  /* ── triplet tokens (hsl(var(--x))) ──────────────────────────────────────── */
+  --background-color: var(--eft-bg) !important;
+  --surface-base: var(--eft-bg) !important; --surface-base-hover: var(--eft-s2) !important;
+  --surface-l1: var(--eft-s1) !important; --surface-l1-hover: var(--eft-s2) !important;
+  --surface-l2: var(--eft-s2) !important; --surface-l3: var(--eft-s3) !important;
+  --surface-l4: var(--eft-s4) !important; --surface-l4-hover: var(--eft-s4) !important;
+  --surface-inset: var(--eft-inset) !important; --surface-invert: var(--eft-invert) !important;
+  --muted: var(--eft-muted) !important; --muted-foreground: var(--eft-fg2) !important;
+  --accent: var(--eft-accent) !important; --accent-foreground: var(--eft-fg) !important;
+  --border: var(--eft-border) !important;
+  --primary: var(--eft-fg) !important; --primary-foreground: var(--eft-bg) !important;
+  --secondary-foreground: var(--eft-fg) !important;
+  --card-foreground: var(--eft-fg) !important; --popover-foreground: var(--eft-fg) !important;
+  --fg-primary: var(--eft-fg) !important; --fg-secondary: var(--eft-fg2) !important;
+  --fg-tertiary: var(--eft-fg3) !important; --fg-invert: var(--eft-invert) !important;
+  --fg-link: var(--eft-link) !important; --fg-danger: var(--eft-red) !important;
+  --fg-positive: var(--eft-green) !important; --fg-warning: var(--eft-yellow) !important;
+  --destructive: var(--eft-red) !important; --destructive-foreground: var(--eft-invert) !important;
+  --sidebar-foreground: var(--eft-fg2) !important; --sidebar-accent: var(--eft-s2) !important;
+  --sidebar-accent-foreground: var(--eft-fg) !important; --sidebar-border: var(--eft-border) !important;
+  --thead-bg-color: var(--eft-s2) !important;
+
+  /* ── oklch / full-colour tokens ──────────────────────────────────────────── */
+  --background: var(--efh-bg) !important; --background-secondary: var(--efh-bg2) !important;
+  --card: var(--efh-card) !important; --card-hover: var(--efh-hover) !important; --card-focus: var(--efh-hover) !important;
+  --card-border: var(--efh-border) !important; --card-border-focus: var(--efh-border) !important;
+  --popover: var(--efh-popover) !important; --popover-hover: var(--efh-hover) !important; --popover-border: var(--efh-border) !important;
+  --input-background: var(--efh-input) !important; --input-background-hover: var(--efh-input) !important;
+  --input-border: var(--efh-border) !important; --input-hover: var(--efh-input) !important;
+  --ring: var(--efh-ring) !important;
+  --button-filled: var(--efh-btn) !important; --button-filled-hover: var(--efh-btn-hover) !important; --button-filled-active: var(--efh-btn-hover) !important;
+  --button-primary: var(--efh-btn) !important; --button-primary-hover: var(--efh-btn-hover) !important;
+  --button-secondary: var(--efh-btn-secondary) !important; --button-secondary-hover: var(--efh-hover) !important;
+  --button-ghost-hover: var(--efh-hover) !important; --button-ghost-active: var(--efh-hover) !important;
+  --button-ghost-surface-hover: var(--efh-hover) !important; --button-outline-border: var(--efh-border) !important;
+  --border-l1: var(--efh-border-faint) !important; --border-l2: var(--efh-border) !important; --border-l3: var(--efh-border) !important;
+  --toggle-hover: var(--efh-hover) !important; --toggle-selected: var(--efh-toggle) !important; --toggle-border: var(--efh-border) !important;
+}
+
+/* code blocks: Grok renders Shiki on a hardcoded white surface, which is jarring
+   in dark mode. Pin the block + its header to a dark Everforest surface with
+   readable text (these blocks aren't class-syntax-highlighted). */
+html:not([data-ef="off"]) :is(.shiki, pre.shiki, .shiki pre) { background-color: #272e33 !important; }
+html:not([data-ef="off"]) .shiki, html:not([data-ef="off"]) .shiki :is(code, span, .line) { color: #d3c6aa !important; }
+html:not([data-ef="off"]) div:has(+ .shiki) { background-color: #2d353b !important; }
+html:not([data-ef="off"]) div:has(+ .shiki) :is(span, button, svg) { color: #9da9a0 !important; }

@@ -42,6 +42,15 @@ html:not([data-ef="off"]) .RNNXgb { background: var(--ef-bg) !important; }
 html:not([data-ef="off"]) #appbar div,
 html:not([data-ef="off"]) #rhs div { background-color: var(--ef-bg) !important; }
 
+/* Newer Google result/ad "cards" (incl. the white "Sponsored results" unit) use
+   surfaces nested deeper than the #rso > div > div > div levels above. Flatten
+   them via the stable results/ad container ids so this survives Google's hashed
+   class churn. background-color (not the background shorthand) keeps favicons and
+   thumbnails intact, the way the #appbar/#rhs rule above does. */
+html:not([data-ef="off"]) :is(#rso, #tads, #tadsb, #tvcap, #bottomads) div {
+  background-color: var(--ef-bg) !important;
+}
+
 /* search box text */
 html:not([data-ef="off"]) #searchform input,
 html:not([data-ef="off"]) #searchform textarea,
