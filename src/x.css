@@ -93,6 +93,22 @@ html:not([data-ef="off"]) :is(#layers, [role="main"]) [data-testid^="tweetTextar
   color: var(--ef-blue) !important;
 }
 
+/* rendered @mentions outside the tweet body — the "Replying to @x" reply context
+   in replies / notifications — are profile links X paints in the accent colour,
+   which the broad text-flatten greys out. Blue them (and their inner span), then
+   keep the User-Name header (display name + @handle) on its muted flatten colour
+   — the restore rule matches the blue rule's specificity and follows it, so it
+   wins for header links while reply-context mentions stay blue. The /status/
+   guard leaves timestamp / permalink anchors out of it. */
+html:not([data-ef="off"]) [data-testid="tweet"] a[href^="/"]:not([href*="/status/"]),
+html:not([data-ef="off"]) [data-testid="tweet"] a[href^="/"]:not([href*="/status/"]) span {
+  color: var(--ef-blue) !important;
+}
+html:not([data-ef="off"]) [data-testid="tweet"] [data-testid="User-Name"] a[href^="/"],
+html:not([data-ef="off"]) [data-testid="tweet"] [data-testid="User-Name"] a[href^="/"] span {
+  color: var(--ef-fg) !important;
+}
+
 /* primary buttons → Everforest green pill (scoped for specificity over the paint) */
 html:not([data-ef="off"]) [data-testid="sidebarColumn"] :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])),
 html:not([data-ef="off"]) [data-testid="primaryColumn"] :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])),
