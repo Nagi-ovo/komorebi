@@ -117,6 +117,13 @@ html:not([data-ef="off"]) [data-testid="UserDescription"] a span {
   color: var(--ef-blue) !important;
 }
 
+/* in-tweet "Show more" link (expands a long tweet) — its button is native accent
+   but the inner text span gets greyed by the flatten; blue the span back. */
+html:not([data-ef="off"]) [data-testid="tweet-text-show-more-link"],
+html:not([data-ef="off"]) [data-testid="tweet-text-show-more-link"] span {
+  color: var(--ef-blue) !important;
+}
+
 /* primary buttons → Everforest green pill (scoped for specificity over the paint) */
 html:not([data-ef="off"]) [data-testid="sidebarColumn"] :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])),
 html:not([data-ef="off"]) [data-testid="primaryColumn"] :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])),
