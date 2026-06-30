@@ -5,20 +5,53 @@
 
 html:not([data-ef="off"]) {
   --ef-bg: #fdf6e3; --ef-fg: #5c6a72; --ef-muted: #828a78;
+  --ef-bg-0: rgba(253, 246, 227, 0);
   --ef-blue: #3a94c5; --ef-purple: #df69ba; --ef-green: #8da101; --ef-border: #e0dcc7;
+  --ef-surface: #f4f0d9; --ef-control: #efebd4; --ef-shadow: rgba(92, 106, 114, 0.14);
   --ef-header: var(--ef-muted);
+  --COEmY: var(--ef-fg) !important; --Xqboce: var(--ef-fg) !important; --YLNNHc: var(--ef-fg) !important;
+  --PBxOKe: var(--ef-fg) !important; --bcxd3b: var(--ef-fg) !important; --uv-styles-color-text-default: var(--ef-fg) !important;
+  --uv-styles-color-text-emphasis: var(--ef-fg) !important; --uv-styles-color-icon-default: var(--ef-fg) !important; --uv-styles-color-icon-emphasis: var(--ef-fg) !important;
+  --IXoxUe: var(--ef-muted) !important; --bbQxAb: var(--ef-muted) !important; --pEa0Bc: var(--ef-muted) !important;
+  --amnPwe: var(--ef-muted) !important; --uLz37c: var(--ef-muted) !important; --uv-styles-color-text-de-emphasis: var(--ef-muted) !important;
+  --uv-styles-color-icon-on-secondary: var(--ef-muted) !important; --uv-styles-color-icon-on-tertiary: var(--ef-muted) !important;
+  --xhUGwc: var(--ef-bg) !important; --EpFNW: var(--ef-bg) !important; --EoKObe: var(--ef-bg) !important;
+  --V9ysqf: var(--ef-bg) !important; --ZXiaGf: var(--ef-bg) !important; --cIehld: var(--ef-bg) !important;
+  --todMNc: var(--ef-bg) !important; --uv-styles-color-surface: var(--ef-bg) !important;
+  --MV2sG: var(--ef-control) !important; --XKMDxc: var(--ef-control) !important; --YaIeMb: var(--ef-control) !important;
+  --aYn2S: var(--ef-control) !important; --uv-styles-color-footer: var(--ef-control) !important;
+  --uv-styles-color-letterbox: var(--ef-control) !important; --uv-styles-color-tertiary: var(--ef-control) !important;
+  --DEeStf: var(--ef-surface) !important; --TSWZIb: var(--ef-surface) !important; --Ijc2tf: var(--ef-surface) !important;
+  --BRLwE: var(--ef-surface) !important; --Zia6nf: var(--ef-surface) !important; --jwFC2e: var(--ef-surface) !important;
+  --uv-styles-color-secondary: var(--ef-surface) !important; --uv-styles-color-secondary-hover: var(--ef-control) !important;
+  --gS5jXb: var(--ef-border) !important; --Aqn7xd: var(--ef-border) !important; --JclFj: var(--ef-border) !important;
+  --mXZkqc: var(--ef-border) !important; --ONhrGd: var(--ef-border) !important; --Yi4Nb: var(--ef-border) !important;
+  --Lm570b: var(--ef-border) !important; --kloG3: var(--ef-border) !important; --uv-styles-color-outline: var(--ef-border) !important;
+  --uv-styles-color-review-stars-empty: var(--ef-border) !important;
+  --JKqx2: var(--ef-blue) !important; --TyVYld: var(--ef-blue) !important; --TMYS9: var(--ef-blue) !important;
+  --rrJJUc: var(--ef-blue) !important; --Nsm0ce: var(--ef-blue) !important; --Ehh4mf: var(--ef-blue) !important;
+  --MoaHse: var(--ef-blue) !important; --Pa8Wlb: var(--ef-blue) !important; --Wmwad: var(--ef-blue) !important;
+  --fuvksc: var(--ef-blue) !important; --gJjJk: var(--ef-blue) !important; --izGsqb: var(--ef-blue) !important;
+  --lv6yU: var(--ef-blue) !important; --ngPXTb: var(--ef-blue) !important; --p9J9c: var(--ef-blue) !important;
+  --uv-styles-color-primary: var(--ef-blue) !important; --uv-styles-color-blue-icon: var(--ef-blue) !important;
+  --uv-styles-color-text-primary: var(--ef-blue) !important; --uv-styles-color-on-secondary: var(--ef-blue) !important;
+  --D9aNi: var(--ef-shadow) !important;
   color-scheme: light;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-bg: #2d353b; --ef-fg: #d3c6aa; --ef-muted: #9da9a0;
+  --ef-bg-0: rgba(45, 53, 59, 0);
   --ef-blue: #7fbbb3; --ef-purple: #d699b6; --ef-green: #a7c080; --ef-border: #4f585e;
+  --ef-surface: #343f44; --ef-control: #3d484d; --ef-shadow: rgba(0, 0, 0, 0.26);
   --ef-header: var(--ef-fg);
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
     --ef-bg: #2d353b; --ef-fg: #d3c6aa; --ef-muted: #9da9a0;
+    --ef-bg-0: rgba(45, 53, 59, 0);
     --ef-blue: #7fbbb3; --ef-purple: #d699b6; --ef-green: #a7c080; --ef-border: #4f585e;
+    --ef-surface: #343f44; --ef-control: #3d484d; --ef-shadow: rgba(0, 0, 0, 0.26);
     --ef-header: var(--ef-fg);
     color-scheme: dark;
   }
@@ -29,16 +62,36 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
    layers, and the background shorthand erases those images. */
 html:not([data-ef="off"]) body { background-color: var(--ef-bg) !important; color: var(--ef-fg) !important; }
 html:not([data-ef="off"]) #searchform,
+html:not([data-ef="off"]) form[action="/search"],
+html:not([data-ef="off"]) form[role="search"],
 html:not([data-ef="off"]) #search,
 html:not([data-ef="off"]) footer,
 html:not([data-ef="off"]) #fbar,
+html:not([data-ef="off"]) form[action="/search"] div:has([role="listbox"]),
+html:not([data-ef="off"]) form[action="/search"] [role="listbox"],
+html:not([data-ef="off"]) form[action="/search"] [role="option"],
+html:not([data-ef="off"]) form[role="search"] div:has([role="listbox"]),
+html:not([data-ef="off"]) form[role="search"] [role="listbox"],
+html:not([data-ef="off"]) form[role="search"] [role="option"],
 html:not([data-ef="off"]) #searchform div:has([role="listbox"]),
 html:not([data-ef="off"]) #searchform [role="listbox"],
 html:not([data-ef="off"]) #searchform [role="option"],
 html:not([data-ef="off"]) .RDmXvc,
 html:not([data-ef="off"]) .RNNXgb { background-color: var(--ef-bg) !important; }
+html:not([data-ef="off"]) .RNNXgb {
+  background-color: var(--ef-surface) !important;
+  border-color: var(--ef-border) !important;
+  box-shadow: 0 2px 10px var(--ef-shadow) !important;
+}
+html:not([data-ef="off"]) :is(#searchform, form[action="/search"], form[role="search"]) :is(.A8xzab, .Ty0Rrc) {
+  background-color: var(--ef-control) !important;
+  color: var(--ef-muted) !important;
+  fill: currentColor !important;
+}
 html:not([data-ef="off"]) #appbar div,
-html:not([data-ef="off"]) #rhs div { background-color: var(--ef-bg) !important; }
+html:not([data-ef="off"]) #rhs,
+html:not([data-ef="off"]) #rhs > div,
+html:not([data-ef="off"]) #rhs > div > div { background-color: var(--ef-bg) !important; }
 html:not([data-ef="off"])[data-ef-google-images] #rso,
 html:not([data-ef="off"]):not([data-ef-google-images]) #rso,
 html:not([data-ef="off"]):not([data-ef-google-images]) #rso > div,
@@ -47,26 +100,138 @@ html:not([data-ef="off"]):not([data-ef-google-images]) #rso > div > div > div {
   background-color: var(--ef-bg) !important;
 }
 
-/* Newer Google result/ad "cards" (incl. the white "Sponsored results" unit) use
-   surfaces nested deeper than the #rso > div > div > div levels above. Flatten
-   them via the stable results/ad container ids so this survives Google's hashed
-   class churn. background-color (not the background shorthand) keeps favicons and
-   thumbnails intact, the way the #appbar/#rhs rule above does. */
-html:not([data-ef="off"]):not([data-ef-google-images]) :is(#rso, #tads, #tadsb, #tvcap, #bottomads) div {
+/* Newer result/ad cards sometimes paint white deeper than the structural #rso
+   levels above. Theme only card shells: repainting every descendant div hides
+   rich media widgets such as video thumbnails and AI-mode preview cards. */
+html:not([data-ef="off"]):not([data-ef-google-images]) #rso :is(.MjjYud, .ULSxyf, .g, .Ww4FFb),
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#tads, #tadsb, #tvcap, #bottomads),
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#tads, #tadsb, #tvcap, #bottomads) > div,
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#tads, #tadsb, #tvcap, #bottomads) > div > div {
   background-color: var(--ef-bg) !important;
+}
+/* Preserve thumbnails and AI/video preview controls inside ordinary search. */
+html:not([data-ef="off"]):not([data-ef-google-images]) #rso :is(
+  .vtSz8d, .vtSz8d *,
+  [aria-label*="Play on"], [aria-label*="Play on"] *
+) {
+  background-color: transparent !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#rso, #rcnt) :is(.vDOt8c, .YoEHmf, .p8Jhnd, .fxvkXe) {
+  background-color: var(--ef-control) !important;
+  border-color: var(--ef-border) !important;
+  color: var(--ef-fg) !important;
+}
+/* AI Overview follow-up composer. Only the actual card gets a surface; Google's
+   absolute glow/mask layers must stay transparent or they cover the rounded UI. */
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#rso, #rcnt) :is(.wPoHPd, .UAbVe, .esoFne, .yaj8zd, .Txyg0d),
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) :is(.wPoHPd, .UAbVe, .esoFne, .yaj8zd, .Txyg0d) {
+  background-color: transparent !important;
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#rso, #rcnt) .AgWCw,
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) .AgWCw {
+  background-color: var(--ef-surface) !important;
+  border-color: var(--ef-border) !important;
+  box-shadow: 0 12px 28px var(--ef-shadow) !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#rso, #rcnt) :is(.Zze5V, .P04Dsb, .fXao5b, .UrrEJe, .Sq0FX, .fGL6Ke, .wYOqBc, .jUiaTd, .d4HWzd),
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) :is(.Zze5V, .P04Dsb, .fXao5b, .UrrEJe, .Sq0FX, .fGL6Ke, .wYOqBc, .jUiaTd, .d4HWzd) {
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#rso, #rcnt) textarea[placeholder="Ask anything"],
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) textarea[placeholder="Ask anything"] {
+  background-color: transparent !important;
+  color: var(--ef-fg) !important;
+  caret-color: var(--ef-blue) !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#rso, #rcnt) textarea[placeholder="Ask anything"]::placeholder,
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) textarea[placeholder="Ask anything"]::placeholder {
+  color: var(--ef-muted) !important;
+  opacity: 1;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#rso, #rcnt) :is(.AgWCw, .wPoHPd) :where(svg, path, button, [role="button"]),
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) :is(.AgWCw, .wPoHPd) :where(svg, path, button, [role="button"]) {
+  color: var(--ef-muted) !important;
+  fill: currentColor !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#rso, #rcnt) .AgWCw .pIIIbd,
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) .AgWCw .pIIIbd {
+  background-color: transparent !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) :is(#rso, #rcnt) .AgWCw .wilSz,
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) .AgWCw .wilSz {
+  background-color: var(--ef-control) !important;
+  border-radius: 999px !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) :is(.DZ13He, .gGfHpf) {
+  background-color: var(--ef-bg) !important;
+  background-image: none !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) :is(.qEn1od, .ho072b, .raGCNe) {
+  background-color: var(--ef-surface) !important;
+  border-color: var(--ef-border) !important;
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) body:has(textarea[placeholder="Ask anything"]) :is(.YoEHmf, .ecHJbe) {
+  background-color: var(--ef-control) !important;
+  border-color: var(--ef-border) !important;
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) #rcnt .RDmXvc {
+  background-color: transparent !important;
+  background-image: linear-gradient(var(--ef-bg-0), var(--ef-bg) 52px, var(--ef-bg) 80px) !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) #rcnt .NN8h5c {
+  background-color: var(--ef-bg) !important;
+  background-image: none !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) #rcnt .zNsLfb {
+  background-color: var(--ef-bg) !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) #rcnt :is(.zNsLfb, .Jzkafd, .in7vHe, .niO4u) {
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) #rcnt .in7vHe {
+  border-color: color-mix(in srgb, var(--ef-blue) 40%, var(--ef-border)) !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) #rcnt .niO4u {
+  background-color: color-mix(in srgb, var(--ef-control) 78%, transparent) !important;
+}
+html:not([data-ef="off"]):not([data-ef-google-images]) #rcnt .zNsLfb :where(svg, path) {
+  color: var(--ef-muted) !important;
+  fill: currentColor !important;
 }
 
 /* search box text */
 html:not([data-ef="off"]) #searchform input,
 html:not([data-ef="off"]) #searchform textarea,
+html:not([data-ef="off"]) form[action="/search"] input,
+html:not([data-ef="off"]) form[action="/search"] textarea,
+html:not([data-ef="off"]) form[role="search"] input,
+html:not([data-ef="off"]) form[role="search"] textarea,
 html:not([data-ef="off"]) #searchform [role="option"],
+html:not([data-ef="off"]) form[action="/search"] [role="option"],
+html:not([data-ef="off"]) form[role="search"] [role="option"],
 html:not([data-ef="off"]) .gLFyf { color: var(--ef-fg) !important; }
-html:not([data-ef="off"]) #searchform [role="option"]:is(:hover, [aria-selected="true"], .sbhl) {
+html:not([data-ef="off"]) #searchform [role="option"]:is(:hover, [aria-selected="true"], .sbhl),
+html:not([data-ef="off"]) form[action="/search"] [role="option"]:is(:hover, [aria-selected="true"], .sbhl),
+html:not([data-ef="off"]) form[role="search"] [role="option"]:is(:hover, [aria-selected="true"], .sbhl) {
   background: color-mix(in srgb, var(--ef-blue) 14%, var(--ef-bg)) !important;
+}
+html:not([data-ef="off"]) :is(#searchform, form[action="/search"], form[role="search"]) input[type="submit"],
+html:not([data-ef="off"]) #gbqfbb {
+  background-color: var(--ef-control) !important;
+  border: 1px solid var(--ef-border) !important;
+  color: var(--ef-fg) !important;
 }
 
 /* Google dims header controls aggressively in dark mode. */
 html:not([data-ef="off"]) #searchform :where(button, [role="button"], svg, path),
+html:not([data-ef="off"]) form[action="/search"] :where(button, [role="button"], svg, path),
+html:not([data-ef="off"]) form[role="search"] :where(button, [role="button"], svg, path),
+html:not([data-ef="off"]) #gb :where(a:not([href*="ServiceLogin"]), button, [role="button"], svg, path),
 html:not([data-ef="off"]) div[role="navigation"] :where(a, button, [role="button"], span, svg, path),
 html:not([data-ef="off"]) a[href*="/save"] {
   color: var(--ef-header) !important;
@@ -77,6 +242,10 @@ html:not([data-ef="off"]) a[href*="/save"] {
 /* broad copy inside rich panels, especially AI Overview */
 html:not([data-ef="off"]) #rcnt :where(div, span, p, li, h1, h2, h3, h4),
 html:not([data-ef="off"]) #rhs :where(div, span, p, li, h1, h2, h3, h4) {
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]) #rso .related-question-pair,
+html:not([data-ef="off"]) #rso .related-question-pair :where(div, span, p) {
   color: var(--ef-fg) !important;
 }
 
@@ -114,7 +283,29 @@ html:not([data-ef="off"]) div[role="navigation"] :is(
   color: var(--ef-blue) !important;
   fill: currentColor !important;
 }
-html:not([data-ef="off"]) :is(footer, #fbar, footer a, #fbar a) { color: var(--ef-muted) !important; }
+html:not([data-ef="off"]) :is(footer, #fbar, footer a, #fbar a, .c93Gbe a, .pHiOh) { color: var(--ef-muted) !important; }
+html:not([data-ef="off"]) :is(
+  .c93Gbe, .c93Gbe .uU7dJb, .c93Gbe .KxwPGc,
+  #sfooter, #footcnt, #fbarcnt, #fbar, #fbar.f6F9Be, #sfooter .fbar, #sfooter .SLPe5b
+) {
+  background-color: var(--ef-bg) !important;
+  border-color: var(--ef-border) !important;
+  color: var(--ef-muted) !important;
+}
+html:not([data-ef="off"]) .c93Gbe :where(a, span, div) {
+  border-color: var(--ef-border) !important;
+  color: var(--ef-muted) !important;
+}
+html:not([data-ef="off"]) #sfooter :where(a, span, div, [role="button"]) {
+  border-color: var(--ef-border) !important;
+  color: var(--ef-muted) !important;
+}
+html:not([data-ef="off"]) #sfooter :where(.KwU3F, update-location, update-location *, .VtPCGb) {
+  color: var(--ef-blue) !important;
+}
+html:not([data-ef="off"]) #sfooter .unknown_loc {
+  background-color: var(--ef-muted) !important;
+}
 html:not([data-ef="off"]) ::selection { background: color-mix(in srgb, var(--ef-blue) 35%, transparent); }
 html:not([data-ef="off"]) #rcnt :where(a, button, [role="button"], [tabindex]):focus-visible {
   outline: 2px solid var(--ef-blue) !important;

@@ -20,7 +20,14 @@
       "run_at": "document_start"
     },
     {
-      "matches": ["https://www.google.com/search*", "https://www.google.co.uk/search*"],
+      "matches": [
+        "https://www.google.com/",
+        "https://www.google.com/webhp*",
+        "https://www.google.com/search*",
+        "https://www.google.co.uk/",
+        "https://www.google.co.uk/webhp*",
+        "https://www.google.co.uk/search*"
+      ],
       "css": ["google.css"],
       "js": ["content.js"],
       "run_at": "document_start"
