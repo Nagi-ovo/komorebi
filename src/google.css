@@ -248,6 +248,14 @@ html:not([data-ef="off"]) #rso .related-question-pair,
 html:not([data-ef="off"]) #rso .related-question-pair :where(div, span, p) {
   color: var(--ef-fg) !important;
 }
+html:not([data-ef="off"]) :is(#botstuff, #bres) .b2Rnsc {
+  background-color: var(--ef-control) !important;
+  border-color: var(--ef-border) !important;
+}
+html:not([data-ef="off"]) :is(#botstuff, #bres) .b2Rnsc :where(a, div, span, svg, path) {
+  color: var(--ef-blue) !important;
+  fill: currentColor !important;
+}
 
 /* result titles + links + visited */
 html:not([data-ef="off"]) #search h3, html:not([data-ef="off"]) #rso h3,
