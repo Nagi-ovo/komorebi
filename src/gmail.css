@@ -1,45 +1,47 @@
 /* Everforest for Gmail (mail.google.com) — best-effort, class/role-targeted.
    Gmail predates design tokens: surfaces are painted by hashed classes + inline
    styles over a table layout, so this is structural and fragile by nature. We
-   repaint the shell (nav, list, toolbars, reading pane) to Everforest and leave
-   the actual email HTML alone — in dark mode the message body is kept on a light
-   card so emails stay readable. Mode follows the popup, or the OS on "sync". */
+   repaint the shell (nav, list, toolbars, reading pane) to Everforest and float
+   the message body on a light card without rewriting email HTML. Mode follows
+   the popup, or the OS on "sync". */
 
 html:not([data-ef="off"]) {
   --ef-page: #efebd4; --ef-panel: #fdf6e3; --ef-elev: #fffbef;
   --ef-row-read: #fdf6e3; --ef-row-unread: #fffbef; --ef-hover: #efebd4; --ef-selected: #e9f0e9;
-  --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-border: #e0dcc7;
+  --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-ink: #3c4043; --ef-border: #e0dcc7;
   --ef-blue: #3a94c5; --ef-green: #8da101; --ef-on-accent: #2d353b;
-  --ef-search: #efebd4;
+  --ef-search: #efebd4; --ef-mail-card: #fdf6e3;
   color-scheme: light;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-page: #1e2326; --ef-panel: #2d353b; --ef-elev: #343f44;
   --ef-row-read: #2d353b; --ef-row-unread: #343f44; --ef-hover: #3d484d; --ef-selected: #3a515d;
-  --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-border: #4f585e;
+  --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-ink: #d3c6aa; --ef-border: #4f585e;
   --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
-  --ef-search: #343f44;
+  --ef-search: #343f44; --ef-mail-card: #fdf6e3;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
     --ef-page: #1e2326; --ef-panel: #2d353b; --ef-elev: #343f44;
     --ef-row-read: #2d353b; --ef-row-unread: #343f44; --ef-hover: #3d484d; --ef-selected: #3a515d;
-    --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-border: #4f585e;
+    --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-ink: #d3c6aa; --ef-border: #4f585e;
     --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
-    --ef-search: #343f44;
+    --ef-search: #343f44; --ef-mail-card: #fdf6e3;
     color-scheme: dark;
   }
 }
 
 /* ── app shell: page + panels ─────────────────────────────────────────────── */
 html:not([data-ef="off"]) body,
+html:not([data-ef="off"]) header,
 html:not([data-ef="off"]) .wl,
 html:not([data-ef="off"]) .aeN,
 html:not([data-ef="off"]) .bkK,
 html:not([data-ef="off"]) .ar5,
 html:not([data-ef="off"]) .bAw,
 html:not([data-ef="off"]) .brC-aT5-aOt-Jw,
+html:not([data-ef="off"]) [role="banner"],
 html:not([data-ef="off"]) [role="complementary"],
 html:not([data-ef="off"]) div[role="navigation"] { background-color: var(--ef-page) !important; }
 
@@ -61,16 +63,100 @@ html:not([data-ef="off"]) .M9 { background-color: var(--ef-elev) !important; }
 /* ── search bar ───────────────────────────────────────────────────────────── */
 html:not([data-ef="off"]) form[role="search"],
 html:not([data-ef="off"]) .gssb_e,
-html:not([data-ef="off"]) .aRp,
-html:not([data-ef="off"]) .gb_kd,
-html:not([data-ef="off"]) .Xr { background-color: var(--ef-search) !important; }
+html:not([data-ef="off"]) .aRp {
+  background-color: var(--ef-search) !important;
+  color: var(--ef-fg2) !important;
+}
+html:not([data-ef="off"]) form[role="search"] :where(input, textarea) {
+  color: var(--ef-ink) !important;
+}
+html:not([data-ef="off"]) form[role="search"] :where(input, textarea)::placeholder {
+  color: var(--ef-fg2) !important;
+  opacity: 1;
+}
+html:not([data-ef="off"]) form[role="search"] svg {
+  color: var(--ef-fg2) !important;
+}
+html:not([data-ef="off"]) form[role="search"] svg :is(path, rect)[fill="none"] {
+  fill: none !important;
+}
+html:not([data-ef="off"]) form[role="search"] svg path:not([fill="none"]):not([d^="M0 0h"]):not([d^="M0 0H"]):not([d^="M0,0h"]) {
+  fill: currentColor !important;
+}
+html:not([data-ef="off"]) form[role="search"] button:disabled {
+  color: var(--ef-fg2) !important;
+  position: relative;
+}
+html:not([data-ef="off"]) form[role="search"] button:disabled > :is(img, svg) {
+  opacity: 0 !important;
+}
+html:not([data-ef="off"]) form[role="search"] button:disabled::before {
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  content: "";
+  height: 14px;
+  left: 50%;
+  margin: -9px 0 0 -9px;
+  position: absolute;
+  top: 50%;
+  width: 14px;
+}
+html:not([data-ef="off"]) form[role="search"] button:disabled::after {
+  background-color: currentColor;
+  content: "";
+  height: 2px;
+  left: 50%;
+  margin: 4px 0 0 4px;
+  position: absolute;
+  top: 50%;
+  transform: rotate(45deg);
+  transform-origin: left center;
+  width: 8px;
+}
 
 /* ── message list rows ────────────────────────────────────────────────────── */
 html:not([data-ef="off"]) .zA.yO { background-color: var(--ef-row-read) !important; }
 html:not([data-ef="off"]) .zA.zE { background-color: var(--ef-row-unread) !important; }
+html:not([data-ef="off"]) .zA,
+html:not([data-ef="off"]) .aKh {
+  border-bottom: 1px solid var(--ef-border) !important;
+  box-shadow: none !important;
+}
 html:not([data-ef="off"]) .zA:hover { background-color: var(--ef-hover) !important; box-shadow: none !important; }
 html:not([data-ef="off"]) .zA.x7,
 html:not([data-ef="off"]) .zA.aps { background-color: var(--ef-selected) !important; }
+
+/* account rollouts: desktop notification strip, mail toolbar, input tools */
+html:not([data-ef="off"]) .b8.UC.bAp {
+  background-color: var(--ef-elev) !important;
+  border-bottom: 1px solid var(--ef-border) !important;
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]) .b8.UC.bAp :where(a, button, [role="button"]) {
+  color: var(--ef-blue) !important;
+}
+html:not([data-ef="off"]) .vh {
+  background-color: var(--ef-elev) !important;
+  border: 1px solid var(--ef-border) !important;
+  box-shadow: none !important;
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]) .vh :where(a, button, [role="button"]) {
+  color: var(--ef-blue) !important;
+}
+html:not([data-ef="off"]) :where(.G-atb, [gh="mtb"], [role="main"]) :where(.T-I.T-I-ax7, .d-Na-JX-I) {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  color: var(--ef-fg2) !important;
+}
+html:not([data-ef="off"]) :where(.G-atb, [gh="mtb"], [role="main"]) :where(.T-I.T-I-ax7, .d-Na-JX-I):hover {
+  background-color: var(--ef-hover) !important;
+}
+html:not([data-ef="off"]):not([data-ef-mode="dark"]) :where(.G-atb, [gh="mtb"], [role="main"]) :where(.T-I.T-I-ax7, .d-Na-JX-I) :is(span, div):empty {
+  filter: brightness(0) saturate(100%);
+  opacity: 0.55;
+}
 
 /* ── text ─────────────────────────────────────────────────────────────────── */
 html:not([data-ef="off"]) body,
@@ -82,6 +168,146 @@ html:not([data-ef="off"]) .hP, html:not([data-ef="off"]) .ha h2 { color: var(--e
 html:not([data-ef="off"]) .y2, html:not([data-ef="off"]) .xW span,
 html:not([data-ef="off"]) .xY span, html:not([data-ef="off"]) .a4W .y2,
 html:not([data-ef="off"]) .aYS, html:not([data-ef="off"]) .gD .go { color: var(--ef-fg2) !important; }
+html:not([data-ef="off"]) :is(div[role="navigation"], .aeN) :where(a, button, [role="button"], [role="link"],
+  h1, h2, h3, [role="heading"], .TO, .TN, .aio, .n0, .J-Ke) {
+  color: var(--ef-ink) !important;
+  text-shadow: none !important;
+}
+html:not([data-ef="off"]) :is(div[role="navigation"], .aeN) :where(a, button, [role="button"], [role="link"],
+  h1, h2, h3, [role="heading"]) :where(span, div) {
+  color: inherit !important;
+  text-shadow: none !important;
+}
+html:not([data-ef="off"]) :is(div[role="navigation"], .aeN) :where(.bsU, .CJ) {
+  color: var(--ef-ink) !important;
+  text-shadow: none !important;
+}
+html:not([data-ef="off"]) :is(div[role="navigation"], .aeN) svg {
+  color: var(--ef-fg2) !important;
+}
+html:not([data-ef="off"]) :is(div[role="navigation"], .aeN) svg :is(path, rect, polygon, circle)[fill="none"] {
+  fill: none !important;
+}
+html:not([data-ef="off"]) :is(div[role="navigation"], .aeN) svg [stroke="none"] {
+  stroke: none !important;
+}
+html:not([data-ef="off"]) :is(div[role="navigation"], .aeN) svg path:is([d^="M0 0h"], [d^="M0 0H"], [d^="M0,0h"]) {
+  fill: none !important;
+  stroke: none !important;
+}
+html:not([data-ef="off"]) :is(div[role="navigation"], .aeN) svg :is(path, rect, polygon, circle):not([fill="none"]):not([d^="M0 0h"]):not([d^="M0 0H"]):not([d^="M0,0h"]) {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(div[role="navigation"], .aeN) :is(.qj, .qr, .pM, .asa, .aik) {
+  filter: brightness(0) saturate(100%);
+  opacity: 0.48;
+}
+html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(div[role="navigation"], .aeN) :is(.TO, .TN, .aio, .n0) :is(span, div):empty {
+  filter: brightness(0) saturate(100%);
+  opacity: 0.48;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(button, [role="button"]) {
+  color: var(--ef-fg2) !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(button, [role="button"]) svg {
+  color: inherit !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(button, [role="button"]) svg :is(path, rect, polygon, circle)[fill="none"] {
+  fill: none !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(button, [role="button"]) svg [stroke="none"] {
+  stroke: none !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(button, [role="button"]) svg path:is([d^="M0 0h"], [d^="M0 0H"], [d^="M0,0h"]) {
+  fill: none !important;
+  stroke: none !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(button, [role="button"]) svg :is(path, rect, polygon, circle):not([fill="none"]):not([d^="M0 0h"]):not([d^="M0 0H"]):not([d^="M0,0h"]) {
+  fill: currentColor !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(button, [role="button"]) svg :is(path, rect, polygon, circle)[stroke]:not([stroke="none"]) {
+  stroke: currentColor !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(.gb_1e, .gb_ye, .FH, .VYBDae-JX-I, .gb_C:not(.gb_6a)) {
+  box-shadow: none !important;
+  color: var(--ef-fg2) !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(.gb_1e, .gb_ye, .FH, .VYBDae-JX-I, .gb_C:not(.gb_6a)) :where(svg, span, div) {
+  box-shadow: none !important;
+  color: inherit !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(.gb_1e, .gb_ye, .FH, .VYBDae-JX-I, .gb_C:not(.gb_6a)) svg :where(path, rect, polygon, circle):not([fill="none"]):not([d^="M0 0h"]):not([d^="M0 0H"]):not([d^="M0,0h"]) {
+  fill: currentColor !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :where(.gb_1e, .gb_ye, .FH, .VYBDae-JX-I, .gb_C:not(.gb_6a)) svg :where(path, rect, polygon, circle)[stroke]:not([stroke="none"]) {
+  stroke: currentColor !important;
+}
+html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(header, [role="banner"], form[role="search"]) img:is([src*="white"], [src*="dark"]):not([src*="googleusercontent"]),
+html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(header, [role="banner"], form[role="search"]) img[src*="_white_"],
+html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(header, [role="banner"], form[role="search"]) img[src*="/white/"] {
+  filter: brightness(0) saturate(100%);
+  opacity: 0.55;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) :is(img.gb_6c, img[src*="logo_gmail_lockup"]) {
+  filter: none !important;
+  opacity: 1 !important;
+}
+html:not([data-ef="off"]) :is(header, [role="banner"]) img.gb_6c[src*="logo_gmail_lockup_dark"] {
+  content: url("https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r7.png") !important;
+}
+html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(header, [role="banner"]) :is(button, [role="button"]):has(img[src*="help_outline_white_24dp"]) {
+  color: var(--ef-fg2) !important;
+  position: relative;
+}
+html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(header, [role="banner"]) :is(button, [role="button"]):has(img[src*="help_outline_white_24dp"]) > img {
+  opacity: 0 !important;
+}
+html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(header, [role="banner"]) :is(button, [role="button"]):has(img[src*="help_outline_white_24dp"])::before {
+  align-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  content: "?";
+  display: flex;
+  font: 700 14px/1 system-ui, sans-serif;
+  height: 20px;
+  justify-content: center;
+  left: 50%;
+  margin: -12px 0 0 -12px;
+  position: absolute;
+  top: 50%;
+  width: 20px;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] :is(div[role="navigation"], .aeN) :is(.qj, .qr, .pM, .asa, .aik) {
+  filter: none;
+  opacity: 0.72;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"] :where(.G-atb, [gh="mtb"], [role="main"]) :where(.T-I.T-I-ax7, .d-Na-JX-I) :is(span, div):empty,
+html:not([data-ef="off"])[data-ef-mode="dark"] :is(div[role="navigation"], .aeN) :is(.TO, .TN, .aio, .n0) :is(span, div):empty,
+html:not([data-ef="off"])[data-ef-mode="dark"] :is(header, [role="banner"], form[role="search"]) img:is([src*="white"], [src*="dark"]):not([src*="googleusercontent"]),
+html:not([data-ef="off"])[data-ef-mode="dark"] :is(header, [role="banner"], form[role="search"]) img[src*="_white_"],
+html:not([data-ef="off"])[data-ef-mode="dark"] :is(header, [role="banner"], form[role="search"]) img[src*="/white/"] {
+  filter: none;
+  opacity: 0.72;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(div[role="navigation"], .aeN) :is(.qj, .qr, .pM, .asa, .aik) {
+    filter: none;
+    opacity: 0.72;
+  }
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) :where(.G-atb, [gh="mtb"], [role="main"]) :where(.T-I.T-I-ax7, .d-Na-JX-I) :is(span, div):empty,
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(div[role="navigation"], .aeN) :is(.TO, .TN, .aio, .n0) :is(span, div):empty,
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(header, [role="banner"], form[role="search"]) img:is([src*="white"], [src*="dark"]):not([src*="googleusercontent"]),
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(header, [role="banner"], form[role="search"]) img[src*="_white_"],
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(header, [role="banner"], form[role="search"]) img[src*="/white/"] {
+    filter: none;
+    opacity: 0.72;
+  }
+}
 
 /* ── compose button → Everforest green ────────────────────────────────────── */
 html:not([data-ef="off"]) .T-I.T-I-KE.L3,
@@ -90,10 +316,72 @@ html:not([data-ef="off"]) .T-I.T-I-KE.L3 *,
 html:not([data-ef="off"]) .z0 > .L3 * { color: var(--ef-on-accent) !important; }
 
 /* selected folder / label in the left nav */
+html:not([data-ef="off"]) .TO.nZ,
+html:not([data-ef="off"]) .TO.aiq,
 html:not([data-ef="off"]) .TO.nZ .TN,
 html:not([data-ef="off"]) .TO.aiq .TN,
 html:not([data-ef="off"]) .aim.b3O .TO { background-color: var(--ef-selected) !important; }
+html:not([data-ef="off"]) .TO.nZ,
+html:not([data-ef="off"]) .TO.aiq,
+html:not([data-ef="off"]) .TO.nZ .TN,
+html:not([data-ef="off"]) .TO.aiq .TN,
+html:not([data-ef="off"]) .aim.b3O .TO {
+  box-shadow: none !important;
+}
+html:not([data-ef="off"]) .TO:hover,
 html:not([data-ef="off"]) .TO:hover .TN { background-color: var(--ef-hover) !important; }
+
+/* right side panel: narrow Workspace rail and expanded Gemini panel */
+html:not([data-ef="off"]) .aUx,
+html:not([data-ef="off"]) [aria-label="Gemini"],
+html:not([data-ef="off"]) .aHij0b-aLs.mhvkBc {
+  background-color: var(--ef-panel) !important;
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]) .aHij0b-aLs.mhvkBc,
+html:not([data-ef="off"]) .ccYpFf,
+html:not([data-ef="off"]) .OA7Etd {
+  border-color: var(--ef-border) !important;
+}
+html:not([data-ef="off"]) .aUx :where(h1, h2, h3, [role="heading"], p, span, div),
+html:not([data-ef="off"]) [aria-label="Gemini"] :where(h1, h2, h3, [role="heading"], p, span, div) {
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]) .aUx :where(button, [role="button"], a),
+html:not([data-ef="off"]) [aria-label="Gemini"] :where(button, [role="button"], a) {
+  color: var(--ef-fg2) !important;
+}
+html:not([data-ef="off"]) .aUx :where(input, textarea, [contenteditable="true"]),
+html:not([data-ef="off"]) [aria-label="Gemini"] :where(input, textarea, [contenteditable="true"]) {
+  background-color: var(--ef-elev) !important;
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]) .aUx svg,
+html:not([data-ef="off"]) [aria-label="Gemini"] svg {
+  color: var(--ef-fg2) !important;
+}
+html:not([data-ef="off"]) .aUx svg :is(path, rect, polygon, circle)[fill="none"],
+html:not([data-ef="off"]) [aria-label="Gemini"] svg :is(path, rect, polygon, circle)[fill="none"] {
+  fill: none !important;
+}
+html:not([data-ef="off"]) .aUx svg :is(path, rect, polygon, circle):not([fill="none"]):not([d^="M0 0h"]):not([d^="M0 0H"]):not([d^="M0,0h"]),
+html:not([data-ef="off"]) [aria-label="Gemini"] svg :is(path, rect, polygon, circle):not([fill="none"]):not([d^="M0 0h"]):not([d^="M0 0H"]):not([d^="M0,0h"]) {
+  fill: currentColor !important;
+  stroke: currentColor !important;
+}
+html:not([data-ef="off"]) :is(.DQHLAd, .mQZRwe) {
+  filter: none !important;
+  opacity: 0 !important;
+}
+
+/* Gmail custom themes leave high-contrast shadows behind on some accounts. */
+html:not([data-ef="off"]) :is(.J-Ke.n0, .bsU, .CJ) {
+  color: var(--ef-ink) !important;
+  text-shadow: none !important;
+}
+html:not([data-ef="off"]) :is(.zA, .aKh, .TO.nZ, .TO.aiq, .vh) {
+  box-shadow: none !important;
+}
 
 /* links / accents */
 html:not([data-ef="off"]) [role="main"] a span[dir],
@@ -104,16 +392,16 @@ html:not([data-ef="off"]) :is(input[type="text"], input[type="search"], input[ty
   input[type="url"], input[type="number"], textarea, select):not(.gb_kd):not([class*="gb_"]) {
   background-color: var(--ef-elev) !important; color: var(--ef-fg) !important;
 }
+html:not([data-ef="off"]) :is(input[type="text"], input[type="search"], input[type="email"],
+  input[type="url"], input[type="number"], textarea)::placeholder {
+  color: var(--ef-fg2) !important;
+  opacity: 1;
+}
 
 /* ── keep the actual email readable ───────────────────────────────────────── */
-/* light mode: emails sit on the light panel untouched. dark mode: float them on
-   a light card so HTML mails (which assume a light background) don't break. */
-html:not([data-ef="off"])[data-ef-mode="dark"] :is(.a3s, .ii.gt, .gmail_quote, .adn .gs),
-html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(.a3s, .ii.gt, .gmail_quote, .adn .gs) {
-  background-color: #fdf6e3 !important;
+/* Float message bodies on a light Everforest card in every mode; many HTML mails
+   assume a light canvas, and we still leave their inner markup and text alone. */
+html:not([data-ef="off"]) :is(.a3s, .ii.gt, .gmail_quote, .adn .gs) {
+  background-color: var(--ef-mail-card) !important;
 }
-@media (prefers-color-scheme: light) {
-  html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(.a3s, .ii.gt, .gmail_quote, .adn .gs) {
-    background-color: transparent !important;
-  }
-}
+html:not([data-ef="off"]) :is(.a3s, .ii.gt, .adn .gs) { color-scheme: light; }
