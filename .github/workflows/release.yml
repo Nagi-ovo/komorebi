@@ -20,6 +20,7 @@ jobs:
 
       - run: bun install --frozen-lockfile
       - run: bun run typecheck
+      - run: bun test
       - run: bun run build
 
       - name: Package extension + browser themes

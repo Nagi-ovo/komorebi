@@ -18,6 +18,7 @@ import { buildTokens } from "./mapping";
 
 const ROOT = path.resolve(import.meta.dir, "..");
 const DIST = path.join(ROOT, "dist");
+const EXTENSION_VERSION = (await Bun.file(path.join(ROOT, "manifest.json")).json() as { version: string }).version;
 
 // Enabled when not explicitly turned off. "Sync" (follow GitHub's own
 // data-color-mode) is the *implicit* default — it matches when the user hasn't
@@ -102,7 +103,7 @@ function chromeThemeManifest(mode: Mode): unknown {
   return {
     manifest_version: 3,
     name: `Komorebi ${mode === "dark" ? "Dark" : "Light"}`,
-    version: "1.0.0",
+    version: EXTENSION_VERSION,
     description:
       `A calm Everforest-based theme for the Chrome browser UI — ` +
       `companion to the Komorebi web theme.`,

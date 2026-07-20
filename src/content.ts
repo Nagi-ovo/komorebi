@@ -14,19 +14,42 @@
  * the inherited Everforest tokens so it stays light/dark-correct on its own.
  */
 
-import { loadSettings, onSettingsChanged, siteForHost, type Settings } from "./settings";
+import {
+  isGoogleImagesUrl,
+  isXGrokPath,
+  loadSettings,
+  onSettingsChanged,
+  siteForHost,
+  type Settings,
+} from "./settings";
 
 const root = document.documentElement;
 const site = siteForHost(location.hostname);
 
-function syncGooglePageKind(): void {
-  if (site !== "google") return;
-  const params = new URLSearchParams(location.search);
-  root.toggleAttribute("data-ef-google-images", params.get("udm") === "2" || params.get("tbm") === "isch");
+function syncPageKind(): void {
+  if (site === "google") root.toggleAttribute("data-ef-google-images", isGoogleImagesUrl(location.href));
+  if (site === "x") root.toggleAttribute("data-ef-x-grok", isXGrokPath(location.pathname));
+}
+
+// Google and X are SPAs: their page kind can change without a document load.
+// A mutation callback is a cheap, page-world-independent signal; the URL guard
+// makes the common path a single string comparison even on very busy pages.
+let lastRouteHref = "";
+function syncPageKindOnRouteChange(): void {
+  if (location.href === lastRouteHref) return;
+  lastRouteHref = location.href;
+  syncPageKind();
+}
+
+if (site === "google" || site === "x") {
+  syncPageKindOnRouteChange();
+  addEventListener("popstate", syncPageKindOnRouteChange);
+  addEventListener("hashchange", syncPageKindOnRouteChange);
+  new MutationObserver(syncPageKindOnRouteChange).observe(root, { childList: true, subtree: true });
 }
 
 function apply(s: Settings): void {
-  syncGooglePageKind();
+  syncPageKind();
 
   const on = s.enabled && (site ? s.sites[site] !== false : true);
   if (on) root.removeAttribute("data-ef");

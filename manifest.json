@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Komorebi",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "A calm Everforest color theme for the web, in matching light and dark — softer, consistent colors that are easier on the eyes.",
   "author": "Jesse Zhang",
   "homepage_url": "https://github.com/Nagi-ovo/komorebi",
@@ -33,7 +33,14 @@
       "run_at": "document_start"
     },
     {
-      "matches": ["https://x.com/*", "https://twitter.com/*", "https://mobile.x.com/*"],
+      "matches": [
+        "https://x.com/*",
+        "https://www.x.com/*",
+        "https://mobile.x.com/*",
+        "https://twitter.com/*",
+        "https://www.twitter.com/*",
+        "https://mobile.twitter.com/*"
+      ],
       "css": ["x.css"],
       "js": ["content.js"],
       "run_at": "document_start"
@@ -98,7 +105,7 @@
       "run_at": "document_start"
     },
     {
-      "matches": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
+      "matches": ["https://youtube.com/*", "https://www.youtube.com/*", "https://m.youtube.com/*"],
       "css": ["youtube.css"],
       "js": ["content.js"],
       "run_at": "document_start"

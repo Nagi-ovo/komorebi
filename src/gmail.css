@@ -11,7 +11,7 @@ html:not([data-ef="off"]) {
   --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-ink: #3c4043; --ef-border: #e0dcc7;
   --ef-blue: #3a94c5; --ef-green: #8da101; --ef-on-accent: #2d353b;
   --ef-search: #efebd4; --ef-mail-card: #fdf6e3;
-  color-scheme: light;
+  color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-page: #1e2326; --ef-panel: #2d353b; --ef-elev: #343f44;
@@ -19,7 +19,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-ink: #d3c6aa; --ef-border: #4f585e;
   --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
   --ef-search: #343f44; --ef-mail-card: #fdf6e3;
-  color-scheme: dark;
+  color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
@@ -28,7 +28,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-ink: #d3c6aa; --ef-border: #4f585e;
     --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
     --ef-search: #343f44; --ef-mail-card: #fdf6e3;
-    color-scheme: dark;
+    color-scheme: dark !important;
   }
 }
 
@@ -257,8 +257,13 @@ html:not([data-ef="off"]) :is(header, [role="banner"]) :is(img.gb_6c, img[src*="
   filter: none !important;
   opacity: 1 !important;
 }
-html:not([data-ef="off"]) :is(header, [role="banner"]) img.gb_6c[src*="logo_gmail_lockup_dark"] {
+html:not([data-ef="off"])[data-ef-mode="light"] :is(header, [role="banner"]) img.gb_6c[src*="logo_gmail_lockup_dark"] {
   content: url("https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r7.png") !important;
+}
+@media (prefers-color-scheme: light) {
+  html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(header, [role="banner"]) img.gb_6c[src*="logo_gmail_lockup_dark"] {
+    content: url("https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r7.png") !important;
+  }
 }
 html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(header, [role="banner"]) :is(button, [role="button"]):has(img[src*="help_outline_white_24dp"]) {
   color: var(--ef-fg2) !important;
@@ -399,9 +404,22 @@ html:not([data-ef="off"]) :is(input[type="text"], input[type="search"], input[ty
 }
 
 /* ── keep the actual email readable ───────────────────────────────────────── */
-/* Float message bodies on a light Everforest card in every mode; many HTML mails
-   assume a light canvas, and we still leave their inner markup and text alone. */
-html:not([data-ef="off"]) :is(.a3s, .ii.gt, .gmail_quote, .adn .gs) {
+/* Float the actual message body on a light card. Keep the scope narrow: .adn .gs
+   also wraps message chrome, and painting it caused large white blocks in split
+   panes. A baseline ink colour protects plain/transparent mail in dark mode;
+   explicit colours inside HTML mail remain untouched. */
+html:not([data-ef="off"]) :is(.a3s, .ii.gt) {
   background-color: var(--ef-mail-card) !important;
+  color: #3c4043 !important;
+  color-scheme: light !important;
 }
-html:not([data-ef="off"]) :is(.a3s, .ii.gt, .adn .gs) { color-scheme: light; }
+html:not([data-ef="off"]) :is(.a3s, .ii.gt) .gmail_quote {
+  border-color: #e0dcc7 !important;
+}
+
+/* Compose/reply editors belong to Gmail chrome rather than received HTML. */
+html:not([data-ef="off"]) :is(.M9, [role="dialog"]) [contenteditable="true"] {
+  background-color: var(--ef-elev) !important;
+  color: var(--ef-fg) !important;
+  caret-color: var(--ef-blue) !important;
+}

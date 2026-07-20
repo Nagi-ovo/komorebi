@@ -31,7 +31,7 @@ html:not([data-ef="off"]) {
   --ef-inv: #2d353b; --ef-on-inv: #fdf6e3;
   --ef-hover: #efebd4; --ef-selected: #e9f0e9;
   --ef-icon-filter: none;
-  color-scheme: light;
+  color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-page: #2d353b; --ef-surface: #2d353b; --ef-bright: #343f44;
@@ -49,7 +49,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   /* sprite-image toolbar icons are near-black; invert+hue-rotate keeps colour
      icons roughly recognisable while turning monochrome glyphs light. */
   --ef-icon-filter: invert(0.9) hue-rotate(180deg) brightness(1.05);
-  color-scheme: dark;
+  color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
@@ -66,7 +66,28 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
     --ef-hover: #3d484d; --ef-selected: #3a515d;
     --ef-icon-filter: invert(0.9) hue-rotate(180deg) brightness(1.05);
-    color-scheme: dark;
+    color-scheme: dark !important;
+  }
+}
+
+/* Slides needs stronger separation than Docs/Sheets: a cool neutral workspace
+   keeps the white slide canvas crisp, while the filmstrip and content rail stay
+   warm. Gate these tokens on a Slides-only marker so other editors do not move. */
+html:not([data-ef="off"]):has(#punch-start-presentation-container) {
+  --ef-slides-workspace: #d7ddd4;
+  --ef-slides-panel: #fbf5e3;
+  --ef-slides-divider: #c8cec3;
+}
+html:not([data-ef="off"])[data-ef-mode="dark"]:has(#punch-start-presentation-container) {
+  --ef-slides-workspace: #1e2326;
+  --ef-slides-panel: #2d353b;
+  --ef-slides-divider: #4f585e;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]):has(#punch-start-presentation-container) {
+    --ef-slides-workspace: #1e2326;
+    --ef-slides-panel: #2d353b;
+    --ef-slides-divider: #4f585e;
   }
 }
 
@@ -201,11 +222,19 @@ html:not([data-ef="off"]) :is(#docs-editor-container, #docs-editor, #workspace-c
   .punch-editor-canvas-container) {
   background-color: var(--ef-dim) !important;
 }
+html:not([data-ef="off"]):has(#punch-start-presentation-container)
+  :is(#docs-editor-container, #docs-editor, #slides-view, #workspace-container, .workspace-container,
+  .punch-workspace, .punch-editor-canvas-container) {
+  background-color: var(--ef-slides-workspace) !important;
+}
 
 /* top chrome: header, menu bar, title bar */
-html:not([data-ef="off"]) :is(#docs-chrome, .docs-material, #docs-header, .docs-titlebar-buttons,
+html:not([data-ef="off"]) :is(#docs-chrome, #docs-header, .docs-titlebar-buttons,
   .docs-title-outer, #docs-menubar, .docs-menubar, .docs-menubar-container) {
   background-color: var(--ef-surface) !important;
+}
+html:not([data-ef="off"]):has(#punch-start-presentation-container) #docs-header {
+  border-bottom: 1px solid var(--ef-outline-var) !important;
 }
 
 /* toolbar row */
@@ -221,6 +250,22 @@ html:not([data-ef="off"]) :is(.filmstrip, .punch-filmstrip-wrapper, #filmstrip,
   .punch-editor-notes, .punch-notes-container) {
   background-color: var(--ef-surface) !important;
 }
+html:not([data-ef="off"]):has(#punch-start-presentation-container)
+  :is(.filmstrip, .punch-filmstrip-wrapper, #filmstrip) {
+  background-color: var(--ef-slides-panel) !important;
+}
+html:not([data-ef="off"]):has(#punch-start-presentation-container)
+  :is(.filmstrip, .punch-filmstrip-wrapper) {
+  border-right: 1px solid var(--ef-slides-divider) !important;
+}
+html:not([data-ef="off"]):has(#punch-start-presentation-container)
+  :is(#speakernotes-container, #speakernotes-workspace-container, #speakernotes, #speakernotes-dragger,
+  .punch-editor-notes, .punch-notes-container) {
+  background-color: var(--ef-slides-panel) !important;
+}
+html:not([data-ef="off"]):has(#punch-start-presentation-container) #speakernotes-container {
+  border-top: 1px solid var(--ef-slides-divider) !important;
+}
 /* the notes text is drawn as SVG (like the slide) — keep its canvas on a light
    card in both modes so the dark note text stays readable, the way we float
    email bodies on a light card in dark mode. */
@@ -229,29 +274,65 @@ html:not([data-ef="off"]) :is(#speakernotes-workspace, .punch-editor-notetextvie
 }
 
 /* right "insert" rail (Slide / Image / Templates / … — appsSketchy* component) */
-html:not([data-ef="off"]) :is([class*="ContentLibraryRailContainer"],
-  [class*="ContentLibraryRailToolbar"], #content-library-rail-server-rendered-refreshed) {
+html:not([data-ef="off"]) :is(
+  [class*="ContentLibraryRailContainer"]:not([class*="Button"]),
+  [class*="ContentLibraryRailToolbar"]:not([class*="Button"]),
+  #content-library-rail-server-rendered-refreshed) {
   background-color: var(--ef-surface) !important;
 }
+html:not([data-ef="off"]):has(#punch-start-presentation-container)
+  :is([class*="ContentLibraryRailContainer"]:not([class*="Button"]),
+  [class*="ContentLibraryRailToolbar"]:not([class*="Button"]),
+  #content-library-rail-server-rendered-refreshed) {
+  background-color: var(--ef-slides-panel) !important;
+}
+html:not([data-ef="off"]):has(#punch-start-presentation-container)
+  :is([class*="ContentLibraryRailContainer"]:not([class*="Button"]),
+  #content-library-rail-server-rendered-refreshed) {
+  border-left: 1px solid var(--ef-slides-divider) !important;
+}
 html:not([data-ef="off"]) [class*="ContentLibraryRailToolbarButtonLabel"] { color: var(--ef-fg) !important; }
+html:not([data-ef="off"]) [class*="ContentLibraryRailToolbarButtonContainer"] {
+  border-radius: 8px;
+  transition: background-color 120ms ease;
+}
 html:not([data-ef="off"]) [class*="ContentLibraryRailToolbarButtonContainer"]:hover {
   background-color: var(--ef-hover) !important;
 }
+html:not([data-ef="off"]) [class*="ContentLibraryRailToolbarButtonContainer"]:focus-visible {
+  outline: 2px solid var(--ef-blue) !important;
+  outline-offset: -2px;
+}
 
-/* text across the chrome — crisp ink (so menus/toolbars don't look washed) */
-html:not([data-ef="off"]) :is(#docs-chrome, .docs-menubar, #docs-toolbar-wrapper) :is(*, *::before) {
+/* Text across the chrome — crisp ink (so menus/toolbars don't look washed).
+   Do not colour every descendant: Google renders both the 2026 product logo
+   and toolbar glyphs as enormous SVG sprites inside clipped containers. A
+   universal `*`/pseudo-element rule can accidentally restyle those sprite
+   layers (and previously also exposed the always-present rename input). */
+html:not([data-ef="off"]) :is(#docs-chrome, .docs-menubar, #docs-toolbar-wrapper,
+  .menu-button, .goog-toolbar-button-caption, .goog-toolbar-menu-button-caption,
+  .goog-toolbar-combo-button-caption, .docs-toolbar-text-button) {
   color: var(--ef-ink) !important;
 }
-html:not([data-ef="off"]) :is(.docs-title-input, .docs-title-outer, #docs-title-widget) {
+html:not([data-ef="off"]) :is(.docs-title-outer, #docs-title-widget) {
   color: var(--ef-ink) !important;
 }
-/* The title widget has a hidden, absolutely-positioned "sizer" label that
-   mirrors the title text to auto-size the input; Google paints it transparent.
-   Our chrome-text colouring would make it opaque and render it ON TOP of the
-   real input (the doubled / overlapping title). Force it back to transparent —
-   the #docs-chrome id keeps this ahead of the broad chrome-text rule. */
+/* Google displays the title with the label and only reveals the input while it
+   is focused. Colouring the always-present input clips its 22px line-height into
+   a 20px box, producing the struck-through title seen in Slides. Restore the
+   native label/input hand-off explicitly. */
 html:not([data-ef="off"]) #docs-chrome :is(.docs-title-input-label, .docs-title-input-label-inner) {
+  color: var(--ef-ink) !important;
+}
+html:not([data-ef="off"]) #docs-chrome .docs-title-input:not(:focus) {
   color: transparent !important;
+}
+html:not([data-ef="off"]) #docs-chrome:has(.docs-title-input:focus)
+  :is(.docs-title-input-label, .docs-title-input-label-inner) {
+  color: transparent !important;
+}
+html:not([data-ef="off"]) #docs-chrome .docs-title-input:focus {
+  color: var(--ef-ink) !important;
 }
 
 /* menubar hover + open state */
@@ -339,10 +420,50 @@ html:not([data-ef="off"]) :is(.docs-ruler, #sketchy-horizontal-ruler, .docs-hori
   background-color: var(--ef-dim) !important;
   border-color: var(--ef-outline-var) !important;
 }
+html:not([data-ef="off"]):has(#punch-start-presentation-container)
+  :is(.docs-ruler, #sketchy-horizontal-ruler, .docs-horizontal-ruler,
+  .docs-vertical-ruler, .docs-ruler-background-inner) {
+  background-color: var(--ef-slides-workspace) !important;
+  border-color: var(--ef-slides-divider) !important;
+}
 html:not([data-ef="off"]) .app-switcher-button-icon-background { background-color: transparent !important; }
 
-/* sprite-image toolbar / menu icons — recolour for dark mode (no-op in light) */
-html:not([data-ef="off"]) :is(.docs-icon-img) { filter: var(--ef-icon-filter); }
+/* Keep Google's native titlebar sprites. Theme styles can change the titlebar
+   box geometry and make an ancestor clip the badges; lift the badge layer and
+   make every outer container visible while preserving the icon's own 20px
+   sprite crop. */
+html:not([data-ef="off"]):has(#punch-start-presentation-container)
+  :is(#docs-titlebar, #docs-titlebar-container, .docs-title-outer,
+  .docs-titlebar-badges, .docs-titlebar-badge-container) {
+  overflow: visible !important;
+}
+html:not([data-ef="off"]):has(#punch-start-presentation-container)
+  :is(#docs-star, #docs-folder, #docs-save-indicator-badge) {
+  position: relative !important;
+  z-index: 10 !important;
+  min-height: 28px !important;
+  overflow: visible !important;
+  contain: none !important;
+}
+html:not([data-ef="off"]):has(#punch-start-presentation-container)
+  :is(#docs-star, #docs-folder, #docs-save-indicator-badge) .docs-icon {
+  width: 20px !important;
+  height: 20px !important;
+  overflow: hidden !important;
+  transform: none !important;
+}
+
+/* Do not touch native sprite icons in light mode. Even a nominally no-op
+   override can change their rasterisation. Recolour them only in actual dark
+   mode, where the native dark glyphs otherwise disappear. */
+html:not([data-ef="off"])[data-ef-mode="dark"] .docs-icon-img {
+  filter: var(--ef-icon-filter);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) .docs-icon-img {
+    filter: var(--ef-icon-filter);
+  }
+}
 
 /* scrollbars */
 html:not([data-ef="off"]) ::-webkit-scrollbar { width: 12px; height: 12px; }

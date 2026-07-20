@@ -1,0 +1,4 @@
+interface:
+  display_name: "Komorebi Release"
+  short_description: "Komorebi release workflow and notes"
+  default_prompt: "Use $komorebi-release to cut a Komorebi release and write concise GitHub Release notes."

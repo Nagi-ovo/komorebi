@@ -10,37 +10,40 @@ html:not([data-ef="off"]) {
   /* triplets */
   --eft-bg: 44 87% 94%; --eft-s1: 45 100% 97%; --eft-s2: 51 55% 90%; --eft-s3: 51 46% 88%; --eft-s4: 51 34% 85%;
   --eft-inset: 51 46% 88%; --eft-muted: 51 55% 90%; --eft-accent: 51 55% 90%; --eft-border: 50 29% 83%;
-  --eft-fg: 202 11% 40%; --eft-fg2: 202 10% 49%; --eft-fg3: 116 7% 54%; --eft-invert: 44 87% 94%;
+  --eft-fg: 202 11% 40%; --eft-fg2: 202 10% 49%; --eft-fg3: 116 7% 54%; --eft-invert: 206 13% 20%;
   --eft-link: 201 55% 50%; --eft-green: 68 99% 32%; --eft-red: 1 92% 65%; --eft-yellow: 43 100% 44%;
   /* full colours */
   --efh-bg: #fdf6e3; --efh-bg2: #fffbef; --efh-card: #fffbef; --efh-popover: #fffbef; --efh-input: #fffbef;
   --efh-ring: #3a94c5; --efh-border-faint: rgba(92,106,114,.10); --efh-border: rgba(92,106,114,.20);
   --efh-btn: #8da101; --efh-btn-hover: #798a00; --efh-btn-secondary: #f4f0d9;
   --efh-hover: rgba(92,106,114,.06); --efh-toggle: rgba(92,106,114,.10);
-  color-scheme: light;
+  --efh-code-bg: #efebd4; --efh-code-head: #f4f0d9; --efh-code-fg: #5c6a72;
+  color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --eft-bg: 206 13% 20%; --eft-s1: 205 13% 18%; --eft-s2: 199 13% 24%; --eft-s3: 199 12% 27%; --eft-s4: 201 11% 31%;
   --eft-inset: 202 12% 13%; --eft-muted: 199 13% 24%; --eft-accent: 199 13% 24%; --eft-border: 204 9% 34%;
-  --eft-fg: 41 32% 75%; --eft-fg2: 135 7% 64%; --eft-fg3: 138 6% 55%; --eft-invert: 206 13% 20%;
+  --eft-fg: 41 32% 75%; --eft-fg2: 135 7% 64%; --eft-fg3: 138 6% 55%; --eft-invert: 41 32% 75%;
   --eft-link: 172 31% 62%; --eft-green: 83 34% 63%; --eft-red: 359 68% 70%; --eft-yellow: 40 56% 68%;
   --efh-bg: #2d353b; --efh-bg2: #232a2e; --efh-card: #343f44; --efh-popover: #3d484d; --efh-input: #343f44;
   --efh-ring: #7fbbb3; --efh-border-faint: rgba(211,198,170,.10); --efh-border: rgba(211,198,170,.16);
   --efh-btn: #a7c080; --efh-btn-hover: #b6cd93; --efh-btn-secondary: #3d484d;
   --efh-hover: rgba(211,198,170,.06); --efh-toggle: rgba(211,198,170,.10);
-  color-scheme: dark;
+  --efh-code-bg: #272e33; --efh-code-head: #2d353b; --efh-code-fg: #d3c6aa;
+  color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
     --eft-bg: 206 13% 20%; --eft-s1: 205 13% 18%; --eft-s2: 199 13% 24%; --eft-s3: 199 12% 27%; --eft-s4: 201 11% 31%;
     --eft-inset: 202 12% 13%; --eft-muted: 199 13% 24%; --eft-accent: 199 13% 24%; --eft-border: 204 9% 34%;
-    --eft-fg: 41 32% 75%; --eft-fg2: 135 7% 64%; --eft-fg3: 138 6% 55%; --eft-invert: 206 13% 20%;
+    --eft-fg: 41 32% 75%; --eft-fg2: 135 7% 64%; --eft-fg3: 138 6% 55%; --eft-invert: 41 32% 75%;
     --eft-link: 172 31% 62%; --eft-green: 83 34% 63%; --eft-red: 359 68% 70%; --eft-yellow: 40 56% 68%;
     --efh-bg: #2d353b; --efh-bg2: #232a2e; --efh-card: #343f44; --efh-popover: #3d484d; --efh-input: #343f44;
     --efh-ring: #7fbbb3; --efh-border-faint: rgba(211,198,170,.10); --efh-border: rgba(211,198,170,.16);
     --efh-btn: #a7c080; --efh-btn-hover: #b6cd93; --efh-btn-secondary: #3d484d;
     --efh-hover: rgba(211,198,170,.06); --efh-toggle: rgba(211,198,170,.10);
-    color-scheme: dark;
+    --efh-code-bg: #272e33; --efh-code-head: #2d353b; --efh-code-fg: #d3c6aa;
+    color-scheme: dark !important;
   }
 }
 
@@ -60,7 +63,7 @@ html:not([data-ef="off"]) :is(.light, .dark) {
   --secondary-foreground: var(--eft-fg) !important;
   --card-foreground: var(--eft-fg) !important; --popover-foreground: var(--eft-fg) !important;
   --fg-primary: var(--eft-fg) !important; --fg-secondary: var(--eft-fg2) !important;
-  --fg-tertiary: var(--eft-fg3) !important; --fg-invert: var(--eft-invert) !important;
+  --fg-tertiary: var(--eft-fg3) !important;
   --fg-link: var(--eft-link) !important; --fg-danger: var(--eft-red) !important;
   --fg-positive: var(--eft-green) !important; --fg-warning: var(--eft-yellow) !important;
   --destructive: var(--eft-red) !important; --destructive-foreground: var(--eft-invert) !important;
@@ -85,10 +88,13 @@ html:not([data-ef="off"]) :is(.light, .dark) {
   --toggle-hover: var(--efh-hover) !important; --toggle-selected: var(--efh-toggle) !important; --toggle-border: var(--efh-border) !important;
 }
 
-/* code blocks: Grok renders Shiki on a hardcoded white surface, which is jarring
-   in dark mode. Pin the block + its header to a dark Everforest surface with
-   readable text (these blocks aren't class-syntax-highlighted). */
-html:not([data-ef="off"]) :is(.shiki, pre.shiki, .shiki pre) { background-color: #272e33 !important; }
-html:not([data-ef="off"]) .shiki, html:not([data-ef="off"]) .shiki :is(code, span, .line) { color: #d3c6aa !important; }
-html:not([data-ef="off"]) div:has(+ .shiki) { background-color: #2d353b !important; }
-html:not([data-ef="off"]) div:has(+ .shiki) :is(span, button, svg) { color: #9da9a0 !important; }
+/* Login/share/error routes do not always mount the token-consuming app shell. */
+html:not([data-ef="off"]) body {
+  background-color: var(--efh-bg) !important;
+  color: hsl(var(--eft-fg)) !important;
+}
+
+/* Code blocks get a mode-matched surface while Shiki token colours stay intact. */
+html:not([data-ef="off"]) :is(.shiki, pre.shiki, .shiki pre) { background-color: var(--efh-code-bg) !important; }
+html:not([data-ef="off"]) :is(.shiki, .shiki code) { color: var(--efh-code-fg) !important; }
+html:not([data-ef="off"]) div:has(> .shiki) { background-color: var(--efh-code-head) !important; }

@@ -26,7 +26,7 @@ html:not([data-ef="off"]) {
   --efc-border: rgba(92,106,114,.18); --efc-border-strong: rgba(92,106,114,.30);
   --efc-fill-control: rgba(92,106,114,.10); --efc-neutral: rgba(92,106,114,.06); --efc-neutral-hover: rgba(92,106,114,.10);
   --efc-fill-primary: #8da101; --efc-fill-secondary: rgba(92,106,114,.10);
-  color-scheme: light;
+  color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-s0: 199 13% 24%; --ef-s1: 206 13% 20%; --ef-s2: 205 13% 18%;
@@ -45,7 +45,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --efc-border: rgba(211,198,170,.16); --efc-border-strong: rgba(211,198,170,.26);
   --efc-fill-control: rgba(211,198,170,.10); --efc-neutral: rgba(211,198,170,.06); --efc-neutral-hover: rgba(211,198,170,.10);
   --efc-fill-primary: #a7c080; --efc-fill-secondary: rgba(211,198,170,.10);
-  color-scheme: dark;
+  color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
@@ -65,7 +65,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --efc-border: rgba(211,198,170,.16); --efc-border-strong: rgba(211,198,170,.26);
     --efc-fill-control: rgba(211,198,170,.10); --efc-neutral: rgba(211,198,170,.06); --efc-neutral-hover: rgba(211,198,170,.10);
     --efc-fill-primary: #a7c080; --efc-fill-secondary: rgba(211,198,170,.10);
-    color-scheme: dark;
+    color-scheme: dark !important;
   }
 }
 

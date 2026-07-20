@@ -18,7 +18,7 @@ html:not([data-ef="off"]) {
   --ef-yellow: #dfa000; --ef-red: #f85552; --ef-grey: #829181;
   --ef-bd-light: rgba(92, 106, 114, .07); --ef-bd: rgba(92, 106, 114, .15);
   --ef-bd-heavy: rgba(92, 106, 114, .26); --ef-bd-xheavy: rgba(92, 106, 114, .38);
-  color-scheme: light;
+  color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-canvas: #2d353b; --ef-canvas-blur: rgba(45, 53, 59, .9);
@@ -32,7 +32,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-yellow: #dbbc7f; --ef-red: #e67e80; --ef-grey: #859289;
   --ef-bd-light: rgba(211, 198, 170, .07); --ef-bd: rgba(211, 198, 170, .15);
   --ef-bd-heavy: rgba(211, 198, 170, .24); --ef-bd-xheavy: rgba(211, 198, 170, .34);
-  color-scheme: dark;
+  color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
@@ -47,7 +47,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-yellow: #dbbc7f; --ef-red: #e67e80; --ef-grey: #859289;
     --ef-bd-light: rgba(211, 198, 170, .07); --ef-bd: rgba(211, 198, 170, .15);
     --ef-bd-heavy: rgba(211, 198, 170, .24); --ef-bd-xheavy: rgba(211, 198, 170, .34);
-    color-scheme: dark;
+    color-scheme: dark !important;
   }
 }
 

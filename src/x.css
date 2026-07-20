@@ -7,18 +7,21 @@
 html:not([data-ef="off"]) {
   --ef-bg: #fdf6e3; --ef-bg1: #f4f0d9; --ef-fg: #5c6a72; --ef-border: #e0dcc7;
   --ef-muted: #829181; --ef-blue: #3a94c5; --ef-green: #8da101; --ef-on-accent: #2d353b;
-  color-scheme: light;
+  --ef-x-verified: #1d9bf0;
+  --ef-x-retweet: #00ba7c;
+  --ef-x-like: #f91880;
+  color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-bg: #2d353b; --ef-bg1: #343f44; --ef-fg: #d3c6aa; --ef-border: #4f585e;
   --ef-muted: #9da9a0; --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
-  color-scheme: dark;
+  color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
     --ef-bg: #2d353b; --ef-bg1: #343f44; --ef-fg: #d3c6aa; --ef-border: #4f585e;
     --ef-muted: #9da9a0; --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
-    color-scheme: dark;
+    color-scheme: dark !important;
   }
 }
 
@@ -77,10 +80,20 @@ html:not([data-ef="off"]) [data-testid="sidebarColumn"] :where(span, div) { colo
 html:not([data-ef="off"]) header[role="banner"] svg,
 html:not([data-ef="off"]) [data-testid="sidebarColumn"] svg { color: var(--ef-muted) !important; }
 
+/* A blue verified badge is identity/status UI, not a decorative header icon.
+   X's r-1cvl2hr class distinguishes the native blue badge from gold/grey
+   organisation badges, so do not recolour every icon-verified instance. */
+html:not([data-ef="off"]) svg[data-testid="icon-verified"].r-1cvl2hr,
+html:not([data-ef="off"]) svg[data-testid="icon-verified"].r-1cvl2hr path {
+  color: var(--ef-x-verified) !important;
+  fill: var(--ef-x-verified) !important;
+}
+
 /* in-tweet links / mentions / hashtags */
 html:not([data-ef="off"]) [data-testid="tweetText"] a,
 html:not([data-ef="off"]) a[href^="/hashtag"],
-html:not([data-ef="off"]) a[href*="//"] { color: var(--ef-blue) !important; }
+html:not([data-ef="off"]) [data-testid="tweetText"] a[href*="//"],
+html:not([data-ef="off"]) [data-testid="UserDescription"] a[href*="//"] { color: var(--ef-blue) !important; }
 
 /* compose box: the rich editor (modal in #layers, or inline in the main column)
    marks @mentions / #hashtags / links with an inline accent colour on a wrapper
@@ -124,18 +137,44 @@ html:not([data-ef="off"]) [data-testid="tweet-text-show-more-link"] span {
   color: var(--ef-blue) !important;
 }
 
+/* Preserve X's semantic interaction states. The generic timeline text rule
+   intentionally keeps inactive actions muted, while active and hover states
+   retain the familiar retweet green and like pink on both icon and count. */
+html:not([data-ef="off"])
+  :is([data-testid="unretweet"], [data-testid="retweet"]:hover),
+html:not([data-ef="off"])
+  :is([data-testid="unretweet"], [data-testid="retweet"]:hover) :where(div, span, svg, path) {
+  color: var(--ef-x-retweet) !important;
+  fill: var(--ef-x-retweet) !important;
+}
+html:not([data-ef="off"])
+  :is([data-testid="unlike"], [data-testid="like"]:hover),
+html:not([data-ef="off"])
+  :is([data-testid="unlike"], [data-testid="like"]:hover) :where(div, span, svg, path) {
+  color: var(--ef-x-like) !important;
+  fill: var(--ef-x-like) !important;
+}
+
 /* primary buttons → Everforest green pill (scoped for specificity over the paint) */
 html:not([data-ef="off"]) [data-testid="sidebarColumn"] :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])),
 html:not([data-ef="off"]) [data-testid="primaryColumn"] :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])),
 html:not([data-ef="off"]) [data-testid="tweetButtonInline"],
 html:not([data-ef="off"]) [data-testid="tweetButton"],
-html:not([data-ef="off"]) [data-testid="SideNav_NewTweet_Button"] { background-color: var(--ef-green) !important; }
+html:not([data-ef="off"]) [data-testid="SideNav_NewTweet_Button"],
+html:not([data-ef="off"]) [data-testid="empty_state_button_text"] {
+  background-color: var(--ef-green) !important;
+  border-color: var(--ef-green) !important;
+}
 html:not([data-ef="off"]) :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])) > div,
 html:not([data-ef="off"]) :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])) > div > div { background-color: transparent !important; }
 html:not([data-ef="off"]) :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])) span,
 html:not([data-ef="off"]) [data-testid="tweetButtonInline"] span,
 html:not([data-ef="off"]) [data-testid="tweetButton"] span,
-html:not([data-ef="off"]) [data-testid="SideNav_NewTweet_Button"] span { color: var(--ef-on-accent) !important; }
+html:not([data-ef="off"]) [data-testid="SideNav_NewTweet_Button"] span,
+html:not([data-ef="off"]) [data-testid="empty_state_button_text"],
+html:not([data-ef="off"]) [data-testid="empty_state_button_text"] :where(div, span) {
+  color: var(--ef-on-accent) !important;
+}
 
 html:not([data-ef="off"]) #layers :is([role="dialog"], [role="menu"], [role="listbox"], [data-testid="Dropdown"]) {
   background-color: var(--ef-bg) !important;
@@ -157,4 +196,38 @@ html:not([data-ef="off"]) [style*="border-bottom-color"] {
 }
 html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
   border-bottom-color: var(--ef-blue) !important;
+}
+
+/* X's built-in Grok view (/i/grok) uses a separate atomic-style surface stack.
+   Keep these rules route-gated so normal timelines, dialogs and compose are not
+   flattened further. The r-* selectors are X's semantic atomic paint classes;
+   the stable Grok aria-label and primaryColumn scope prevent false positives. */
+html:not([data-ef="off"])[data-ef-x-grok]
+  [data-testid="primaryColumn"] [aria-label="Grok"] :is(.r-14lw9ot, .r-6026j) {
+  background-color: var(--ef-bg1) !important;
+  border-color: var(--ef-border) !important;
+}
+html:not([data-ef="off"])[data-ef-x-grok]
+  [data-testid="primaryColumn"] [aria-label="Grok"] textarea {
+  background-color: transparent !important;
+  caret-color: var(--ef-green) !important;
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"])[data-ef-x-grok]
+  [data-testid="primaryColumn"] [aria-label="Grok"] :is(button, [role="button"]).r-14lw9ot {
+  background-color: var(--ef-bg1) !important;
+  border-color: var(--ef-border) !important;
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"])[data-ef-x-grok]
+  [data-testid="primaryColumn"] [aria-label="Grok"]
+  :is(button, [role="button"]):is(.r-l5o3uw, .r-1m3jxhj) {
+  background-color: var(--ef-green) !important;
+  border-color: var(--ef-green) !important;
+  color: var(--ef-on-accent) !important;
+}
+html:not([data-ef="off"])[data-ef-x-grok]
+  [data-testid="primaryColumn"] [aria-label="Grok"]
+  :is(button, [role="button"]):is(.r-l5o3uw, .r-1m3jxhj) :where(div, span, svg) {
+  color: var(--ef-on-accent) !important;
 }

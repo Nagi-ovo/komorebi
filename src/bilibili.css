@@ -11,7 +11,7 @@ html:not([data-ef="off"]) {
   --ef-line: #e0dcc7; --ef-line-bold: #bdc3af;
   --ef-graph-thick: #e6e2cc; --ef-graph-weak: #939f91; --ef-graph-icon: #708089;
   --ef-white-surface: #fdf6e3;
-  color-scheme: light;
+  color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-bg1: #2d353b; --ef-bg1-float: #343f44; --ef-bg2: #272e33; --ef-bg3: #232a2e;
@@ -20,7 +20,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-line: #4f585e; --ef-line-bold: #56635f;
   --ef-graph-thick: #3d484d; --ef-graph-weak: #7a8478; --ef-graph-icon: #9da9a0;
   --ef-white-surface: #2d353b;
-  color-scheme: dark;
+  color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
@@ -30,7 +30,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-line: #4f585e; --ef-line-bold: #56635f;
     --ef-graph-thick: #3d484d; --ef-graph-weak: #7a8478; --ef-graph-icon: #9da9a0;
     --ef-white-surface: #2d353b;
-    color-scheme: dark;
+    color-scheme: dark !important;
   }
 }
 

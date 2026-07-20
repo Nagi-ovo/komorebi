@@ -70,7 +70,7 @@ export function onSettingsChanged(cb: (s: Settings) => void): void {
 export function siteForHost(hostname: string): Site | null {
   if (hostname === "github.com" || hostname === "gist.github.com") return "github";
   if (hostname === "www.google.com" || hostname === "www.google.co.uk") return "google";
-  if (hostname === "x.com" || hostname === "twitter.com" || hostname === "mobile.x.com") return "x";
+  if (["x.com", "www.x.com", "mobile.x.com", "twitter.com", "www.twitter.com", "mobile.twitter.com"].includes(hostname)) return "x";
   if (hostname === "chatgpt.com" || hostname === "chat.openai.com") return "chatgpt";
   if (hostname === "claude.ai") return "claude";
   if (hostname === "gemini.google.com") return "gemini";
@@ -85,4 +85,14 @@ export function siteForHost(hostname: string): Site | null {
   if (hostname === "arxiv.org" || hostname === "www.arxiv.org" || hostname === "info.arxiv.org") return "arxiv";
   if (hostname === "grok.com" || hostname === "www.grok.com") return "grok";
   return null;
+}
+
+/** Route helpers live here so SPA page-kind behaviour stays testable without a DOM. */
+export function isGoogleImagesUrl(input: string | URL): boolean {
+  const url = typeof input === "string" ? new URL(input, "https://www.google.com") : input;
+  return url.pathname === "/imghp" || url.searchParams.get("udm") === "2" || url.searchParams.get("tbm") === "isch";
+}
+
+export function isXGrokPath(pathname: string): boolean {
+  return pathname === "/i/grok" || pathname.startsWith("/i/grok/");
 }

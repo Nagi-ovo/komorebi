@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/src/docs.css">
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; font: 14px/1.4 system-ui, sans-serif; }
+      #docs-chrome { height: 112px; padding: 10px 16px; }
+      #docs-header { height: 46px; }
+      #docs-branding-logo-link { display: inline-block; width: 52px; height: 52px; }
+      .docs-branding-icon { position: relative; overflow: hidden; width: 36px; height: 36px; }
+      .docs-branding-icon-img { position: absolute; width: 10000px; height: 329px; }
+      #docs-title-widget { position: relative; width: 180px; height: 28px; }
+      .docs-title-input-label { position: absolute; inset: 0; z-index: 1; padding: 2px 6px; }
+      .docs-title-input { position: absolute; inset: 0; width: 100%; font: inherit; }
+      #docs-toolbar-wrapper { height: 40px; padding: 10px 16px; border-radius: 20px; }
+      #docs-editor-container { display: grid; grid-template-columns: 180px 1fr 88px; height: 520px; }
+      .filmstrip { padding: 20px; }
+      .thumbnail { height: 86px; background: white; border: 1px solid #d8d8d8; border-radius: 8px; }
+      #slides-view { padding: 32px; }
+      #workspace-container { height: 100%; display: grid; place-items: center; }
+      .slide { width: 70%; aspect-ratio: 16 / 9; background: white; box-shadow: 0 1px 4px rgb(0 0 0 / .16); }
+      #content-library-rail-server-rendered-refreshed { padding: 22px 0; }
+      .appsSketchyContentLibraryRailToolbarRefreshed { width: 100%; }
+      .appsSketchyContentLibraryRailToolbarButtonContainerRefreshed { width: 100%; height: 58px; text-align: center; }
+      .appsSketchyContentLibraryRailToolbarButtonRefreshed-outer-box,
+      .appsSketchyContentLibraryRailToolbarButtonRefreshed-inner-box { width: 100%; height: 100%; }
+      .appsSketchyContentLibraryRailToolbarButtonIconRefreshed { width: 56px; height: 32px; margin: auto; border-radius: 16px; display: grid; place-items: center; }
+      .appsSketchyContentLibraryRailToolbarButtonLabelRefreshed { display: block; }
+    </style>
+  </head>
+  <body>
+    <span id="punch-start-presentation-container"></span>
+    <div id="docs-chrome" class="docs-material">
+      <div id="docs-header">
+        <a id="docs-branding-logo-link" aria-label="Slides home">
+          <div id="docs-drive-logo" style="opacity: 0">
+            <div class="docs-branding-icon"><div class="docs-branding-icon-img docs-branding-icon-drive"></div></div>
+          </div>
+          <div id="docs-branding-logo">
+            <div class="docs-branding-icon"><div class="docs-branding-icon-img docs-icon-slides-2026-36x36"></div></div>
+          </div>
+        </a>
+        <div id="docs-title-widget">
+          <div class="docs-title-input-label"><span class="docs-title-input-label-inner">S2-Week22</span></div>
+          <input class="docs-title-input" value="S2-Week22">
+        </div>
+      </div>
+      <div id="docs-toolbar-wrapper">Menus　＋　↶　↷　Background　Layout　Theme　Transition</div>
+    </div>
+    <div id="docs-editor-container">
+      <aside class="filmstrip"><div id="filmstrip"><div class="thumbnail"></div></div></aside>
+      <main id="slides-view"><div id="workspace-container" class="workspace-container"><div class="slide"></div></div></main>
+      <aside id="content-library-rail-server-rendered-refreshed" class="appsSketchyContentLibraryRailContainerRefreshed">
+        <div class="appsSketchyContentLibraryRailToolbarRefreshed">
+          <div role="button" class="appsSketchyContentLibraryRailToolbarButtonContainerRefreshed">
+            <div class="appsSketchyContentLibraryRailToolbarButtonRefreshed-outer-box">
+              <div class="appsSketchyContentLibraryRailToolbarButtonRefreshed-inner-box">
+                <div class="appsSketchyContentLibraryRailToolbarButtonIconRefreshed">▣</div>
+                <span class="appsSketchyContentLibraryRailToolbarButtonLabelRefreshed">Slide</span>
+              </div>
+            </div>
+          </div>
+          <div role="button" class="appsSketchyContentLibraryRailToolbarButtonContainerRefreshed">
+            <div class="appsSketchyContentLibraryRailToolbarButtonRefreshed-outer-box">
+              <div class="appsSketchyContentLibraryRailToolbarButtonRefreshed-inner-box">
+                <div class="appsSketchyContentLibraryRailToolbarButtonIconRefreshed">✧</div>
+                <span class="appsSketchyContentLibraryRailToolbarButtonLabelRefreshed">Image</span>
+              </div>
+            </div>
+          </div>
+          <div role="button" class="appsSketchyContentLibraryRailToolbarButtonContainerRefreshed">
+            <div class="appsSketchyContentLibraryRailToolbarButtonRefreshed-outer-box">
+              <div class="appsSketchyContentLibraryRailToolbarButtonRefreshed-inner-box">
+                <div class="appsSketchyContentLibraryRailToolbarButtonIconRefreshed">▤</div>
+                <span class="appsSketchyContentLibraryRailToolbarButtonLabelRefreshed">Templates</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </body>
+</html>

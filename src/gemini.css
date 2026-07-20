@@ -19,7 +19,7 @@ html:not([data-ef="off"]) :is(body, .theme-host, .lm-component-theme) {
   --ef-error: #f85552; --ef-error-c: #fde3da; --ef-on-error: #fffbef;
   --ef-inv-surface: #2d353b; --ef-inv-on: #fdf6e3; --ef-inv-primary: #7fbbb3;
   --ef-fixed-dim: #3a94c5; --ef-purple: #df69ba; --ef-purple-c: #fae8e2;
-  color-scheme: light;
+  color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] :is(body, .theme-host, .lm-component-theme) {
   --ef-surface: #2d353b; --ef-bright: #343f44; --ef-dim: #232a2e;
@@ -34,7 +34,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] :is(body, .theme-host, .lm-compon
   --ef-error: #e67e80; --ef-error-c: #514045; --ef-on-error: #2d353b;
   --ef-inv-surface: #fdf6e3; --ef-inv-on: #2d353b; --ef-inv-primary: #3a94c5;
   --ef-fixed-dim: #7fbbb3; --ef-purple: #d699b6; --ef-purple-c: #4a444e;
-  color-scheme: dark;
+  color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(body, .theme-host, .lm-component-theme) {
@@ -50,7 +50,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] :is(body, .theme-host, .lm-compon
     --ef-error: #e67e80; --ef-error-c: #514045; --ef-on-error: #2d353b;
     --ef-inv-surface: #fdf6e3; --ef-inv-on: #2d353b; --ef-inv-primary: #3a94c5;
     --ef-fixed-dim: #7fbbb3; --ef-purple: #d699b6; --ef-purple-c: #4a444e;
-    color-scheme: dark;
+    color-scheme: dark !important;
   }
 }
 
