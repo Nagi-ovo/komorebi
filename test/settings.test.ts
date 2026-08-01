@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { isGoogleImagesUrl, isXGrokPath, siteForHost } from "../src/settings";
+import { YoutubeThemeSync, youtubeDarkForMode } from "../src/youtube-theme";
 import manifest from "../manifest.json";
 
 const docsCss = await Bun.file(`${import.meta.dir}/../src/docs.css`).text();
@@ -59,6 +60,66 @@ describe("SPA page kinds", () => {
     ["/i/grokking", false],
   ] as const)("recognises X Grok: %s", (path, expected) => {
     expect(isXGrokPath(path)).toBe(expected);
+  });
+});
+
+describe("YouTube theme synchronisation", () => {
+  class FakeRoot {
+    private attrs = new Set<string>();
+
+    constructor(dark: boolean) {
+      if (dark) this.attrs.add("dark");
+    }
+
+    hasAttribute(name: string): boolean {
+      return this.attrs.has(name);
+    }
+
+    toggleAttribute(name: string, force: boolean): boolean {
+      if (force) this.attrs.add(name);
+      else this.attrs.delete(name);
+      return force;
+    }
+  }
+
+  test("forces YouTube's dark attribute to match Komorebi and restores the native choice", () => {
+    const root = new FakeRoot(true);
+    const sync = new YoutubeThemeSync(root);
+
+    sync.force(false);
+    expect(root.hasAttribute("dark")).toBe(false);
+
+    // YouTube can reapply its saved dark appearance after document_start.
+    root.toggleAttribute("dark", true);
+    sync.reconcile();
+    expect(root.hasAttribute("dark")).toBe(false);
+
+    sync.force(null);
+    expect(root.hasAttribute("dark")).toBe(true);
+  });
+
+  test("also protects forced dark mode from a native light-theme rewrite", () => {
+    const root = new FakeRoot(false);
+    const sync = new YoutubeThemeSync(root);
+
+    sync.force(true);
+    root.toggleAttribute("dark", false);
+    sync.reconcile();
+    expect(root.hasAttribute("dark")).toBe(true);
+
+    sync.force(null);
+    expect(root.hasAttribute("dark")).toBe(false);
+  });
+
+  test.each([
+    ["light", false, false],
+    ["light", true, false],
+    ["dark", false, true],
+    ["dark", true, true],
+    ["sync", false, false],
+    ["sync", true, true],
+  ] as const)("resolves %s with OS dark=%s", (mode, prefersDark, expected) => {
+    expect(youtubeDarkForMode(mode, prefersDark)).toBe(expected);
   });
 });
 

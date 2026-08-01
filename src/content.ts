@@ -22,9 +22,23 @@ import {
   siteForHost,
   type Settings,
 } from "./settings";
+import { YoutubeThemeSync, youtubeDarkForMode } from "./youtube-theme";
 
 const root = document.documentElement;
 const site = siteForHost(location.hostname);
+const prefersDark = matchMedia("(prefers-color-scheme: dark)");
+const youtubeTheme = site === "youtube" ? new YoutubeThemeSync(root) : null;
+let currentSettings: Settings | null = null;
+
+if (youtubeTheme) {
+  new MutationObserver(() => youtubeTheme.reconcile()).observe(root, {
+    attributes: true,
+    attributeFilter: ["dark"],
+  });
+  prefersDark.addEventListener("change", () => {
+    if (currentSettings) apply(currentSettings);
+  });
+}
 
 function syncPageKind(): void {
   if (site === "google") root.toggleAttribute("data-ef-google-images", isGoogleImagesUrl(location.href));
@@ -49,6 +63,7 @@ if (site === "google" || site === "x") {
 }
 
 function apply(s: Settings): void {
+  currentSettings = s;
   syncPageKind();
 
   const on = s.enabled && (site ? s.sites[site] !== false : true);
@@ -61,6 +76,7 @@ function apply(s: Settings): void {
   if (s.contrast === "medium") root.removeAttribute("data-ef-contrast");
   else root.setAttribute("data-ef-contrast", s.contrast);
 
+  youtubeTheme?.force(on ? youtubeDarkForMode(s.mode, prefersDark.matches) : null);
   if (site === "bilibili") syncBiliShadows(on);
 }
 
