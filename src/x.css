@@ -47,8 +47,10 @@ html:not([data-ef="off"]) [data-testid="sidebarColumn"] div { background-color: 
 html:not([data-ef="off"]) [data-testid="primaryColumn"] div:has([data-testid="tweetTextarea_0"]) {
   background-color: var(--ef-bg) !important;
 }
+/* The @mention picker adds an empty, fixed viewport interaction shield beside
+   the editor. Keep that shield transparent or it covers the whole timeline. */
 html:not([data-ef="off"]) [data-testid="primaryColumn"] div:has([data-testid="ScrollSnap-List"]),
-html:not([data-ef="off"]) [data-testid="primaryColumn"] div:has(> div [data-testid="tweetTextarea_0RichTextInputContainer"]) > div,
+html:not([data-ef="off"]) [data-testid="primaryColumn"] div:has(> div [data-testid="tweetTextarea_0RichTextInputContainer"]) > div:not(:empty),
 html:not([data-ef="off"]) [data-testid="primaryColumn"] div:has([data-testid="app-bar-back"]) {
   background-color: var(--ef-bg) !important;
 }

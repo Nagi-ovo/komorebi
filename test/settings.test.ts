@@ -96,6 +96,15 @@ describe("Slides visual regressions", () => {
 });
 
 describe("X visual regressions", () => {
+  test("keeps the empty @mention interaction shield transparent", () => {
+    expect(xCss).toContain(
+      'div:has(> div [data-testid="tweetTextarea_0RichTextInputContainer"]) > div:not(:empty)',
+    );
+    expect(xCss).not.toContain(
+      'div:has(> div [data-testid="tweetTextarea_0RichTextInputContainer"]) > div,',
+    );
+  });
+
   test("themes the welcome empty-state CTA with readable accent text", () => {
     expect(xCss).toContain('[data-testid="empty_state_button_text"]');
     expect(xCss).toContain("background-color: var(--ef-green) !important");
