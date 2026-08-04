@@ -5,6 +5,7 @@ import manifest from "../manifest.json";
 
 const docsCss = await Bun.file(`${import.meta.dir}/../src/docs.css`).text();
 const xCss = await Bun.file(`${import.meta.dir}/../src/x.css`).text();
+const youtubeCss = await Bun.file(`${import.meta.dir}/../src/youtube.css`).text();
 
 describe("siteForHost", () => {
   test.each([
@@ -120,6 +121,17 @@ describe("YouTube theme synchronisation", () => {
     ["sync", true, true],
   ] as const)("resolves %s with OS dark=%s", (mode, prefersDark, expected) => {
     expect(youtubeDarkForMode(mode, prefersDark)).toBe(expected);
+  });
+});
+
+describe("YouTube visual regressions", () => {
+  test("paints the fixed masthead, chip rail, and search controls with Everforest surfaces", () => {
+    expect(youtubeCss).toContain("#frosted-glass");
+    expect(youtubeCss).toContain("#masthead-container");
+    expect(youtubeCss).toContain("ytd-masthead #background");
+    expect(youtubeCss).toContain("ytd-feed-filter-chip-bar-renderer #chips-wrapper");
+    expect(youtubeCss).toContain(".ytSearchboxComponentInputBox");
+    expect(youtubeCss).toContain(".ytSearchboxComponentSearchButton");
   });
 });
 

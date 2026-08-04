@@ -81,6 +81,28 @@ html:not([data-ef="off"]) :root {
 html:not([data-ef="off"]),
 html:not([data-ef="off"]) ytd-app { background-color: var(--ef-s1) !important; }
 
+/* The fixed masthead and chip rail sit in their own stacking layers, so the
+   root canvas does not show through consistently: the feed hides it behind a
+   frosted-glass sheet and the watch page behind ytd-masthead's own #background,
+   both filled with literal white. Their search controls hardcode white/grey
+   too, instead of drawing on the remapped YouTube tokens. */
+html:not([data-ef="off"]) #frosted-glass,
+html:not([data-ef="off"]) #masthead-container,
+html:not([data-ef="off"]) ytd-masthead,
+html:not([data-ef="off"]) ytd-masthead #background,
+html:not([data-ef="off"]) ytd-feed-filter-chip-bar-renderer #chips-wrapper,
+html:not([data-ef="off"]) ytd-feed-filter-chip-bar-renderer :is(#left-arrow, #right-arrow) ytd-button-renderer {
+  background-color: var(--ef-s1) !important;
+}
+html:not([data-ef="off"]) .ytSearchboxComponentInputBox {
+  background-color: var(--ef-s2) !important;
+  border-color: var(--ef-stroke) !important;
+}
+html:not([data-ef="off"]) .ytSearchboxComponentSearchButton {
+  background-color: var(--ef-s3) !important;
+  border-color: var(--ef-stroke) !important;
+}
+
 /* feed / history / playlist page headers default to white */
 html:not([data-ef="off"]) div.ytd-tabbed-page-header,
 html:not([data-ef="off"]) .page-header-view-model-wiz { background-color: var(--ef-s1) !important; }
