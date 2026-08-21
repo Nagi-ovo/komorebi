@@ -207,5 +207,7 @@ describe("X visual regressions", () => {
     expect(xCss).toContain("--background: var(--ef-hsl-bg) !important");
     expect(xCss).toContain("--color-gray-1100: var(--ef-hsl-fg) !important");
     expect(xCss).toContain("html:not([data-ef=\"off\"]) .bg-white");
+    expect(xCss).toContain(".rounded-full.bg-black");
+    expect(xCss).toContain(".dark\\:bg-black:where([data-theme=\"dark\"]");
   });
 });

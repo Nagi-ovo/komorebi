@@ -118,6 +118,25 @@ html:not([data-ef="off"]) .bg-white {
 html:not([data-ef="off"]) .bg-white :where(span, div, p, label) {
   color: var(--ef-fg) !important;
 }
+/* Login CTAs that hardcode bg-black / dark:bg-slate-50 instead of --x-btn-*. */
+html:not([data-ef="off"]) .rounded-full.bg-black,
+html:not([data-ef="off"]) .rounded-full.dark\:bg-slate-50 {
+  background-color: var(--ef-green) !important;
+  color: var(--ef-on-accent) !important;
+  border-color: var(--ef-green) !important;
+}
+html:not([data-ef="off"]) .rounded-full.bg-black :where(span, svg),
+html:not([data-ef="off"]) .rounded-full.dark\:bg-slate-50 :where(span, svg) {
+  color: var(--ef-on-accent) !important;
+  fill: currentColor !important;
+}
+/* Email/username field uses dark:bg-black — pure #000 against Everforest dark. */
+html:not([data-ef="off"]) .dark\:bg-black:where([data-theme="dark"], [data-theme="dark"] *),
+html:not([data-ef="off"])[data-theme="dark"] .dark\:bg-black {
+  background-color: var(--ef-bg2) !important;
+  color: var(--ef-fg) !important;
+  border-color: var(--ef-border) !important;
+}
 /* Primary CTA labels sitting on the remapped green --x-btn-primary. */
 html:not([data-ef="off"]) :is(button, [role="button"], a).bg-primary,
 html:not([data-ef="off"]) :is(button, [role="button"], a).bg-primary :where(span, div) {
