@@ -6,6 +6,7 @@ import manifest from "../manifest.json";
 const docsCss = await Bun.file(`${import.meta.dir}/../src/docs.css`).text();
 const xCss = await Bun.file(`${import.meta.dir}/../src/x.css`).text();
 const youtubeCss = await Bun.file(`${import.meta.dir}/../src/youtube.css`).text();
+const contentTs = await Bun.file(`${import.meta.dir}/../src/content.ts`).text();
 
 describe("siteForHost", () => {
   test.each([
@@ -209,5 +210,17 @@ describe("X visual regressions", () => {
     expect(xCss).toContain("body .bg-white");
     expect(xCss).toContain("body .bg-black");
     expect(xCss).toContain("body h1");
+  });
+});
+
+describe("X page-DOM OAuth style injection", () => {
+  test("injects ef-x-page stylesheet with OAuth utility overrides", () => {
+    expect(contentTs).toContain('X_PAGE_STYLE_ID = "ef-x-page"');
+    expect(contentTs).toContain("syncXPageStyle");
+    expect(contentTs).toContain("--x-white:var(--ef-bg1)!important");
+    expect(contentTs).toContain("--color-slate-50:var(--ef-green)!important");
+    expect(contentTs).toContain(".bg-white");
+    expect(contentTs).toContain(".bg-black");
+    expect(contentTs).toContain("dark\\\\:bg-slate-50");
   });
 });
