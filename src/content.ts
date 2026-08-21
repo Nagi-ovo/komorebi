@@ -12,6 +12,11 @@
  * page-level stylesheet can neither select nor override. So while the theme is
  * on we inject a tiny override into each comment shadow root, written against
  * the inherited Everforest tokens so it stays light/dark-correct on its own.
+ *
+ * X extra: content-script CSS is injected before page stylesheets, so x-web's
+ * later :root token sheet can win for --x-white / OAuth utilities. We also
+ * append a page-DOM <style id="ef-x-page"> (same idea as Bilibili) so landing
+ * pills pick up Everforest after hydration.
  */
 
 import {
@@ -29,6 +34,61 @@ const site = siteForHost(location.hostname);
 const prefersDark = matchMedia("(prefers-color-scheme: dark)");
 const youtubeTheme = site === "youtube" ? new YoutubeThemeSync(root) : null;
 let currentSettings: Settings | null = null;
+
+/** X's logged-out Tailwind shell keys colors off data-theme=light|dark. Keep it
+ *  aligned with the popup mode so native token sheets and our remaps agree.
+ *  X's client hydration often rewrites data-theme — re-pin when it drifts. */
+let xThemeDesired: "light" | "dark" | null = null;
+
+// ── X landing OAuth utilities (page-DOM stylesheet) ─────────────────────────
+const X_PAGE_STYLE_ID = "ef-x-page";
+const X_PAGE_CSS =
+  "html:not([data-ef=off]){--x-white:var(--ef-bg1)!important;" +
+  "--color-slate-50:var(--ef-green)!important;}" +
+  "html:not([data-ef=off]) :is(.bg-white,[class~=bg-white]){" +
+  "background:var(--ef-bg1)!important;background-color:var(--ef-bg1)!important;" +
+  "color:var(--ef-fg)!important;border-color:var(--ef-border)!important;}" +
+  "html:not([data-ef=off]) :is(.bg-white,[class~=bg-white]) :where(span,div,p,label){" +
+  "color:var(--ef-fg)!important;}" +
+  "html:not([data-ef=off]) :is(.bg-black,[class~=bg-black],.dark\\:bg-slate-50){" +
+  "background:var(--ef-green)!important;background-color:var(--ef-green)!important;" +
+  "color:var(--ef-on-accent)!important;border-color:var(--ef-green)!important;}" +
+  "html:not([data-ef=off]) :is(.bg-black,[class~=bg-black],.dark\\:bg-slate-50) :where(span,svg){" +
+  "color:var(--ef-on-accent)!important;fill:currentColor!important;}" +
+  "html:not([data-ef=off]) :is(.bg-black,[class~=bg-black],.dark\\:bg-slate-50) .text-white," +
+  "html:not([data-ef=off]) :is(.bg-black,[class~=bg-black],.dark\\:bg-slate-50) .text-white :where(svg,path){" +
+  "color:var(--ef-on-accent)!important;fill:currentColor!important;}" +
+  "html:not([data-ef=off]) .dark\\:bg-black{" +
+  "background:var(--ef-bg1)!important;background-color:var(--ef-bg1)!important;" +
+  "color:var(--ef-fg)!important;border-color:var(--ef-border)!important;}" +
+  "html:not([data-ef=off]) .nsm7Bb-HzV7m-LgbsSe{" +
+  "background:var(--ef-bg1)!important;background-color:var(--ef-bg1)!important;" +
+  "color:var(--ef-fg)!important;border-color:var(--ef-border)!important;}";
+
+function syncXPageStyle(on: boolean): void {
+  const existing = document.getElementById(X_PAGE_STYLE_ID);
+  if (!on) {
+    existing?.remove();
+    return;
+  }
+  const style = existing ?? document.createElement("style");
+  style.id = X_PAGE_STYLE_ID;
+  style.textContent = X_PAGE_CSS;
+  // Append (or re-append) so we stay after X's linked stylesheets / hydration.
+  (document.documentElement || document.head || document).appendChild(style);
+}
+
+function syncXDataTheme(on: boolean, mode: Settings["mode"]): void {
+  if (site !== "x") return;
+  if (!on) {
+    xThemeDesired = null;
+    return;
+  }
+  xThemeDesired = mode === "sync" ? (prefersDark.matches ? "dark" : "light") : mode;
+  if (root.getAttribute("data-theme") !== xThemeDesired) {
+    root.setAttribute("data-theme", xThemeDesired);
+  }
+}
 
 if (youtubeTheme) {
   new MutationObserver(() => youtubeTheme.reconcile()).observe(root, {
@@ -49,28 +109,17 @@ if (site === "x") {
       root.setAttribute("data-theme", xThemeDesired);
     }
   }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  // X hydration can replace <html>/<head>; re-seat the page <style> if dropped.
+  new MutationObserver(() => {
+    if (!currentSettings) return;
+    const on = currentSettings.enabled && currentSettings.sites.x !== false;
+    if (on && !document.getElementById(X_PAGE_STYLE_ID)) syncXPageStyle(true);
+  }).observe(root, { childList: true });
 }
 
 function syncPageKind(): void {
   if (site === "google") root.toggleAttribute("data-ef-google-images", isGoogleImagesUrl(location.href));
   if (site === "x") root.toggleAttribute("data-ef-x-grok", isXGrokPath(location.pathname));
-}
-
-/** X's logged-out Tailwind shell keys colors off data-theme=light|dark. Keep it
- *  aligned with the popup mode so native token sheets and our remaps agree.
- *  X's client hydration often rewrites data-theme — re-pin when it drifts. */
-let xThemeDesired: "light" | "dark" | null = null;
-
-function syncXDataTheme(on: boolean, mode: Settings["mode"]): void {
-  if (site !== "x") return;
-  if (!on) {
-    xThemeDesired = null;
-    return;
-  }
-  xThemeDesired = mode === "sync" ? (prefersDark.matches ? "dark" : "light") : mode;
-  if (root.getAttribute("data-theme") !== xThemeDesired) {
-    root.setAttribute("data-theme", xThemeDesired);
-  }
 }
 
 // Google and X are SPAs: their page kind can change without a document load.
@@ -105,6 +154,7 @@ function apply(s: Settings): void {
   else root.setAttribute("data-ef-contrast", s.contrast);
 
   syncXDataTheme(on, s.mode);
+  if (site === "x") syncXPageStyle(on);
   youtubeTheme?.force(on ? youtubeDarkForMode(s.mode, prefersDark.matches) : null);
   if (site === "bilibili") syncBiliShadows(on);
 }
