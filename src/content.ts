@@ -44,6 +44,11 @@ if (site === "x") {
   prefersDark.addEventListener("change", () => {
     if (currentSettings) apply(currentSettings);
   });
+  new MutationObserver(() => {
+    if (xThemeDesired && root.getAttribute("data-theme") !== xThemeDesired) {
+      root.setAttribute("data-theme", xThemeDesired);
+    }
+  }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
 }
 
 function syncPageKind(): void {
@@ -52,11 +57,20 @@ function syncPageKind(): void {
 }
 
 /** X's logged-out Tailwind shell keys colors off data-theme=light|dark. Keep it
- *  aligned with the popup mode so native token sheets and our remaps agree. */
+ *  aligned with the popup mode so native token sheets and our remaps agree.
+ *  X's client hydration often rewrites data-theme — re-pin when it drifts. */
+let xThemeDesired: "light" | "dark" | null = null;
+
 function syncXDataTheme(on: boolean, mode: Settings["mode"]): void {
-  if (site !== "x" || !on) return;
-  const resolved = mode === "sync" ? (prefersDark.matches ? "dark" : "light") : mode;
-  root.setAttribute("data-theme", resolved);
+  if (site !== "x") return;
+  if (!on) {
+    xThemeDesired = null;
+    return;
+  }
+  xThemeDesired = mode === "sync" ? (prefersDark.matches ? "dark" : "light") : mode;
+  if (root.getAttribute("data-theme") !== xThemeDesired) {
+    root.setAttribute("data-theme", xThemeDesired);
+  }
 }
 
 // Google and X are SPAs: their page kind can change without a document load.

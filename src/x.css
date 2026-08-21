@@ -108,34 +108,60 @@ html:not([data-ef="off"]) :is([data-theme], .light-theme, .dark-theme) {
   --color-gray-1100: var(--ef-hsl-fg) !important;
 }
 
-/* Hardcoded .bg-white oauth / QR / marketing pills — keep readable on dark mode
-   by folding them into the Everforest surface instead of leaving pure white. */
-html:not([data-ef="off"]) .bg-white {
+/* Hardcoded landing utilities — do not rely on X's data-theme dark: variants
+   (hydration often leaves data-theme=light while our data-ef-mode is dark). */
+html:not([data-ef="off"]) .bg-white,
+html:not([data-ef="off"]) [class~="bg-white"] {
   background-color: var(--ef-bg1) !important;
   color: var(--ef-fg) !important;
   border-color: var(--ef-border) !important;
 }
-html:not([data-ef="off"]) .bg-white :where(span, div, p, label) {
+html:not([data-ef="off"]) .bg-white :where(span, div, p, label),
+html:not([data-ef="off"]) [class~="bg-white"] :where(span, div, p, label) {
   color: var(--ef-fg) !important;
 }
-/* Login CTAs that hardcode bg-black / dark:bg-slate-50 instead of --x-btn-*. */
+/* Login CTAs: bg-black / dark:bg-slate-50 pills (phone) → Everforest green. */
+html:not([data-ef="off"]) main .bg-black,
+html:not([data-ef="off"]) main [class~="bg-black"],
+html:not([data-ef="off"]) main .rounded-full.bg-black,
+html:not([data-ef="off"]) main .rounded-full.dark\:bg-slate-50,
 html:not([data-ef="off"]) .rounded-full.bg-black,
 html:not([data-ef="off"]) .rounded-full.dark\:bg-slate-50 {
   background-color: var(--ef-green) !important;
   color: var(--ef-on-accent) !important;
   border-color: var(--ef-green) !important;
 }
+html:not([data-ef="off"]) main .bg-black :where(span, svg),
+html:not([data-ef="off"]) main [class~="bg-black"] :where(span, svg),
 html:not([data-ef="off"]) .rounded-full.bg-black :where(span, svg),
 html:not([data-ef="off"]) .rounded-full.dark\:bg-slate-50 :where(span, svg) {
   color: var(--ef-on-accent) !important;
   fill: currentColor !important;
 }
-/* Email/username field uses dark:bg-black — pure #000 against Everforest dark. */
+/* Email field: bg-white + dark:bg-black — theme both without needing dark:. */
+html:not([data-ef="off"]) main [class~="bg-white"][class*="border"],
+html:not([data-ef="off"]) main .dark\:bg-black,
 html:not([data-ef="off"]) .dark\:bg-black:where([data-theme="dark"], [data-theme="dark"] *),
-html:not([data-ef="off"])[data-theme="dark"] .dark\:bg-black {
-  background-color: var(--ef-bg2) !important;
+html:not([data-ef="off"])[data-theme="dark"] .dark\:bg-black,
+html:not([data-ef="off"])[data-ef-mode="dark"] .dark\:bg-black,
+html:not([data-ef="off"]):not([data-ef-mode="light"]) .dark\:bg-black {
+  background-color: var(--ef-bg1) !important;
   color: var(--ef-fg) !important;
   border-color: var(--ef-border) !important;
+}
+/* Landing headline uses text-[#1A1A1A] dark:text-white — force readable fg. */
+html:not([data-ef="off"]) main h1 {
+  color: var(--ef-fg) !important;
+}
+/* Google Identity button chrome (class names from the GSI widget). */
+html:not([data-ef="off"]) .nsm7Bb-HzV7m-LgbsSe,
+html:not([data-ef="off"]) div[role="button"].nsm7Bb-HzV7m-LgbsSe {
+  background-color: var(--ef-bg1) !important;
+  color: var(--ef-fg) !important;
+  border-color: var(--ef-border) !important;
+}
+html:not([data-ef="off"]) .nsm7Bb-HzV7m-LgbsSe :where(span, div) {
+  color: var(--ef-fg) !important;
 }
 /* Primary CTA labels sitting on the remapped green --x-btn-primary. */
 html:not([data-ef="off"]) :is(button, [role="button"], a).bg-primary,
