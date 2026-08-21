@@ -222,5 +222,8 @@ describe("X page-DOM OAuth style injection", () => {
     expect(contentTs).toContain(".bg-white");
     expect(contentTs).toContain(".bg-black");
     expect(contentTs).toContain("dark\\\\:bg-slate-50");
+    expect(contentTs).toContain("paintXJetfuelCtas");
+    expect(contentTs).toContain("data-ef-x-cta");
+    expect(contentTs).toContain("Continue with phone");
   });
 });

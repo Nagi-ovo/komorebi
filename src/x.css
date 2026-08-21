@@ -192,6 +192,18 @@ html:not([data-ef="off"]) div[role="button"].nsm7Bb-HzV7m-LgbsSe {
 html:not([data-ef="off"]) .nsm7Bb-HzV7m-LgbsSe :where(span, div) {
   color: var(--ef-fg) !important;
 }
+/* Jetfuel login shell: hydrated OAuth pills use hashed classes with hardcoded
+   rgba() fills. content.ts paints those by label; keep the shell tokens calm. */
+html:not([data-ef="off"]) .jetfuel-style-root {
+  color: var(--ef-fg);
+}
+html:not([data-ef="off"]) .jetfuel-style-root .jf-gsi-face,
+html:not([data-ef="off"]) .jetfuel-style-root .nsm7Bb-HzV7m-LgbsSe {
+  background: var(--ef-bg1) !important;
+  background-color: var(--ef-bg1) !important;
+  color: var(--ef-fg) !important;
+  border-color: var(--ef-border) !important;
+}
 /* Primary CTA labels sitting on the remapped green --x-btn-primary. */
 html:not([data-ef="off"]) :is(button, [role="button"], a).bg-primary,
 html:not([data-ef="off"]) :is(button, [role="button"], a).bg-primary :where(span, div) {

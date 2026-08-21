@@ -69,6 +69,7 @@ function syncXPageStyle(on: boolean): void {
   const existing = document.getElementById(X_PAGE_STYLE_ID);
   if (!on) {
     existing?.remove();
+    clearXJetfuelCtas();
     return;
   }
   const style = existing ?? document.createElement("style");
@@ -76,6 +77,105 @@ function syncXPageStyle(on: boolean): void {
   style.textContent = X_PAGE_CSS;
   // Append (or re-append) so we stay after X's linked stylesheets / hydration.
   (document.documentElement || document.head || document).appendChild(style);
+  scheduleXJetfuelCtas();
+}
+
+/** After hydration, X's Jetfuel login replaces Tailwind utilities with hashed
+ *  classes that hardcode rgba(248,250,252) / #fff / #000. Style those CTAs by
+ *  visible label so OAuth pills track Everforest even when hashes churn. */
+const X_CTA_ATTR = "data-ef-x-cta";
+let xCtaQueued = false;
+
+function clearXJetfuelCtas(): void {
+  document.querySelectorAll<HTMLElement>(`[${X_CTA_ATTR}]`).forEach((el) => {
+    el.style.removeProperty("background");
+    el.style.removeProperty("background-color");
+    el.style.removeProperty("color");
+    el.style.removeProperty("border-color");
+    el.style.removeProperty("fill");
+    el.removeAttribute(X_CTA_ATTR);
+  });
+}
+
+function opaqueLoginSurface(el: HTMLElement): HTMLElement {
+  let best: HTMLElement | null = null;
+  const consider = (node: HTMLElement) => {
+    const bg = getComputedStyle(node).backgroundColor;
+    if (!bg || bg === "transparent" || bg === "rgba(0, 0, 0, 0)") return;
+    best = node;
+  };
+  consider(el);
+  el.querySelectorAll<HTMLElement>("div, span").forEach((node) => {
+    const radius = getComputedStyle(node).borderRadius;
+    if (radius.includes("999") || parseFloat(radius) >= 16) consider(node);
+    else if (!best) consider(node);
+  });
+  return best ?? el;
+}
+
+function paintXJetfuelCtas(): void {
+  if (root.getAttribute("data-ef") === "off") return;
+  const cs = getComputedStyle(root);
+  const green = cs.getPropertyValue("--ef-green").trim() || "#a7c080";
+  const bg1 = cs.getPropertyValue("--ef-bg1").trim() || "#343f44";
+  const onAccent = cs.getPropertyValue("--ef-on-accent").trim() || "#2d353b";
+  const fg = cs.getPropertyValue("--ef-fg").trim() || "#d3c6aa";
+  const border = cs.getPropertyValue("--ef-border").trim() || "#4f585e";
+
+  const apply = (surface: HTMLElement, kind: "phone" | "oauth" | "field") => {
+    const bg = kind === "phone" ? green : bg1;
+    const color = kind === "phone" ? onAccent : fg;
+    surface.style.setProperty("background", bg, "important");
+    surface.style.setProperty("background-color", bg, "important");
+    surface.style.setProperty("color", color, "important");
+    surface.style.setProperty("border-color", kind === "phone" ? green : border, "important");
+    surface.setAttribute(X_CTA_ATTR, kind);
+    if (kind === "phone") {
+      surface.querySelectorAll<HTMLElement>("span, svg, path").forEach((n) => {
+        n.style.setProperty("color", onAccent, "important");
+        n.style.setProperty("fill", onAccent, "important");
+      });
+    } else if (kind === "oauth") {
+      surface.querySelectorAll<HTMLElement>("span, div").forEach((n) => {
+        if (n.closest("svg")) return;
+        n.style.setProperty("color", fg, "important");
+      });
+      // Apple/Google marks often hardcode fill="#000" — force readable ink.
+      surface.querySelectorAll<SVGElement>("svg, path").forEach((n) => {
+        n.style.setProperty("fill", fg, "important");
+        n.style.setProperty("color", fg, "important");
+      });
+    }
+  };
+
+  for (const el of document.querySelectorAll<HTMLElement>(
+    "button, [role='button'], div.jf-element, div.nsm7Bb-HzV7m-LgbsSe, div.jf-gsi-face",
+  )) {
+    const text = (el.innerText || "").replace(/\s+/g, " ").trim();
+    if (text.length > 48) continue;
+    if (/^Continue with phone$/i.test(text)) apply(opaqueLoginSurface(el), "phone");
+    else if (/^Continue with (Google|Apple)$/i.test(text)) apply(opaqueLoginSurface(el), "oauth");
+  }
+
+  // Email / username field: Jetfuel hardcodes black in dark mode.
+  for (const el of document.querySelectorAll<HTMLElement>(".jetfuel-style-root div, .jetfuel-style-root input")) {
+    const text = (el.innerText || el.getAttribute("placeholder") || "").replace(/\s+/g, " ").trim();
+    if (!/^Email or username$/i.test(text) && el.getAttribute("placeholder") !== "Email or username") {
+      continue;
+    }
+    const surface = opaqueLoginSurface(el);
+    if (surface.closest("button")) continue;
+    apply(surface, "field");
+  }
+}
+
+function scheduleXJetfuelCtas(): void {
+  if (xCtaQueued) return;
+  xCtaQueued = true;
+  requestAnimationFrame(() => {
+    xCtaQueued = false;
+    paintXJetfuelCtas();
+  });
 }
 
 function syncXDataTheme(on: boolean, mode: Settings["mode"]): void {
@@ -114,7 +214,8 @@ if (site === "x") {
     if (!currentSettings) return;
     const on = currentSettings.enabled && currentSettings.sites.x !== false;
     if (on && !document.getElementById(X_PAGE_STYLE_ID)) syncXPageStyle(true);
-  }).observe(root, { childList: true });
+    else if (on) scheduleXJetfuelCtas();
+  }).observe(root, { childList: true, subtree: true });
 }
 
 function syncPageKind(): void {
