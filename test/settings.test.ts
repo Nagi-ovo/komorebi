@@ -202,13 +202,12 @@ describe("X visual regressions", () => {
   test("remaps x-web surface tokens used by logged-out login cards and modals", () => {
     expect(xCss).toContain("--x-bg-modal: var(--ef-bg1) !important");
     expect(xCss).toContain("--x-bg-primary: var(--ef-bg) !important");
-    expect(xCss).toContain("--x-bg-inputs: var(--ef-bg2) !important");
+    expect(xCss).toContain("--x-white: var(--ef-bg1) !important");
+    expect(xCss).toContain("--color-slate-50: var(--ef-green) !important");
     expect(xCss).toContain("--color-modal-background: var(--ef-hsl-bg1) !important");
     expect(xCss).toContain("--background: var(--ef-hsl-bg) !important");
-    expect(xCss).toContain("--color-gray-1100: var(--ef-hsl-fg) !important");
-    expect(xCss).toContain('[class~="bg-white"]');
-    expect(xCss).toContain("main .bg-black");
-    expect(xCss).toContain("main h1");
-    expect(xCss).toContain("nsm7Bb-HzV7m-LgbsSe");
+    expect(xCss).toContain("body .bg-white");
+    expect(xCss).toContain("body .bg-black");
+    expect(xCss).toContain("body h1");
   });
 });

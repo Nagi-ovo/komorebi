@@ -73,6 +73,11 @@ html:not([data-ef="off"]) :is([data-theme], .light-theme, .dark-theme) {
   --x-overlay-normal: color-mix(in srgb, var(--ef-bg) 40%, transparent) !important;
   --x-shadow-popup: 0 4px 20px color-mix(in srgb, var(--ef-fg) 12%, transparent) !important;
   --x-ring: var(--ef-blue) !important;
+  /* Page utilities read these tokens directly (.bg-white → --x-white,
+     dark:bg-slate-50 → --color-slate-50). Remap here so hydration/hashed
+     class names still pick up Everforest even when our class selectors miss. */
+  --x-white: var(--ef-bg1) !important;
+  --color-slate-50: var(--ef-green) !important;
 
   /* shadcn-style HSL component tokens (bg-gray-*, from-background, modal sheets) */
   --background: var(--ef-hsl-bg) !important;
@@ -108,54 +113,78 @@ html:not([data-ef="off"]) :is([data-theme], .light-theme, .dark-theme) {
   --color-gray-1100: var(--ef-hsl-fg) !important;
 }
 
-/* Hardcoded landing utilities — do not rely on X's data-theme dark: variants
-   (hydration often leaves data-theme=light while our data-ef-mode is dark). */
+/* Hardcoded landing utilities. Login landing has no <main>; prefer body-scoped
+   + token remaps above. Keep class rules as a second line of defence. */
+html:not([data-ef="off"]) body .bg-white,
+html:not([data-ef="off"]) body [class~="bg-white"],
 html:not([data-ef="off"]) .bg-white,
 html:not([data-ef="off"]) [class~="bg-white"] {
+  background: var(--ef-bg1) !important;
   background-color: var(--ef-bg1) !important;
   color: var(--ef-fg) !important;
   border-color: var(--ef-border) !important;
 }
+html:not([data-ef="off"]) body .bg-white :where(span, div, p, label),
+html:not([data-ef="off"]) body [class~="bg-white"] :where(span, div, p, label),
 html:not([data-ef="off"]) .bg-white :where(span, div, p, label),
 html:not([data-ef="off"]) [class~="bg-white"] :where(span, div, p, label) {
   color: var(--ef-fg) !important;
 }
-/* Login CTAs: bg-black / dark:bg-slate-50 pills (phone) → Everforest green. */
-html:not([data-ef="off"]) main .bg-black,
-html:not([data-ef="off"]) main [class~="bg-black"],
-html:not([data-ef="off"]) main .rounded-full.bg-black,
-html:not([data-ef="off"]) main .rounded-full.dark\:bg-slate-50,
+/* Phone CTA: light mode bg-black; dark mode dark:bg-slate-50 (→ --color-slate-50). */
+html:not([data-ef="off"]) body .bg-black,
+html:not([data-ef="off"]) body [class~="bg-black"],
+html:not([data-ef="off"]) body .rounded-full.bg-black,
+html:not([data-ef="off"]) body span.bg-black,
 html:not([data-ef="off"]) .rounded-full.bg-black,
-html:not([data-ef="off"]) .rounded-full.dark\:bg-slate-50 {
+html:not([data-ef="off"]) .rounded-full.dark\:bg-slate-50,
+html:not([data-ef="off"]) body .dark\:bg-slate-50 {
+  background: var(--ef-green) !important;
   background-color: var(--ef-green) !important;
   color: var(--ef-on-accent) !important;
   border-color: var(--ef-green) !important;
 }
-html:not([data-ef="off"]) main .bg-black :where(span, svg),
-html:not([data-ef="off"]) main [class~="bg-black"] :where(span, svg),
+html:not([data-ef="off"]) body .bg-black :where(span, svg),
+html:not([data-ef="off"]) body [class~="bg-black"] :where(span, svg),
 html:not([data-ef="off"]) .rounded-full.bg-black :where(span, svg),
-html:not([data-ef="off"]) .rounded-full.dark\:bg-slate-50 :where(span, svg) {
+html:not([data-ef="off"]) .rounded-full.dark\:bg-slate-50 :where(span, svg),
+html:not([data-ef="off"]) body .dark\:bg-slate-50 :where(span, svg) {
   color: var(--ef-on-accent) !important;
   fill: currentColor !important;
 }
-/* Email field: bg-white + dark:bg-black — theme both without needing dark:. */
-html:not([data-ef="off"]) main [class~="bg-white"][class*="border"],
-html:not([data-ef="off"]) main .dark\:bg-black,
+/* text-white reads var(--x-white); restore bright ink on green/dark accents. */
+html:not([data-ef="off"]) .text-white,
+html:not([data-ef="off"]) .text-white :where(svg, path) {
+  color: #fff !important;
+  fill: currentColor !important;
+}
+html:not([data-ef="off"]) body .bg-black .text-white,
+html:not([data-ef="off"]) body .bg-black .text-white :where(svg, path),
+html:not([data-ef="off"]) body .dark\:bg-slate-50 .text-white,
+html:not([data-ef="off"]) body .dark\:bg-slate-50 :where(span, svg) {
+  color: var(--ef-on-accent) !important;
+  fill: currentColor !important;
+}
+/* Email field */
+html:not([data-ef="off"]) body [class~="bg-white"][class*="border"],
+html:not([data-ef="off"]) body .dark\:bg-black,
 html:not([data-ef="off"]) .dark\:bg-black:where([data-theme="dark"], [data-theme="dark"] *),
 html:not([data-ef="off"])[data-theme="dark"] .dark\:bg-black,
 html:not([data-ef="off"])[data-ef-mode="dark"] .dark\:bg-black,
 html:not([data-ef="off"]):not([data-ef-mode="light"]) .dark\:bg-black {
+  background: var(--ef-bg1) !important;
   background-color: var(--ef-bg1) !important;
   color: var(--ef-fg) !important;
   border-color: var(--ef-border) !important;
 }
-/* Landing headline uses text-[#1A1A1A] dark:text-white — force readable fg. */
-html:not([data-ef="off"]) main h1 {
+/* Landing headline — login page has no <main>. */
+html:not([data-ef="off"]) body h1,
+html:not([data-ef="off"]) h1 {
   color: var(--ef-fg) !important;
 }
 /* Google Identity button chrome (class names from the GSI widget). */
 html:not([data-ef="off"]) .nsm7Bb-HzV7m-LgbsSe,
 html:not([data-ef="off"]) div[role="button"].nsm7Bb-HzV7m-LgbsSe {
+  background: var(--ef-bg1) !important;
   background-color: var(--ef-bg1) !important;
   color: var(--ef-fg) !important;
   border-color: var(--ef-border) !important;
