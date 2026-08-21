@@ -40,9 +40,23 @@ if (youtubeTheme) {
   });
 }
 
+if (site === "x") {
+  prefersDark.addEventListener("change", () => {
+    if (currentSettings) apply(currentSettings);
+  });
+}
+
 function syncPageKind(): void {
   if (site === "google") root.toggleAttribute("data-ef-google-images", isGoogleImagesUrl(location.href));
   if (site === "x") root.toggleAttribute("data-ef-x-grok", isXGrokPath(location.pathname));
+}
+
+/** X's logged-out Tailwind shell keys colors off data-theme=light|dark. Keep it
+ *  aligned with the popup mode so native token sheets and our remaps agree. */
+function syncXDataTheme(on: boolean, mode: Settings["mode"]): void {
+  if (site !== "x" || !on) return;
+  const resolved = mode === "sync" ? (prefersDark.matches ? "dark" : "light") : mode;
+  root.setAttribute("data-theme", resolved);
 }
 
 // Google and X are SPAs: their page kind can change without a document load.
@@ -76,6 +90,7 @@ function apply(s: Settings): void {
   if (s.contrast === "medium") root.removeAttribute("data-ef-contrast");
   else root.setAttribute("data-ef-contrast", s.contrast);
 
+  syncXDataTheme(on, s.mode);
   youtubeTheme?.force(on ? youtubeDarkForMode(s.mode, prefersDark.matches) : null);
   if (site === "bilibili") syncBiliShadows(on);
 }

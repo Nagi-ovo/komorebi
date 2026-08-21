@@ -198,4 +198,14 @@ describe("X visual regressions", () => {
     expect(xCss).toContain('[data-testid="unlike"]');
     expect(xCss).toContain('[data-testid="like"]:hover');
   });
+
+  test("remaps x-web surface tokens used by logged-out login cards and modals", () => {
+    expect(xCss).toContain("--x-bg-modal: var(--ef-bg1) !important");
+    expect(xCss).toContain("--x-bg-primary: var(--ef-bg) !important");
+    expect(xCss).toContain("--x-bg-inputs: var(--ef-bg2) !important");
+    expect(xCss).toContain("--color-modal-background: var(--ef-hsl-bg1) !important");
+    expect(xCss).toContain("--background: var(--ef-hsl-bg) !important");
+    expect(xCss).toContain("--color-gray-1100: var(--ef-hsl-fg) !important");
+    expect(xCss).toContain("html:not([data-ef=\"off\"]) .bg-white");
+  });
 });
