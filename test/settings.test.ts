@@ -6,6 +6,7 @@ import manifest from "../manifest.json";
 const docsCss = await Bun.file(`${import.meta.dir}/../src/docs.css`).text();
 const xCss = await Bun.file(`${import.meta.dir}/../src/x.css`).text();
 const youtubeCss = await Bun.file(`${import.meta.dir}/../src/youtube.css`).text();
+const contentTs = await Bun.file(`${import.meta.dir}/../src/content.ts`).text();
 
 describe("siteForHost", () => {
   test.each([
@@ -197,5 +198,32 @@ describe("X visual regressions", () => {
     expect(xCss).toContain('[data-testid="retweet"]:hover');
     expect(xCss).toContain('[data-testid="unlike"]');
     expect(xCss).toContain('[data-testid="like"]:hover');
+  });
+
+  test("remaps x-web surface tokens used by logged-out login cards and modals", () => {
+    expect(xCss).toContain("--x-bg-modal: var(--ef-bg1) !important");
+    expect(xCss).toContain("--x-bg-primary: var(--ef-bg) !important");
+    expect(xCss).toContain("--x-white: var(--ef-bg1) !important");
+    expect(xCss).toContain("--color-slate-50: var(--ef-green) !important");
+    expect(xCss).toContain("--color-modal-background: var(--ef-hsl-bg1) !important");
+    expect(xCss).toContain("--background: var(--ef-hsl-bg) !important");
+    expect(xCss).toContain("body .bg-white");
+    expect(xCss).toContain("body .bg-black");
+    expect(xCss).toContain("body h1");
+  });
+});
+
+describe("X page-DOM OAuth style injection", () => {
+  test("injects ef-x-page stylesheet with OAuth utility overrides", () => {
+    expect(contentTs).toContain('X_PAGE_STYLE_ID = "ef-x-page"');
+    expect(contentTs).toContain("syncXPageStyle");
+    expect(contentTs).toContain("--x-white:var(--ef-bg1)!important");
+    expect(contentTs).toContain("--color-slate-50:var(--ef-green)!important");
+    expect(contentTs).toContain(".bg-white");
+    expect(contentTs).toContain(".bg-black");
+    expect(contentTs).toContain("dark\\\\:bg-slate-50");
+    expect(contentTs).toContain("paintXJetfuelCtas");
+    expect(contentTs).toContain("data-ef-x-cta");
+    expect(contentTs).toContain("Continue with phone");
   });
 });

@@ -106,3 +106,11 @@ html:not([data-ef="off"]) .ytSearchboxComponentSearchButton {
 /* feed / history / playlist page headers default to white */
 html:not([data-ef="off"]) div.ytd-tabbed-page-header,
 html:not([data-ef="off"]) .page-header-view-model-wiz { background-color: var(--ef-s1) !important; }
+
+/* Signed-out empty-state nudge — YouTube hardcodes a near-black card. */
+html:not([data-ef="off"]) ytd-feed-nudge-renderer,
+html:not([data-ef="off"]) ytd-feed-nudge-renderer > *,
+html:not([data-ef="off"]) .ytd-feed-nudge-renderer {
+  background-color: var(--ef-s2) !important;
+  color: var(--ef-fg1) !important;
+}
