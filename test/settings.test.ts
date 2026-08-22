@@ -1,12 +1,14 @@
 import { describe, expect, test } from "bun:test";
 import { isGoogleImagesUrl, isXGrokPath, siteForHost } from "../src/settings";
 import { YoutubeThemeSync, youtubeDarkForMode } from "../src/youtube-theme";
+import { XThemeSync, xDataThemeForMode } from "../src/x-theme";
 import manifest from "../manifest.json";
 
 const docsCss = await Bun.file(`${import.meta.dir}/../src/docs.css`).text();
 const xCss = await Bun.file(`${import.meta.dir}/../src/x.css`).text();
 const youtubeCss = await Bun.file(`${import.meta.dir}/../src/youtube.css`).text();
 const contentTs = await Bun.file(`${import.meta.dir}/../src/content.ts`).text();
+const xLoginFixture = await Bun.file(`${import.meta.dir}/fixtures/x-login.html`).text();
 
 describe("siteForHost", () => {
   test.each([
@@ -125,6 +127,79 @@ describe("YouTube theme synchronisation", () => {
   });
 });
 
+describe("X theme synchronisation", () => {
+  class FakeRoot {
+    attrs = new Map<string, string>();
+
+    constructor(theme: string | null) {
+      if (theme != null) this.attrs.set("data-theme", theme);
+    }
+
+    getAttribute(name: string): string | null {
+      return this.attrs.get(name) ?? null;
+    }
+
+    setAttribute(name: string, value: string): void {
+      this.attrs.set(name, value);
+    }
+
+    removeAttribute(name: string): void {
+      this.attrs.delete(name);
+    }
+  }
+
+  test("forces data-theme to match Komorebi and restores the native choice", () => {
+    const root = new FakeRoot("dark");
+    const sync = new XThemeSync(root);
+
+    sync.force("light");
+    expect(root.getAttribute("data-theme")).toBe("light");
+
+    // X can reapply its saved dark appearance after document_start.
+    root.setAttribute("data-theme", "dark");
+    sync.reconcile();
+    expect(root.getAttribute("data-theme")).toBe("light");
+
+    sync.force(null);
+    expect(root.getAttribute("data-theme")).toBe("dark");
+  });
+
+  test("also protects forced dark mode from a native light-theme rewrite", () => {
+    const root = new FakeRoot("light");
+    const sync = new XThemeSync(root);
+
+    sync.force("dark");
+    root.setAttribute("data-theme", "light");
+    sync.reconcile();
+    expect(root.getAttribute("data-theme")).toBe("dark");
+
+    sync.force(null);
+    expect(root.getAttribute("data-theme")).toBe("light");
+  });
+
+  test("restores a missing native data-theme by removing the attribute", () => {
+    const root = new FakeRoot(null);
+    const sync = new XThemeSync(root);
+
+    sync.force("dark");
+    expect(root.getAttribute("data-theme")).toBe("dark");
+
+    sync.force(null);
+    expect(root.getAttribute("data-theme")).toBeNull();
+  });
+
+  test.each([
+    ["light", false, "light"],
+    ["light", true, "light"],
+    ["dark", false, "dark"],
+    ["dark", true, "dark"],
+    ["sync", false, "light"],
+    ["sync", true, "dark"],
+  ] as const)("resolves %s with OS dark=%s", (mode, prefersDark, expected) => {
+    expect(xDataThemeForMode(mode, prefersDark)).toBe(expected);
+  });
+});
+
 describe("YouTube visual regressions", () => {
   test("paints the fixed masthead, chip rail, and search controls with Everforest surfaces", () => {
     expect(youtubeCss).toContain("#frosted-glass");
@@ -224,6 +299,36 @@ describe("X page-DOM OAuth style injection", () => {
     expect(contentTs).toContain("dark\\\\:bg-slate-50");
     expect(contentTs).toContain("paintXJetfuelCtas");
     expect(contentTs).toContain("data-ef-x-cta");
-    expect(contentTs).toContain("Continue with phone");
+  });
+
+  test("clears painted Jetfuel descendants when theming is disabled", () => {
+    expect(contentTs).toContain('X_CTA_INK_ATTR = "data-ef-x-cta-ink"');
+    expect(contentTs).toContain("[${X_CTA_ATTR}], [${X_CTA_INK_ATTR}]");
+  });
+
+  test("matches login CTAs by stable icon and GSI markers, not English copy", () => {
+    expect(xLoginFixture).toContain('data-icon="icon-phone-stroke"');
+    expect(xLoginFixture).toContain('data-icon="icon-logo-google"');
+    expect(xLoginFixture).toContain('data-icon="icon-logo-apple"');
+    expect(xLoginFixture).toContain("dark:bg-black");
+    expect(contentTs).toContain('[data-icon="icon-phone-stroke"]');
+    expect(contentTs).toContain('[data-icon="icon-logo-google"]');
+    expect(contentTs).toContain('[data-icon="icon-logo-apple"]');
+    expect(contentTs).toContain(".jf-gsi-face");
+    expect(contentTs).toContain(".nsm7Bb-HzV7m-LgbsSe");
+    expect(contentTs).not.toContain("Continue with phone");
+    expect(contentTs).not.toContain("Email or username");
+  });
+
+  test("gates Jetfuel rescans to the logged-out login shell", () => {
+    expect(contentTs).toContain("mutationTouchesXLogin");
+    expect(contentTs).toContain("X_LOGIN_MARKERS");
+    expect(contentTs).toContain(".jetfuel-style-root");
+    expect(contentTs).toContain("else if (on && mutationTouchesXLogin(mutations)) scheduleXJetfuelCtas()");
+  });
+
+  test("restores X data-theme through XThemeSync", () => {
+    expect(contentTs).toContain("xTheme?.force");
+    expect(contentTs).toContain("xTheme?.reconcile()");
   });
 });

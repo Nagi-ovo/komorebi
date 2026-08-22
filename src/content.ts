@@ -28,17 +28,14 @@ import {
   type Settings,
 } from "./settings";
 import { YoutubeThemeSync, youtubeDarkForMode } from "./youtube-theme";
+import { XThemeSync, xDataThemeForMode } from "./x-theme";
 
 const root = document.documentElement;
 const site = siteForHost(location.hostname);
 const prefersDark = matchMedia("(prefers-color-scheme: dark)");
 const youtubeTheme = site === "youtube" ? new YoutubeThemeSync(root) : null;
+const xTheme = site === "x" ? new XThemeSync(root) : null;
 let currentSettings: Settings | null = null;
-
-/** X's logged-out Tailwind shell keys colors off data-theme=light|dark. Keep it
- *  aligned with the popup mode so native token sheets and our remaps agree.
- *  X's client hydration often rewrites data-theme — re-pin when it drifts. */
-let xThemeDesired: "light" | "dark" | null = null;
 
 // ── X landing OAuth utilities (page-DOM stylesheet) ─────────────────────────
 const X_PAGE_STYLE_ID = "ef-x-page";
@@ -81,19 +78,37 @@ function syncXPageStyle(on: boolean): void {
 }
 
 /** After hydration, X's Jetfuel login replaces Tailwind utilities with hashed
- *  classes that hardcode rgba(248,250,252) / #fff / #000. Style those CTAs by
- *  visible label so OAuth pills track Everforest even when hashes churn. */
+ *  classes that hardcode rgba(248,250,252) / #fff / #000. Identify those CTAs
+ *  by stable icon/GSI markers (labels localize) so OAuth pills track Everforest
+ *  even when hashes churn. */
 const X_CTA_ATTR = "data-ef-x-cta";
+const X_CTA_INK_ATTR = "data-ef-x-cta-ink";
+const X_JETFUEL_ROOT = ".jetfuel-style-root";
+/** Login-specific markers verified on the live x-web landing + icon modules.
+ *  data-icon is hardcoded on the SVG components; GSI classes survive Jetfuel. */
+const X_LOGIN_MARKERS =
+  '.jf-gsi-face, .nsm7Bb-HzV7m-LgbsSe, [data-icon="icon-phone-stroke"], [data-icon="icon-logo-google"], [data-icon="icon-logo-apple"]';
+const X_PHONE_ICON = '[data-icon="icon-phone-stroke"]';
+const X_OAUTH_MARKERS =
+  '[data-icon="icon-logo-google"], [data-icon="icon-logo-apple"], .jf-gsi-face, .nsm7Bb-HzV7m-LgbsSe';
+const X_FIELD_SURFACE = '.dark\\:bg-black, [class~="dark:bg-black"]';
+const X_FIELD_INPUT =
+  "input:not([type=hidden]):not([type=submit]):not([type=button]):not([type=checkbox]):not([type=radio])";
 let xCtaQueued = false;
 
+function clearPaintedStyles(el: HTMLElement | SVGElement): void {
+  el.style.removeProperty("background");
+  el.style.removeProperty("background-color");
+  el.style.removeProperty("color");
+  el.style.removeProperty("border-color");
+  el.style.removeProperty("fill");
+  el.removeAttribute(X_CTA_ATTR);
+  el.removeAttribute(X_CTA_INK_ATTR);
+}
+
 function clearXJetfuelCtas(): void {
-  document.querySelectorAll<HTMLElement>(`[${X_CTA_ATTR}]`).forEach((el) => {
-    el.style.removeProperty("background");
-    el.style.removeProperty("background-color");
-    el.style.removeProperty("color");
-    el.style.removeProperty("border-color");
-    el.style.removeProperty("fill");
-    el.removeAttribute(X_CTA_ATTR);
+  document.querySelectorAll(`[${X_CTA_ATTR}], [${X_CTA_INK_ATTR}]`).forEach((el) => {
+    if (el instanceof HTMLElement || el instanceof SVGElement) clearPaintedStyles(el);
   });
 }
 
@@ -122,6 +137,13 @@ function paintXJetfuelCtas(): void {
   const fg = cs.getPropertyValue("--ef-fg").trim() || "#d3c6aa";
   const border = cs.getPropertyValue("--ef-border").trim() || "#4f585e";
 
+  const paintInk = (n: Element, color: string, withFill: boolean): void => {
+    if (!(n instanceof HTMLElement) && !(n instanceof SVGElement)) return;
+    n.style.setProperty("color", color, "important");
+    if (withFill) n.style.setProperty("fill", color, "important");
+    n.setAttribute(X_CTA_INK_ATTR, "");
+  };
+
   const apply = (surface: HTMLElement, kind: "phone" | "oauth" | "field") => {
     const bg = kind === "phone" ? green : bg1;
     const color = kind === "phone" ? onAccent : fg;
@@ -131,42 +153,58 @@ function paintXJetfuelCtas(): void {
     surface.style.setProperty("border-color", kind === "phone" ? green : border, "important");
     surface.setAttribute(X_CTA_ATTR, kind);
     if (kind === "phone") {
-      surface.querySelectorAll<HTMLElement>("span, svg, path").forEach((n) => {
-        n.style.setProperty("color", onAccent, "important");
-        n.style.setProperty("fill", onAccent, "important");
-      });
+      surface.querySelectorAll("span, svg, path").forEach((n) => paintInk(n, onAccent, true));
     } else if (kind === "oauth") {
-      surface.querySelectorAll<HTMLElement>("span, div").forEach((n) => {
+      surface.querySelectorAll("span, div").forEach((n) => {
         if (n.closest("svg")) return;
-        n.style.setProperty("color", fg, "important");
+        paintInk(n, fg, false);
       });
       // Apple/Google marks often hardcode fill="#000" — force readable ink.
-      surface.querySelectorAll<SVGElement>("svg, path").forEach((n) => {
-        n.style.setProperty("fill", fg, "important");
-        n.style.setProperty("color", fg, "important");
-      });
+      surface.querySelectorAll("svg, path").forEach((n) => paintInk(n, fg, true));
     }
   };
 
-  for (const el of document.querySelectorAll<HTMLElement>(
-    "button, [role='button'], div.jf-element, div.nsm7Bb-HzV7m-LgbsSe, div.jf-gsi-face",
-  )) {
-    const text = (el.innerText || "").replace(/\s+/g, " ").trim();
-    if (text.length > 48) continue;
-    if (/^Continue with phone$/i.test(text)) apply(opaqueLoginSurface(el), "phone");
-    else if (/^Continue with (Google|Apple)$/i.test(text)) apply(opaqueLoginSurface(el), "oauth");
+  const marks = document.querySelectorAll(X_LOGIN_MARKERS);
+  if (marks.length === 0) return;
+
+  const scopes = new Set<ParentNode>();
+  for (const mark of marks) {
+    scopes.add(mark.closest(X_JETFUEL_ROOT) ?? document);
   }
 
-  // Email / username field: Jetfuel hardcodes black in dark mode.
-  for (const el of document.querySelectorAll<HTMLElement>(".jetfuel-style-root div, .jetfuel-style-root input")) {
-    const text = (el.innerText || el.getAttribute("placeholder") || "").replace(/\s+/g, " ").trim();
-    if (!/^Email or username$/i.test(text) && el.getAttribute("placeholder") !== "Email or username") {
-      continue;
+  for (const scope of scopes) {
+    for (const icon of scope.querySelectorAll(X_PHONE_ICON)) {
+      apply(surfaceFromLoginMarker(icon), "phone");
     }
-    const surface = opaqueLoginSurface(el);
-    if (surface.closest("button")) continue;
-    apply(surface, "field");
+    for (const icon of scope.querySelectorAll(X_OAUTH_MARKERS)) {
+      apply(surfaceFromLoginMarker(icon), "oauth");
+    }
+    // Email field: Jetfuel hardcodes black in dark mode. Inputs stay scoped
+    // to the Jetfuel card so timeline widgets are left alone.
+    if (scope !== document) {
+      for (const input of scope.querySelectorAll<HTMLElement>(X_FIELD_INPUT)) {
+        apply(opaqueLoginSurface(input), "field");
+      }
+    }
+    for (const el of scope.querySelectorAll<HTMLElement>(X_FIELD_SURFACE)) {
+      if (el.closest("button, [role='button']")) continue;
+      apply(opaqueLoginSurface(el), "field");
+    }
   }
+}
+
+function surfaceFromLoginMarker(el: Element): HTMLElement {
+  const host = el.closest<HTMLElement>(
+    "button, [role='button'], .jf-element, .jf-gsi-face, .nsm7Bb-HzV7m-LgbsSe, [class~='bg-black'], [class~='bg-white'], [class~='dark:bg-slate-50']",
+  );
+  if (host) return opaqueLoginSurface(host);
+  let node: HTMLElement | null = el instanceof HTMLElement ? el : el.parentElement;
+  while (node) {
+    const bg = getComputedStyle(node).backgroundColor;
+    if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)") return node;
+    node = node.parentElement;
+  }
+  return el instanceof HTMLElement ? el : (el.parentElement ?? root);
 }
 
 function scheduleXJetfuelCtas(): void {
@@ -179,15 +217,7 @@ function scheduleXJetfuelCtas(): void {
 }
 
 function syncXDataTheme(on: boolean, mode: Settings["mode"]): void {
-  if (site !== "x") return;
-  if (!on) {
-    xThemeDesired = null;
-    return;
-  }
-  xThemeDesired = mode === "sync" ? (prefersDark.matches ? "dark" : "light") : mode;
-  if (root.getAttribute("data-theme") !== xThemeDesired) {
-    root.setAttribute("data-theme", xThemeDesired);
-  }
+  xTheme?.force(on ? xDataThemeForMode(mode, prefersDark.matches) : null);
 }
 
 if (youtubeTheme) {
@@ -200,21 +230,47 @@ if (youtubeTheme) {
   });
 }
 
+function loginScopeAround(el: Element): Element | null {
+  const mark = el.closest(X_LOGIN_MARKERS);
+  if (mark) return mark.closest(X_JETFUEL_ROOT) ?? mark;
+  const jf = el.closest(X_JETFUEL_ROOT);
+  return jf?.querySelector(X_LOGIN_MARKERS) ? jf : null;
+}
+
+function nodeTouchesXLogin(node: Node): boolean {
+  if (!(node instanceof Element)) return false;
+  if (loginScopeAround(node)) return true;
+  if (node.matches(X_LOGIN_MARKERS) || node.querySelector(X_LOGIN_MARKERS)) return true;
+  const jf = node.matches(X_JETFUEL_ROOT) ? node : node.querySelector(X_JETFUEL_ROOT);
+  return Boolean(jf?.querySelector(X_LOGIN_MARKERS));
+}
+
+function mutationTouchesXLogin(mutations: MutationRecord[]): boolean {
+  for (const m of mutations) {
+    if (m.target instanceof Element && loginScopeAround(m.target)) return true;
+    for (const node of m.addedNodes) {
+      if (nodeTouchesXLogin(node)) return true;
+    }
+  }
+  return false;
+}
+
 if (site === "x") {
   prefersDark.addEventListener("change", () => {
     if (currentSettings) apply(currentSettings);
   });
-  new MutationObserver(() => {
-    if (xThemeDesired && root.getAttribute("data-theme") !== xThemeDesired) {
-      root.setAttribute("data-theme", xThemeDesired);
-    }
-  }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  new MutationObserver(() => xTheme?.reconcile()).observe(root, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
   // X hydration can replace <html>/<head>; re-seat the page <style> if dropped.
-  new MutationObserver(() => {
+  // Jetfuel paint is gated to the logged-out login shell — timeline mutations
+  // must not walk every button.
+  new MutationObserver((mutations) => {
     if (!currentSettings) return;
     const on = currentSettings.enabled && currentSettings.sites.x !== false;
     if (on && !document.getElementById(X_PAGE_STYLE_ID)) syncXPageStyle(true);
-    else if (on) scheduleXJetfuelCtas();
+    else if (on && mutationTouchesXLogin(mutations)) scheduleXJetfuelCtas();
   }).observe(root, { childList: true, subtree: true });
 }
 

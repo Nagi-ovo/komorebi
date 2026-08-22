@@ -193,7 +193,8 @@ html:not([data-ef="off"]) .nsm7Bb-HzV7m-LgbsSe :where(span, div) {
   color: var(--ef-fg) !important;
 }
 /* Jetfuel login shell: hydrated OAuth pills use hashed classes with hardcoded
-   rgba() fills. content.ts paints those by label; keep the shell tokens calm. */
+   rgba() fills. content.ts paints those via data-icon / GSI markers; keep the
+   shell tokens calm. */
 html:not([data-ef="off"]) .jetfuel-style-root {
   color: var(--ef-fg);
 }
