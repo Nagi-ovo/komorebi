@@ -275,6 +275,28 @@ describe("X visual regressions", () => {
     expect(xCss).toContain('[data-testid="like"]:hover');
   });
 
+  test("flattens the search field and its wrapper on explore / search results", () => {
+    expect(xCss).toContain('div:has(> form[role="search"])');
+    expect(xCss).toContain(
+      '[data-testid="primaryColumn"] div:has(> div > div > div > form[role="search"])',
+    );
+    const roundedPill =
+      'form[role="search"] > div:has([data-testid="SearchBox_Search_Input"]) > div:has([data-testid="SearchBox_Search_Input"])';
+    const transparentInternals = `${roundedPill} :is(div, label)`;
+    expect(xCss).toContain(transparentInternals);
+    expect(xCss).toContain(roundedPill);
+    expect(xCss.indexOf(transparentInternals)).toBeLessThan(xCss.lastIndexOf(roundedPill));
+    expect(xCss).toContain('[data-testid="SearchBox_Search_Input"]::placeholder');
+  });
+
+  test("paints the selected tab indicator and the tab strip rule", () => {
+    expect(xCss).toContain(
+      '[role="tab"][aria-selected="true"] > div > div > div:last-child:empty',
+    );
+    expect(xCss).toContain('nav:has(> div > div > [role="tablist"])');
+    expect(xCss).not.toContain('[role="tab"][aria-selected="true"] > div:last-child {');
+  });
+
   test("remaps x-web surface tokens used by logged-out login cards and modals", () => {
     expect(xCss).toContain("--x-bg-modal: var(--ef-bg1) !important");
     expect(xCss).toContain("--x-bg-primary: var(--ef-bg) !important");

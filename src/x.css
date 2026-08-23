@@ -241,6 +241,43 @@ html:not([data-ef="off"]) [data-testid="primaryColumn"] div:has([data-testid="ap
   background-color: var(--ef-bg) !important;
 }
 
+/* search field (explore / search results app-bar, sidebar search). X paints the
+   field and the row that wraps it white through hashed classes the column
+   surface rules never reach, so it floats as a white slab over the page.
+   Flatten the wrapper, keep the pill one step lighter, mute the magnifier. */
+html:not([data-ef="off"]) form[role="search"],
+html:not([data-ef="off"]) div:has(> form[role="search"]),
+html:not([data-ef="off"]) div:has(> div > form[role="search"]),
+html:not([data-ef="off"]) [data-testid="primaryColumn"] div:has(> div > div > div > form[role="search"]) {
+  background-color: var(--ef-bg) !important;
+}
+html:not([data-ef="off"]) form[role="search"] > div:has([data-testid="SearchBox_Search_Input"]) > div:has([data-testid="SearchBox_Search_Input"]) :is(div, label) {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+html:not([data-ef="off"]) form[role="search"] > div:has([data-testid="SearchBox_Search_Input"]) > div:has([data-testid="SearchBox_Search_Input"]) {
+  background-color: var(--ef-bg1) !important;
+  border-color: var(--ef-border) !important;
+}
+html:not([data-ef="off"]) [data-testid="SearchBox_Search_Input"] {
+  background-color: transparent !important;
+  color: var(--ef-fg) !important;
+  caret-color: var(--ef-green) !important;
+}
+html:not([data-ef="off"]) [data-testid="SearchBox_Search_Input"]::placeholder {
+  color: var(--ef-muted) !important;
+}
+html:not([data-ef="off"]) form[role="search"] svg {
+  color: var(--ef-muted) !important;
+}
+/* typeahead suggestions drop onto the same white surface below the field */
+html:not([data-ef="off"]) [data-testid="searchBoxTypeahead"],
+html:not([data-ef="off"]) [data-testid="typeaheadResult"],
+html:not([data-ef="off"]) [data-testid="typeaheadRecentSearchesItem"] {
+  background-color: var(--ef-bg) !important;
+  border-color: var(--ef-border) !important;
+}
+
 /* leave media untouched */
 html:not([data-ef="off"]) [data-testid="tweetPhoto"],
 html:not([data-ef="off"]) [data-testid="tweetPhoto"] *,
@@ -384,6 +421,20 @@ html:not([data-ef="off"]) [style*="border-bottom-color"] {
 }
 html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
   border-bottom-color: var(--ef-blue) !important;
+}
+/* X draws the selected-tab underline as an empty child div carrying its own
+   native-blue paint, and rules the strip off with the native grey border —
+   neither is reachable through the tab's own border-bottom above. */
+html:not([data-ef="off"]) [role="tab"][aria-selected="true"] > div:empty,
+html:not([data-ef="off"]) [role="tab"][aria-selected="true"] > div > div:last-child:empty,
+html:not([data-ef="off"]) [role="tab"][aria-selected="true"] > div > div > div:last-child:empty {
+  background-color: var(--ef-blue) !important;
+}
+html:not([data-ef="off"]) [role="tablist"],
+html:not([data-ef="off"]) div:has(> [role="tablist"]),
+html:not([data-ef="off"]) nav:has(> div > div > [role="tablist"]) {
+  border-color: var(--ef-border) !important;
+  border-bottom-color: var(--ef-border) !important;
 }
 
 /* X's built-in Grok view (/i/grok) uses a separate atomic-style surface stack.
