@@ -275,6 +275,11 @@ describe("X visual regressions", () => {
     expect(xCss).toContain('[data-testid="like"]:hover');
   });
 
+  test("keeps native video controls visible inside tweet media", () => {
+    expect(xCss).toContain('[data-testid="tweetPhoto"] :is(img, video)');
+    expect(xCss).not.toContain('[data-testid="tweetPhoto"] *,');
+  });
+
   test("flattens the search field and its wrapper on explore / search results", () => {
     expect(xCss).toContain('div:has(> form[role="search"])');
     expect(xCss).toContain(

@@ -278,9 +278,10 @@ html:not([data-ef="off"]) [data-testid="typeaheadRecentSearchesItem"] {
   border-color: var(--ef-border) !important;
 }
 
-/* leave media untouched */
+/* Leave media pixels untouched without clearing X's native video controls.
+   The scrubber, played track, and volume slider also live inside tweetPhoto. */
 html:not([data-ef="off"]) [data-testid="tweetPhoto"],
-html:not([data-ef="off"]) [data-testid="tweetPhoto"] *,
+html:not([data-ef="off"]) [data-testid="tweetPhoto"] :is(img, video),
 html:not([data-ef="off"]) [data-testid="card.wrapper"] img,
 html:not([data-ef="off"]) video { background-color: transparent !important; }
 html:not([data-ef="off"]) [data-testid="card.wrapper"] {
