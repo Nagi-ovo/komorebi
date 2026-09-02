@@ -5,6 +5,7 @@ import { XThemeSync, xDataThemeForMode } from "../src/x-theme";
 import manifest from "../manifest.json";
 
 const docsCss = await Bun.file(`${import.meta.dir}/../src/docs.css`).text();
+const googleCss = await Bun.file(`${import.meta.dir}/../src/google.css`).text();
 const xCss = await Bun.file(`${import.meta.dir}/../src/x.css`).text();
 const youtubeCss = await Bun.file(`${import.meta.dir}/../src/youtube.css`).text();
 const grokCss = await Bun.file(`${import.meta.dir}/../src/grok.css`).text();
@@ -203,6 +204,14 @@ describe("X theme synchronisation", () => {
   });
 });
 
+describe("Google visual regressions", () => {
+  test("keeps native contrast on sports knowledge-panel brand headers", () => {
+    expect(googleCss).toContain("#rcnt .imso-loa.imso-thor");
+    expect(googleCss).toContain("#rcnt .tb_h");
+    expect(googleCss).toContain("color: #fff !important");
+  });
+});
+
 describe("YouTube visual regressions", () => {
   test("paints the fixed masthead, chip rail, and search controls with Everforest surfaces", () => {
     expect(youtubeCss).toContain("#frosted-glass");
@@ -299,6 +308,21 @@ describe("X visual regressions", () => {
     expect(xCss).toContain('[data-testid="empty_state_button_text"]');
     expect(xCss).toContain("background-color: var(--ef-green) !important");
     expect(xCss).toContain("color: var(--ef-on-accent) !important");
+  });
+
+  test("keeps on-accent ink on green CTAs and white on the new-posts pill", () => {
+    expect(xCss).toContain(
+      '[data-testid="SideNav_NewTweet_Button"] :is(div, span, svg)',
+    );
+    expect(xCss).toContain(
+      '[data-testid="primaryColumn"] button[aria-label*="新的帖子"]',
+    );
+    expect(xCss).toContain(
+      '[data-testid="primaryColumn"] button[aria-label*="new posts" i]',
+    );
+    expect(xCss).not.toContain(
+      '[data-testid="SideNav_NewTweet_Button"] span,',
+    );
   });
 
   test("restores only native blue verified badges to X blue", () => {

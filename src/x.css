@@ -480,13 +480,26 @@ html:not([data-ef="off"]) [data-testid="empty_state_button_text"] {
 }
 html:not([data-ef="off"]) :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])) > div,
 html:not([data-ef="off"]) :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])) > div > div { background-color: transparent !important; }
-html:not([data-ef="off"]) :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])) span,
-html:not([data-ef="off"]) [data-testid="tweetButtonInline"] span,
-html:not([data-ef="off"]) [data-testid="tweetButton"] span,
-html:not([data-ef="off"]) [data-testid="SideNav_NewTweet_Button"] span,
+/* Flatten paints header/aside :where(div) grey at 0,2,2. The 发帖 label
+   lives on an inner div, so span-only restores miss. :is(div, span, svg)
+   ties that specificity; later source order wins. */
+html:not([data-ef="off"]) :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])) :is(div, span, svg),
+html:not([data-ef="off"]) [data-testid="tweetButtonInline"] :is(div, span, svg),
+html:not([data-ef="off"]) [data-testid="tweetButton"] :is(div, span, svg),
+html:not([data-ef="off"]) [data-testid="SideNav_NewTweet_Button"] :is(div, span, svg),
 html:not([data-ef="off"]) [data-testid="empty_state_button_text"],
-html:not([data-ef="off"]) [data-testid="empty_state_button_text"] :where(div, span) {
+html:not([data-ef="off"]) [data-testid="empty_state_button_text"] :is(div, span, svg) {
   color: var(--ef-on-accent) !important;
+  fill: currentColor !important;
+}
+/* Timeline "new posts" pill stays native X-blue and has no testid.
+   Flatten greys the label; put white back (zh + en aria-labels). */
+html:not([data-ef="off"]) [data-testid="primaryColumn"] button[aria-label*="新的帖子"],
+html:not([data-ef="off"]) [data-testid="primaryColumn"] button[aria-label*="新的帖子"] :is(div, span, svg),
+html:not([data-ef="off"]) [data-testid="primaryColumn"] button[aria-label*="new posts" i],
+html:not([data-ef="off"]) [data-testid="primaryColumn"] button[aria-label*="new posts" i] :is(div, span, svg) {
+  color: #fff !important;
+  fill: currentColor !important;
 }
 
 html:not([data-ef="off"]) #layers :is([role="dialog"], [role="menu"], [role="listbox"], [data-testid="Dropdown"]) {
@@ -497,8 +510,9 @@ html:not([data-ef="off"]) #layers :is([role="dialog"], [role="menu"], [role="lis
 html:not([data-ef="off"]) #layers :is([role="dialog"], [role="menu"], [role="listbox"], [data-testid="Dropdown"]) :where(div, span, button) {
   color: var(--ef-fg) !important;
 }
-html:not([data-ef="off"]) #layers :is([data-testid="tweetButtonInline"], [data-testid="tweetButton"]) span {
+html:not([data-ef="off"]) #layers :is([data-testid="tweetButtonInline"], [data-testid="tweetButton"]) :is(div, span, svg) {
   color: var(--ef-on-accent) !important;
+  fill: currentColor !important;
 }
 
 /* dividers */

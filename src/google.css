@@ -272,6 +272,16 @@ html:not([data-ef="off"]) #rso a:visited span { color: var(--ef-purple) !importa
 html:not([data-ef="off"]) #rcnt a, html:not([data-ef="off"]) #rcnt a span { color: var(--ef-blue) !important; }
 html:not([data-ef="off"]) #rcnt a:visited, html:not([data-ef="off"]) #rcnt a:visited span { color: var(--ef-purple) !important; }
 
+/* Only the brand-color masthead. Google reuses .imso-loa on match tiles
+   and table rows; those stay on the cream canvas and need Everforest ink. */
+html:not([data-ef="off"]) #rcnt .imso-loa.imso-thor,
+html:not([data-ef="off"]) #rcnt .imso-loa.imso-thor :where(div, span, p, li, h1, h2, h3, h4, a, a span, svg, path),
+html:not([data-ef="off"]) #rcnt .tb_h,
+html:not([data-ef="off"]) #rcnt .tb_h :where(div, span, p, li, h1, h2, h3, h4, a, a span, svg, path) {
+  color: #fff !important;
+  fill: currentColor !important;
+}
+
 /* url (cite), snippet body, bold matches */
 html:not([data-ef="off"]) cite, html:not([data-ef="off"]) #search cite { color: var(--ef-green) !important; }
 html:not([data-ef="off"]) #search .VwiC3b, html:not([data-ef="off"]) #rso .VwiC3b { color: var(--ef-fg) !important; }
