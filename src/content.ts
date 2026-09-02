@@ -14,9 +14,10 @@
  * the inherited Everforest tokens so it stays light/dark-correct on its own.
  *
  * X extra: content-script CSS is injected before page stylesheets, so x-web's
- * later :root token sheet can win for --x-white / OAuth utilities. We also
- * append a page-DOM <style id="ef-x-page"> (same idea as Bilibili) so landing
- * pills pick up Everforest after hydration.
+ * later :root[data-theme] token sheet can win for --x-white / --x-bg-* /
+ * --x-neutral-* / OAuth utilities. We also append a page-DOM
+ * <style id="ef-x-page"> (same idea as Bilibili) so landing pills and the
+ * migrated x-web profile/timeline shell pick up Everforest after hydration.
  */
 
 import {
@@ -40,8 +41,39 @@ let currentSettings: Settings | null = null;
 // ── X landing OAuth utilities (page-DOM stylesheet) ─────────────────────────
 const X_PAGE_STYLE_ID = "ef-x-page";
 const X_PAGE_CSS =
-  "html:not([data-ef=off]){--x-white:var(--ef-bg1)!important;" +
-  "--color-slate-50:var(--ef-green)!important;}" +
+  "html:not([data-ef=off]),html:not([data-ef=off])[data-theme]{" +
+  "background-color:var(--ef-bg)!important;color:var(--ef-fg)!important;" +
+  "--x-white:var(--ef-bg1)!important;" +
+  "--x-bg-primary:var(--ef-bg)!important;" +
+  "--x-bg-secondary:var(--ef-bg1)!important;" +
+  "--x-bg-tertiary:var(--ef-bg2)!important;" +
+  "--x-bg-modal:var(--ef-bg1)!important;" +
+  "--x-bg-sheets:var(--ef-bg1)!important;" +
+  "--x-bg-inputs:var(--ef-bg2)!important;" +
+  "--x-bg-alpha-100:var(--ef-bg)!important;" +
+  "--x-fg-primary:var(--ef-fg)!important;" +
+  "--x-fg-secondary:var(--ef-muted)!important;" +
+  "--x-fg-tertiary:var(--ef-muted)!important;" +
+  "--x-fg-inverted:var(--ef-bg)!important;" +
+  "--x-fg-on-color:var(--ef-on-accent)!important;" +
+  "--x-border-normal:var(--ef-border)!important;" +
+  "--x-btn-primary:var(--ef-green)!important;" +
+  "--x-neutral-000:var(--ef-bg1)!important;" +
+  "--x-neutral-050:var(--ef-bg2)!important;" +
+  "--x-neutral-900:var(--ef-bg2)!important;" +
+  "--x-neutral-1000:var(--ef-bg1)!important;" +
+  "--x-neutral-1100:var(--ef-bg)!important;" +
+  "--color-slate-50:var(--ef-green)!important;" +
+  "--background:var(--ef-hsl-bg)!important;" +
+  "--foreground:var(--ef-hsl-fg)!important;" +
+  "--color-background:var(--ef-hsl-bg)!important;" +
+  "--color-text:var(--ef-hsl-fg)!important;" +
+  "--color-modal-background:var(--ef-hsl-bg1)!important;" +
+  "--pill:var(--ef-bg1)!important;" +
+  "--chat-accent:var(--ef-hsl-blue)!important;" +
+  "--jf-bg-color:var(--ef-bg1)!important;" +
+  "--jf-text-color:var(--ef-fg)!important;" +
+  "--base-gradient-color:var(--ef-bg)!important;}" +
   "html:not([data-ef=off]) :is(.bg-white,[class~=bg-white]){" +
   "background:var(--ef-bg1)!important;background-color:var(--ef-bg1)!important;" +
   "color:var(--ef-fg)!important;border-color:var(--ef-border)!important;}" +
@@ -58,6 +90,9 @@ const X_PAGE_CSS =
   "html:not([data-ef=off]) .dark\\:bg-black{" +
   "background:var(--ef-bg1)!important;background-color:var(--ef-bg1)!important;" +
   "color:var(--ef-fg)!important;border-color:var(--ef-border)!important;}" +
+  "html:not([data-ef=off]) :is([class~=bg-gray-1100],[class~=dark\\:bg-gray-100]){" +
+  "background:var(--ef-green)!important;background-color:var(--ef-green)!important;" +
+  "color:var(--ef-on-accent)!important;border-color:var(--ef-green)!important;}" +
   "html:not([data-ef=off]) .nsm7Bb-HzV7m-LgbsSe{" +
   "background:var(--ef-bg1)!important;background-color:var(--ef-bg1)!important;" +
   "color:var(--ef-fg)!important;border-color:var(--ef-border)!important;}";
@@ -75,6 +110,48 @@ function syncXPageStyle(on: boolean): void {
   // Append (or re-append) so we stay after X's linked stylesheets / hydration.
   (document.documentElement || document.head || document).appendChild(style);
   scheduleXJetfuelCtas();
+}
+
+// Grok's wd-refresh sheet redeclares --surface-* on body after our content-script
+// CSS. Re-assert the same tokens from a page-DOM <style> so hydration loses.
+const GROK_PAGE_STYLE_ID = "ef-grok-page";
+const GROK_PAGE_SEL =
+  "html:not([data-ef=off]),html:not([data-ef=off]).light,html:not([data-ef=off]).dark," +
+  "html:not([data-ef=off]) body,html:not([data-ef=off]).light body," +
+  "html:not([data-ef=off]).dark body,html:not([data-ef=off]) body.wd-refresh," +
+  "html:not([data-ef=off]).light body.wd-refresh,html:not([data-ef=off]).dark body.wd-refresh," +
+  "html:not([data-ef=off]) :is(.light,.dark,.wd-refresh)";
+const GROK_PAGE_CSS =
+  GROK_PAGE_SEL + "{" +
+  "--surface-base:var(--eft-bg)!important;--surface-base-hover:var(--eft-visual)!important;" +
+  "--surface-l1:var(--eft-composer)!important;--surface-l1-hover:var(--eft-visual)!important;" +
+  "--surface-l2:var(--eft-s3)!important;--warm-white:var(--eft-s1)!important;" +
+  "--sidebar-background:var(--eft-side)!important;--sidebar-accent:var(--eft-visual)!important;" +
+  "--sidebar-primary:var(--eft-green)!important;--wd-composer-bg:var(--eft-composer)!important;" +
+  "--wd-user-bubble:var(--eft-bubble)!important;--wd-accent:var(--eft-green)!important;" +
+  "--wd-composer-border:var(--efh-border)!important;--background:var(--efh-bg)!important;" +
+  "--background-secondary:var(--efh-side)!important;--accent:var(--eft-visual)!important;" +
+  "--input-background:var(--efh-input)!important;--fg-primary:var(--eft-fg)!important;" +
+  "--fg-link:var(--eft-blue)!important;--fg-positive:var(--eft-green)!important;" +
+  "--button-primary:var(--efh-green)!important;--ring:var(--efh-green)!important;" +
+  "--foreground:var(--efh-fg)!important;}" +
+  "html:not([data-ef=off]) :is(body,main,[role=main]){" +
+  "background-color:var(--efh-bg)!important;color:hsl(var(--eft-fg))!important;}" +
+  "html:not([data-ef=off]) :is(aside,nav,.bg-sidebar,[data-sidebar=sidebar])," +
+  "html:not([data-ef=off]) .inset-y-0.bg-surface-base:has([data-sidebar=sidebar]){" +
+  "background-color:var(--efh-side)!important;color:hsl(var(--eft-fg))!important;}" +
+  "html:not([data-ef=off]) [data-sidebar=menu-button]{color:hsl(var(--eft-fg))!important;}";
+
+function syncGrokPageStyle(on: boolean): void {
+  const existing = document.getElementById(GROK_PAGE_STYLE_ID);
+  if (!on) {
+    existing?.remove();
+    return;
+  }
+  const style = existing ?? document.createElement("style");
+  style.id = GROK_PAGE_STYLE_ID;
+  style.textContent = GROK_PAGE_CSS;
+  (document.documentElement || document.head || document).appendChild(style);
 }
 
 /** After hydration, X's Jetfuel login replaces Tailwind utilities with hashed
@@ -255,6 +332,14 @@ function mutationTouchesXLogin(mutations: MutationRecord[]): boolean {
   return false;
 }
 
+if (site === "grok") {
+  new MutationObserver(() => {
+    if (!currentSettings) return;
+    const on = currentSettings.enabled && currentSettings.sites.grok !== false;
+    if (on && !document.getElementById(GROK_PAGE_STYLE_ID)) syncGrokPageStyle(true);
+  }).observe(root, { childList: true, subtree: true });
+}
+
 if (site === "x") {
   prefersDark.addEventListener("change", () => {
     if (currentSettings) apply(currentSettings);
@@ -312,6 +397,7 @@ function apply(s: Settings): void {
 
   syncXDataTheme(on, s.mode);
   if (site === "x") syncXPageStyle(on);
+  if (site === "grok") syncGrokPageStyle(on);
   youtubeTheme?.force(on ? youtubeDarkForMode(s.mode, prefersDark.matches) : null);
   if (site === "bilibili") syncBiliShadows(on);
 }

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <title>X profile fixture</title>
+    <style>:root{background-color:#fff}:root[data-theme="dark"]{background-color:#000}</style>
+  </head>
+  <body>
+    <!-- Excerpted from the live x-web public profile (SSR, 2026-09-01).
+         No react-root / primaryColumn / tweet testids. Semantic Tailwind
+         utilities + --x-* tokens. Search/Grok are aria-labelled nav chips. -->
+    <header>
+      <a aria-label="X" href="/"></a>
+      <a class="flex h-[34px] w-[34px] items-center justify-center rounded-full hover:bg-gray-100" aria-label="Search">
+        <svg data-icon="icon-search-stroke" viewBox="0 0 24 24" role="img" aria-hidden="true"></svg>
+      </a>
+      <a aria-label="Grok" href="/i/grok">
+        <svg data-icon="icon-grok-logo" viewBox="0 0 33 32" role="img" aria-hidden="true"></svg>
+      </a>
+    </header>
+    <main class="one-col:w-[600px] flex min-h-dvh w-full flex-col one-col:border-x one-col:border-gray-100">
+      <div class="bg-background/80 sticky top-0 backdrop-blur-md">
+        <a class="text-gray-1100" href="/i/jf/onboarding/web?mode=login">Log in</a>
+        <a class="bg-gray-1100 hover:bg-gray-1100/90 dark:text-gray-1100 text-white dark:bg-gray-100" href="/i/jf/onboarding/web?mode=signup">Sign up</a>
+      </div>
+      <div class="bg-secondary block rounded-sm bg-tertiary! size-11"></div>
+      <h2 class="text-gray-1100">Display name</h2>
+      <p class="text-gray-700 text-text">Bio</p>
+      <button type="button"><span>Follow</span></button>
+    </main>
+    <aside>
+      <section class="rounded-md border border-border bg-background">
+        <h2 class="text-gray-1100">Log in or sign up for X</h2>
+        <p class="text-gray-700">See what’s happening</p>
+        <a class="bg-gray-1100 text-background" href="/i/jf/onboarding/web?mode=signup">
+          <svg data-icon="icon-phone-stroke" viewBox="0 0 24 24" role="img" aria-hidden="true"></svg>
+          Continue with phone
+        </a>
+      </section>
+    </aside>
+  </body>
+</html>

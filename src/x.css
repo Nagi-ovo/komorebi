@@ -1,11 +1,14 @@
-/* Everforest for X (x.com / twitter) — best-effort, two paint paths.
-   Logged-in X is still the classic React app: one shared hashed class on ~every
-   div, so cards can't be selected by class. We repaint column surfaces via
-   testid/role selectors and restyle primary buttons.
-   Logged-out X (and some marketing/shell routes) now ship a separate Tailwind
-   "x-web" bundle that paints through --x-* + HSL --background/--color-* tokens.
-   Remap those tokens here so modals, login cards, QR sheets, inputs, and
-   from-background gradients pick up Everforest without chasing utility classes.
+/* Everforest for X (x.com / twitter) — best-effort, three paint paths.
+   Classic React SPA (#react-root, /home, /i/grok, /i/flow/login): one shared
+   hashed class on ~every div, so cards can't be selected by class. We repaint
+   column surfaces via testid/role selectors and restyle primary buttons.
+   x-web (abs.twimg.com/x-web/…): logged-out landing (Jetfuel + .bg-white) AND
+   public profiles / most content routes. Those pages have no testids — they
+   paint through --x-* + HSL --background/--color-* + semantic utilities
+   (bg-secondary, bg-background, text-gray-*, bg-gray-1100) on <main>/<header>/
+   <aside>. X's later :root[data-theme] sheet aliases --x-bg-* to --x-white /
+   --x-black / --x-neutral-*, so we re-win those tokens at higher specificity
+   and again from the page-DOM sheet in content.ts.
    Broad + fragile by nature. Mode follows the popup, or the OS on "sync". */
 
 html:not([data-ef="off"]) {
@@ -39,8 +42,10 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   }
 }
 
-/* ── x-web design tokens (logged-out shell, login cards, QR, signup flows) ── */
+/* ── x-web design tokens (logged-out shell, login cards, QR, signup flows) ──
+   [data-theme] on html beats X's later :root[data-theme] (0,1,1) aliases. */
 html:not([data-ef="off"]),
+html:not([data-ef="off"])[data-theme],
 html:not([data-ef="off"]) :is([data-theme], .light-theme, .dark-theme) {
   --x-bg-primary: var(--ef-bg) !important;
   --x-bg-secondary: var(--ef-bg1) !important;
@@ -69,15 +74,54 @@ html:not([data-ef="off"]) :is([data-theme], .light-theme, .dark-theme) {
   --x-btn-inverted-hover: var(--ef-bg2) !important;
   --x-btn-inverted-pressed: var(--ef-bg2) !important;
   --x-btn-brand: var(--ef-blue) !important;
+  --x-btn-brand-hover: var(--ef-blue) !important;
+  --x-btn-brand-pressed: var(--ef-blue) !important;
+  --x-btn-tertiary-hover: var(--ef-bg1) !important;
+  --x-btn-tertiary-pressed: var(--ef-bg2) !important;
+  --x-btn-ghost-hover: color-mix(in srgb, var(--ef-fg) 6%, transparent) !important;
+  --x-btn-ghost-pressed: color-mix(in srgb, var(--ef-fg) 10%, transparent) !important;
   --x-hover-subtle: color-mix(in srgb, var(--ef-fg) 6%, transparent) !important;
   --x-overlay-normal: color-mix(in srgb, var(--ef-bg) 40%, transparent) !important;
+  --x-overlay-strong: color-mix(in srgb, var(--ef-bg) 60%, transparent) !important;
   --x-shadow-popup: 0 4px 20px color-mix(in srgb, var(--ef-fg) 12%, transparent) !important;
   --x-ring: var(--ef-blue) !important;
+  --x-toast-bg: var(--ef-bg2) !important;
+  --x-tooltip-bg: var(--ef-fg) !important;
+  --x-tooltip-fg: var(--ef-bg) !important;
+  --x-border-elevated: var(--ef-border) !important;
+  --x-border-media: var(--ef-border) !important;
+  --x-bg-alpha-100: var(--ef-bg) !important;
   /* Page utilities read these tokens directly (.bg-white → --x-white,
      dark:bg-slate-50 → --color-slate-50). Remap here so hydration/hashed
-     class names still pick up Everforest even when our class selectors miss. */
+     class names still pick up Everforest even when our class selectors miss.
+     Do not remap --x-black: light-mode --x-fg-primary aliases it for ink. */
   --x-white: var(--ef-bg1) !important;
   --color-slate-50: var(--ef-green) !important;
+  /* Neutral scale: light aliases 000/050, dark aliases 900/1000 as surfaces. */
+  --x-neutral-000: var(--ef-bg1) !important;
+  --x-neutral-050: var(--ef-bg2) !important;
+  --x-neutral-100: var(--ef-border) !important;
+  --x-neutral-200: var(--ef-border) !important;
+  --x-neutral-300: var(--ef-muted) !important;
+  --x-neutral-400: var(--ef-muted) !important;
+  --x-neutral-500: var(--ef-muted) !important;
+  --x-neutral-600: var(--ef-fg) !important;
+  --x-neutral-700: var(--ef-fg) !important;
+  --x-neutral-800: var(--ef-fg) !important;
+  --x-neutral-900: var(--ef-bg2) !important;
+  --x-neutral-1000: var(--ef-bg1) !important;
+  --x-neutral-1100: var(--ef-bg) !important;
+  --pill: var(--ef-bg1) !important;
+  --pill-active: var(--ef-border) !important;
+  --pill-hover: var(--ef-bg2) !important;
+  --chat-accent: var(--ef-hsl-blue) !important;
+  --chat-accent-foreground: 206 13% 20% !important;
+  --jf-bg-color: var(--ef-bg1) !important;
+  --jf-text-color: var(--ef-fg) !important;
+  --base-color: var(--ef-muted) !important;
+  --base-gradient-color: var(--ef-bg) !important;
+  --color-zinc-600: var(--ef-muted) !important;
+  --color-zinc-700: var(--ef-border) !important;
 
   /* shadcn-style HSL component tokens (bg-gray-*, from-background, modal sheets) */
   --background: var(--ef-hsl-bg) !important;
@@ -111,6 +155,13 @@ html:not([data-ef="off"]) :is([data-theme], .light-theme, .dark-theme) {
   --color-gray-900: var(--ef-hsl-fg) !important;
   --color-gray-1000: var(--ef-hsl-fg) !important;
   --color-gray-1100: var(--ef-hsl-fg) !important;
+  --color-brand: var(--ef-hsl-blue) !important;
+  --color-brand-foreground: 206 13% 20% !important;
+  --color-badge: var(--ef-hsl-blue) !important;
+  --color-mask: color-mix(in srgb, var(--ef-fg) 40%, transparent) !important;
+  --color-modal-overlay: color-mix(in srgb, var(--ef-bg) 55%, transparent) !important;
+  --accent: var(--ef-hsl-bg1) !important;
+  --accent-foreground: var(--ef-hsl-fg) !important;
 }
 
 /* Hardcoded landing utilities. Login landing has no <main>; prefer body-scoped
@@ -210,6 +261,20 @@ html:not([data-ef="off"]) :is(button, [role="button"], a).bg-primary,
 html:not([data-ef="off"]) :is(button, [role="button"], a).bg-primary :where(span, div) {
   color: var(--ef-on-accent) !important;
 }
+/* x-web profile / mobile chrome: Sign up + Continue with phone use bg-gray-1100
+   (and dark:bg-gray-100), not .bg-black. Keep ink readable on the green pill. */
+html:not([data-ef="off"]) [class~="bg-gray-1100"],
+html:not([data-ef="off"]) [class~="dark:bg-gray-100"] {
+  background: var(--ef-green) !important;
+  background-color: var(--ef-green) !important;
+  color: var(--ef-on-accent) !important;
+  border-color: var(--ef-green) !important;
+}
+html:not([data-ef="off"]) [class~="bg-gray-1100"] :where(span, svg),
+html:not([data-ef="off"]) [class~="dark:bg-gray-100"] :where(span, svg) {
+  color: var(--ef-on-accent) !important;
+  fill: currentColor !important;
+}
 
 /* startup shell */
 html:not([data-ef="off"]) #react-root,
@@ -223,8 +288,11 @@ html:not([data-ef="off"]) body > svg[id^="loading-x-anim-"] {
   fill: currentColor !important;
 }
 
-/* surfaces — repaint the columns + their nested cards to the Everforest bg */
+/* surfaces — beat the inline :root{background-color:#fff/#000} slab, then
+   repaint classic testid columns AND x-web landmarks (no roles/testids). */
+html:not([data-ef="off"]),
 html:not([data-ef="off"]) body,
+html:not([data-ef="off"]) :is(main, header, aside),
 html:not([data-ef="off"]) header[role="banner"],
 html:not([data-ef="off"]) [role="main"],
 html:not([data-ef="off"]) [data-testid="primaryColumn"],
@@ -270,6 +338,19 @@ html:not([data-ef="off"]) [data-testid="SearchBox_Search_Input"]::placeholder {
 html:not([data-ef="off"]) form[role="search"] svg {
   color: var(--ef-muted) !important;
 }
+/* x-web search is an aria-labelled nav chip + optional aside field, not
+   SearchBox_Search_Input. Hover chips use bg-gray-100 (token). Paint fields. */
+html:not([data-ef="off"]) form:has([data-icon="icon-search-stroke"]),
+html:not([data-ef="off"]) aside input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]) {
+  background-color: var(--ef-bg1) !important;
+  color: var(--ef-fg) !important;
+  caret-color: var(--ef-green) !important;
+  border-color: var(--ef-border) !important;
+}
+html:not([data-ef="off"]) [aria-label="Search"] svg,
+html:not([data-ef="off"]) [data-icon="icon-search-stroke"] {
+  color: var(--ef-muted) !important;
+}
 /* typeahead suggestions drop onto the same white surface below the field */
 html:not([data-ef="off"]) [data-testid="searchBoxTypeahead"],
 html:not([data-ef="off"]) [data-testid="typeaheadResult"],
@@ -300,11 +381,17 @@ html:not([data-ef="off"]) [data-testid="sidebarColumn"] [data-testid^="UserAvata
 }
 
 /* text */
-html:not([data-ef="off"]) [role="main"] :where(span, div, h1, h2, a[role="link"]),
-html:not([data-ef="off"]) header[role="banner"] :where(span, div, a[role="link"]),
-html:not([data-ef="off"]) [data-testid="sidebarColumn"] :where(span, div) { color: var(--ef-fg) !important; }
-html:not([data-ef="off"]) header[role="banner"] svg,
-html:not([data-ef="off"]) [data-testid="sidebarColumn"] svg { color: var(--ef-muted) !important; }
+html:not([data-ef="off"]) :is(main, [role="main"]) :where(span, div, h1, h2, a[role="link"]),
+html:not([data-ef="off"]) :is(header, header[role="banner"]) :where(span, div, a[role="link"]),
+html:not([data-ef="off"]) :is(aside, [data-testid="sidebarColumn"]) :where(span, div) { color: var(--ef-fg) !important; }
+html:not([data-ef="off"]) :is(header, header[role="banner"]) svg,
+html:not([data-ef="off"]) :is(aside, [data-testid="sidebarColumn"]) svg { color: var(--ef-muted) !important; }
+/* Re-assert after the flatten so x-web Sign up / phone CTAs keep on-accent ink. */
+html:not([data-ef="off"]) [class~="bg-gray-1100"] :where(span, svg, div),
+html:not([data-ef="off"]) [class~="dark:bg-gray-100"] :where(span, svg, div) {
+  color: var(--ef-on-accent) !important;
+  fill: currentColor !important;
+}
 
 /* A blue verified badge is identity/status UI, not a decorative header icon.
    X's r-1cvl2hr class distinguishes the native blue badge from gold/grey

@@ -1,15 +1,30 @@
 <!doctype html>
-<html>
+<html class="light">
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/src/grok.css">
     <style>
-      :root { --fg-invert: 206 13% 20%; }
+      :root {
+        --fg-invert: 206 13% 20%;
+        --surface-base: 0 0% 100%;
+        --surface-l1: 0 0% 98%;
+        --sidebar-background: 240 5.9% 10%;
+        --warm-white: 20 13% 95.5%;
+        --wd-composer-bg: 0 0% 100%;
+        --foreground: #fff;
+      }
       .cta { background: white; color: hsl(var(--fg-invert)); }
+      .canvas { background: hsl(var(--surface-base)); color: var(--foreground); }
+      .nav { background: hsl(var(--sidebar-background)); }
     </style>
   </head>
-  <body>
-    <button class="cta">Try for $0.00</button>
-    <pre class="shiki"><code><span style="color:#8da101">const</span> answer = 42;</code></pre>
+  <body class="wd-refresh bg-surface-base text-fg-primary">
+    <div class="dark" data-sidebar="sidebar">
+      <nav class="nav bg-sidebar">Library</nav>
+    </div>
+    <main class="canvas">
+      <button class="cta">Try for $0.00</button>
+      <pre class="shiki"><code><span style="color:#8da101">const</span> answer = 42;</code></pre>
+    </main>
   </body>
 </html>

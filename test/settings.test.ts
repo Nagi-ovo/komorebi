@@ -7,8 +7,11 @@ import manifest from "../manifest.json";
 const docsCss = await Bun.file(`${import.meta.dir}/../src/docs.css`).text();
 const xCss = await Bun.file(`${import.meta.dir}/../src/x.css`).text();
 const youtubeCss = await Bun.file(`${import.meta.dir}/../src/youtube.css`).text();
+const grokCss = await Bun.file(`${import.meta.dir}/../src/grok.css`).text();
+const grokFixture = await Bun.file(`${import.meta.dir}/fixtures/grok-light.html`).text();
 const contentTs = await Bun.file(`${import.meta.dir}/../src/content.ts`).text();
 const xLoginFixture = await Bun.file(`${import.meta.dir}/fixtures/x-login.html`).text();
+const xProfileFixture = await Bun.file(`${import.meta.dir}/fixtures/x-profile.html`).text();
 
 describe("siteForHost", () => {
   test.each([
@@ -211,6 +214,44 @@ describe("YouTube visual regressions", () => {
   });
 });
 
+describe("Grok visual regressions", () => {
+  test("remaps wd-refresh and sidebar tokens so nav and canvas share one mode", () => {
+    expect(grokCss).toContain("html:not([data-ef=\"off\"]).light");
+    expect(grokCss).toContain("html:not([data-ef=\"off\"]) body");
+    expect(grokCss).toContain("html:not([data-ef=\"off\"]).light body.wd-refresh");
+    expect(grokCss).toContain(":is(.light, .dark, .wd-refresh)");
+    expect(grokCss).toContain(".bg-sidebar");
+    expect(grokCss).toContain("--sidebar-background: var(--eft-side) !important");
+    expect(grokCss).toContain("--surface-elevated: var(--eft-s1) !important");
+    expect(grokCss).toContain("--warm-white: var(--eft-s1) !important");
+    expect(grokCss).toContain("--wd-composer-bg: var(--eft-composer) !important");
+    expect(grokCss).toContain("--wd-user-bubble: var(--eft-bubble) !important");
+    expect(grokCss).toContain("--wd-accent: var(--eft-green) !important");
+    expect(grokCss).toContain("--button-primary: var(--efh-green) !important");
+    expect(grokCss).toContain("--fg-link: var(--eft-blue) !important");
+    expect(grokCss).toContain("--efh-side: #efebd4");
+    expect(grokCss).toContain("--efh-bubble: #e6ead0");
+    expect(grokCss).toContain("--foreground: var(--efh-fg) !important");
+    expect(grokCss).toContain('[data-sidebar="sidebar"]');
+    expect(grokCss).toContain(".inset-y-0.bg-surface-base:has([data-sidebar=\"sidebar\"])");
+    expect(grokFixture).toContain('class="wd-refresh');
+    expect(grokFixture).toContain('data-sidebar="sidebar"');
+    expect(grokFixture).toContain("--sidebar-background");
+  });
+
+  test("re-asserts wd-refresh tokens from a page-DOM stylesheet after hydration", () => {
+    expect(contentTs).toContain('GROK_PAGE_STYLE_ID = "ef-grok-page"');
+    expect(contentTs).toContain("syncGrokPageStyle");
+    expect(contentTs).toContain("html:not([data-ef=off]).light body.wd-refresh");
+    expect(contentTs).toContain("--surface-base:var(--eft-bg)!important");
+    expect(contentTs).toContain("--sidebar-background:var(--eft-side)!important");
+    expect(contentTs).toContain("--wd-user-bubble:var(--eft-bubble)!important");
+    expect(contentTs).toContain("--wd-accent:var(--eft-green)!important");
+    expect(contentTs).toContain("--fg-primary:var(--eft-fg)!important");
+    expect(contentTs).toContain("if (site === \"grok\") syncGrokPageStyle(on)");
+  });
+});
+
 describe("Slides visual regressions", () => {
   test("keeps Slides-only workspace styling scoped", () => {
     expect(docsCss).toContain(':has(#punch-start-presentation-container)');
@@ -313,6 +354,34 @@ describe("X visual regressions", () => {
     expect(xCss).toContain("body .bg-black");
     expect(xCss).toContain("body h1");
   });
+
+  test("re-wins x-web tokens X aliases through --x-neutral / --pill / chat", () => {
+    expect(xCss).toContain('html:not([data-ef="off"])[data-theme]');
+    expect(xCss).toContain("--x-neutral-000: var(--ef-bg1) !important");
+    expect(xCss).toContain("--x-neutral-1000: var(--ef-bg1) !important");
+    expect(xCss).toContain("--x-bg-alpha-100: var(--ef-bg) !important");
+    expect(xCss).toContain("--pill: var(--ef-bg1) !important");
+    expect(xCss).toContain("--chat-accent: var(--ef-hsl-blue) !important");
+    expect(xCss).toContain("--jf-bg-color: var(--ef-bg1) !important");
+    expect(xCss).toContain("--base-gradient-color: var(--ef-bg) !important");
+    expect(xCss).toContain("--color-brand: var(--ef-hsl-blue) !important");
+    expect(xCss).toContain("--color-modal-overlay:");
+  });
+
+  test("paints x-web landmarks that have no primaryColumn testids", () => {
+    expect(xCss).toContain("html:not([data-ef=\"off\"]) :is(main, header, aside)");
+    expect(xCss).toContain('[class~="bg-gray-1100"]');
+    expect(xCss).toContain('form:has([data-icon="icon-search-stroke"])');
+    expect(xCss).toContain("[data-testid=\"primaryColumn\"]");
+  });
+
+  test("keeps route-gated Grok-in-X atomic paint for the classic /i/grok SPA", () => {
+    expect(xCss).toContain("[data-ef-x-grok]");
+    expect(xCss).toContain(".r-14lw9ot");
+    expect(xCss).toContain(".r-6026j");
+    expect(xCss).toContain(".r-l5o3uw");
+    expect(xCss).toContain(".r-1m3jxhj");
+  });
 });
 
 describe("X page-DOM OAuth style injection", () => {
@@ -321,9 +390,15 @@ describe("X page-DOM OAuth style injection", () => {
     expect(contentTs).toContain("syncXPageStyle");
     expect(contentTs).toContain("--x-white:var(--ef-bg1)!important");
     expect(contentTs).toContain("--color-slate-50:var(--ef-green)!important");
+    expect(contentTs).toContain("--x-neutral-000:var(--ef-bg1)!important");
+    expect(contentTs).toContain("--x-bg-primary:var(--ef-bg)!important");
+    expect(contentTs).toContain("--pill:var(--ef-bg1)!important");
+    expect(contentTs).toContain("--chat-accent:var(--ef-hsl-blue)!important");
+    expect(contentTs).toContain("background-color:var(--ef-bg)!important");
     expect(contentTs).toContain(".bg-white");
     expect(contentTs).toContain(".bg-black");
     expect(contentTs).toContain("dark\\\\:bg-slate-50");
+    expect(contentTs).toContain("bg-gray-1100");
     expect(contentTs).toContain("paintXJetfuelCtas");
     expect(contentTs).toContain("data-ef-x-cta");
   });
@@ -345,6 +420,20 @@ describe("X page-DOM OAuth style injection", () => {
     expect(contentTs).toContain(".nsm7Bb-HzV7m-LgbsSe");
     expect(contentTs).not.toContain("Continue with phone");
     expect(contentTs).not.toContain("Email or username");
+  });
+
+  test("tracks the x-web profile shell that dropped primaryColumn testids", () => {
+    expect(xProfileFixture).toContain("<main ");
+    expect(xProfileFixture).toContain("<aside>");
+    expect(xProfileFixture).toContain('aria-label="Search"');
+    expect(xProfileFixture).toContain('aria-label="Grok"');
+    expect(xProfileFixture).toContain('data-icon="icon-search-stroke"');
+    expect(xProfileFixture).toContain("bg-gray-1100");
+    expect(xProfileFixture).toContain("bg-secondary");
+    expect(xProfileFixture).toContain("bg-background");
+    expect(xProfileFixture).not.toContain('data-testid="primaryColumn"');
+    expect(xProfileFixture).not.toContain('id="react-root"');
+    expect(xCss).toContain("--x-neutral-000: var(--ef-bg1) !important");
   });
 
   test("gates Jetfuel rescans to the logged-out login shell", () => {
