@@ -28,6 +28,10 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   } = p;
 
   const dark = mode === "dark";
+  // Deeper light-mode inks keep Everforest hues readable on warm surfaces.
+  const action = dark ? green : "#5f7100";
+  const onAction = dark ? "#2d353b" : "#fdf6e3";
+  const linkInk = dark ? blue : "#28678a";
 
   // Ink used on top of "emphasis" surfaces. In dark mode those surfaces are
   // pastel accents; in light mode Everforest greens/oranges still need dark
@@ -85,11 +89,11 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   // Semantic foregrounds — --fgColor-*
   // ──────────────────────────────────────────────────────────────────
   t["--fgColor-default"] = fg;
-  t["--fgColor-muted"] = grey1;
+  t["--fgColor-muted"] = dark ? grey2 : "#687568";
   t["--fgColor-subtle"] = grey0;
   t["--fgColor-disabled"] = grey0;
-  t["--fgColor-accent"] = blue;
-  t["--fgColor-link"] = blue;
+  t["--fgColor-accent"] = linkInk;
+  t["--fgColor-link"] = linkInk;
   t["--fgColor-success"] = green;
   t["--fgColor-open"] = green;
   t["--fgColor-danger"] = red;
@@ -241,7 +245,7 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--control-transparent-bgColor-rest"] = "#00000000";
   t["--control-transparent-bgColor-hover"] = a(grey1, "1a");
   t["--control-transparent-bgColor-active"] = a(grey1, "26");
-  t["--control-transparent-bgColor-selected"] = a(grey1, "26");
+  t["--control-transparent-bgColor-selected"] = bg_green;
   t["--control-transparent-bgColor-disabled"] = "#00000000";
   t["--control-transparent-borderColor-rest"] = "#00000000";
   t["--control-transparent-borderColor-hover"] = "#00000000";
@@ -261,11 +265,12 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   // Buttons — most cascade from semantic tokens; fix the hardcoded states.
   // ──────────────────────────────────────────────────────────────────
   // Primary (green) button needs readable ink on a pastel/saturated green.
-  t["--button-primary-fgColor-rest"] = onEmphasis;
-  t["--button-primary-iconColor-rest"] = onEmphasis;
-  t["--button-primary-fgColor-disabled"] = a(onEmphasis, "b3");
-  t["--button-primary-bgColor-hover"] = a(green, "e6");
-  t["--button-primary-bgColor-active"] = a(green, "cc");
+  t["--button-primary-bgColor-rest"] = action;
+  t["--button-primary-fgColor-rest"] = onAction;
+  t["--button-primary-iconColor-rest"] = onAction;
+  t["--button-primary-fgColor-disabled"] = a(onAction, "b3");
+  t["--button-primary-bgColor-hover"] = dark ? "#b5ca95" : "#526200";
+  t["--button-primary-bgColor-active"] = dark ? "#b5ca95" : "#526200";
   t["--button-primary-bgColor-disabled"] = a(green, "80");
   t["--button-primary-borderColor-rest"] = a(fg, "1a");
   t["--button-default-bgColor-hover"] = bg2;
@@ -322,7 +327,7 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--selection-bgColor"] = a(blue, "40");
   t["--focus-outline"] = `.125rem solid ${blue}`;
   t["--focus-outlineColor"] = blue;
-  t["--underlineNav-borderColor-active"] = orange; // active tab underline
+  t["--underlineNav-borderColor-active"] = action; // active tab underline
   t["--underlineNav-borderColor-hover"] = a(grey1, "66");
   t["--highlight-neutral-bgColor"] = bg_yellow;    // search-match highlight
   t["--skeletonLoader-bgColor"] = a(grey1, "1a");
@@ -341,11 +346,11 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--actionListItem-default-hover-bgColor"] = a(grey1, "1a");
   t["--actionListItem-default-hover-fgColor"] = fg;
   t["--actionListItem-default-active-bgColor"] = a(grey1, "26");
-  t["--actionListItem-default-selected-bgColor"] = a(blue, "26");
+  t["--actionListItem-default-selected-bgColor"] = bg_green;
   t["--actionListItem-default-selected-fgColor"] = fg;
   t["--actionListItem-danger-hover-bgColor"] = a(red, "1a");
   t["--actionListItem-danger-hover-fgColor"] = red;
-  t["--sideNav-bgColor-selected"] = bg2;
+  t["--sideNav-bgColor-selected"] = bg_green;
   t["--topicTag-borderColor"] = "#00000000";
   t["--treeViewItem-leadingVisual-iconColor-rest"] = blue;
   t["--timelineBadge-bgColor"] = bg2;

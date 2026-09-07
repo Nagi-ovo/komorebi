@@ -11,6 +11,7 @@ html:not([data-ef="off"]) {
   --ef-line: #e0dcc7; --ef-line-bold: #bdc3af;
   --ef-graph-thick: #e6e2cc; --ef-graph-weak: #939f91; --ef-graph-icon: #708089;
   --ef-white-surface: #fdf6e3;
+  --ef-accent: #5f7100; --ef-accent-ink: #5f7100; --ef-selected: #f0f1d2; --ef-on-accent: #fdf6e3;
   color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
@@ -20,6 +21,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-line: #4f585e; --ef-line-bold: #56635f;
   --ef-graph-thick: #3d484d; --ef-graph-weak: #7a8478; --ef-graph-icon: #9da9a0;
   --ef-white-surface: #2d353b;
+  --ef-accent: #a7c080; --ef-accent-ink: color-mix(in srgb, #a7c080 60%, var(--ef-t1)); --ef-selected: #425047; --ef-on-accent: #2d353b;
   color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
@@ -30,6 +32,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-line: #4f585e; --ef-line-bold: #56635f;
     --ef-graph-thick: #3d484d; --ef-graph-weak: #7a8478; --ef-graph-icon: #9da9a0;
     --ef-white-surface: #2d353b;
+    --ef-accent: #a7c080; --ef-accent-ink: color-mix(in srgb, #a7c080 60%, var(--ef-t1)); --ef-selected: #425047; --ef-on-accent: #2d353b;
     color-scheme: dark !important;
   }
 }
@@ -60,3 +63,44 @@ html:not([data-ef="off"]) {
 
 /* safety paint — the page background reads var(--bg3) inline on <body> */
 html:not([data-ef="off"]) body { background-color: var(--ef-bg3) !important; }
+
+/* Distinguish navigation and primary actions from content links and pink
+   community accents. Scope to site chrome; never recolour player overlays. */
+html:not([data-ef="off"]) :is(.channel-link, .channel-link__right, .vui_tabs--nav-item).active,
+html:not([data-ef="off"]) .vui_tabs--nav-item-active {
+  background-color: var(--ef-selected) !important;
+  color: var(--ef-accent-ink) !important;
+}
+html:not([data-ef="off"]) .vui_tabs--nav-item-active :is(span, a) {
+  color: var(--ef-accent-ink) !important;
+}
+html:not([data-ef="off"]) :is(.vui_tabs--nav-wbi, .vui_tabs--nav-slider) {
+  background-color: var(--ef-accent) !important;
+}
+html:not([data-ef="off"]) :is(.follow-btn, .follow-btn-inner).not-follow,
+html:not([data-ef="off"]) .right-entry .upload-buttom {
+  background-color: var(--ef-accent) !important;
+  border-color: var(--ef-accent) !important;
+  color: var(--ef-on-accent) !important;
+}
+
+/* Current space pages use the newer header, nav and radio-filter components. */
+html:not([data-ef="off"]) .header-upload-entry {
+  background-color: var(--ef-accent) !important;
+  color: var(--ef-on-accent) !important;
+}
+html:not([data-ef="off"]) .header-upload-entry :is(.header-upload-entry__text, svg) {
+  color: var(--ef-on-accent) !important;
+}
+html:not([data-ef="off"]) a.nav-tab__item.active[aria-current="page"] {
+  --Gr6_u: var(--ef-accent-ink) !important;
+  background-color: var(--ef-selected) !important;
+  color: var(--ef-accent-ink) !important;
+}
+html:not([data-ef="off"]) a.nav-tab__item.active[aria-current="page"] :is(.nav-tab__item-text, svg) {
+  color: var(--ef-accent-ink) !important;
+}
+html:not([data-ef="off"]) .radio-filter__item.radio-filter__item--active {
+  background-color: var(--ef-accent) !important;
+  color: var(--ef-on-accent) !important;
+}

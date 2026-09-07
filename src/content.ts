@@ -127,7 +127,8 @@ const GROK_PAGE_CSS =
   "--surface-l1:var(--eft-composer)!important;--surface-l1-hover:var(--eft-visual)!important;" +
   "--surface-l2:var(--eft-s3)!important;--warm-white:var(--eft-s1)!important;" +
   "--sidebar-background:var(--eft-side)!important;--sidebar-accent:var(--eft-visual)!important;" +
-  "--sidebar-primary:var(--eft-green)!important;--wd-composer-bg:var(--eft-composer)!important;" +
+  "--sidebar-primary:var(--eft-action)!important;--sidebar-primary-foreground:var(--eft-on-action)!important;" +
+  "--wd-composer-bg:var(--eft-composer)!important;" +
   "--wd-user-bubble:var(--eft-bubble)!important;--wd-accent:var(--eft-green)!important;" +
   "--wd-composer-border:var(--efh-border)!important;--background:var(--efh-bg)!important;" +
   "--background-secondary:var(--efh-side)!important;--accent:var(--eft-visual)!important;" +

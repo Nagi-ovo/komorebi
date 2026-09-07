@@ -4,9 +4,9 @@
    and tabs. Best-effort + fragile by nature. Mode = popup, or the OS on "sync". */
 
 html:not([data-ef="off"]) {
-  --ef-bg: #fdf6e3; --ef-fg: #5c6a72; --ef-muted: #828a78;
+  --ef-bg: #fdf6e3; --ef-fg: #5c6a72; --ef-muted: #687568;
   --ef-bg-0: rgba(253, 246, 227, 0);
-  --ef-blue: #3a94c5; --ef-purple: #df69ba; --ef-green: #8da101; --ef-border: #e0dcc7;
+  --ef-blue: #28678a; --ef-purple: #9b4f82; --ef-green: #5f7100; --ef-border: #e0dcc7;
   --ef-surface: #f4f0d9; --ef-control: #efebd4; --ef-shadow: rgba(92, 106, 114, 0.14);
   --ef-header: var(--ef-muted);
   --COEmY: var(--ef-fg) !important; --Xqboce: var(--ef-fg) !important; --YLNNHc: var(--ef-fg) !important;
@@ -218,7 +218,7 @@ html:not([data-ef="off"]) .gLFyf { color: var(--ef-fg) !important; }
 html:not([data-ef="off"]) #searchform [role="option"]:is(:hover, [aria-selected="true"], .sbhl),
 html:not([data-ef="off"]) form[action="/search"] [role="option"]:is(:hover, [aria-selected="true"], .sbhl),
 html:not([data-ef="off"]) form[role="search"] [role="option"]:is(:hover, [aria-selected="true"], .sbhl) {
-  background: color-mix(in srgb, var(--ef-blue) 14%, var(--ef-bg)) !important;
+  background: color-mix(in srgb, var(--ef-green) 14%, var(--ef-bg)) !important;
 }
 html:not([data-ef="off"]) :is(#searchform, form[action="/search"], form[role="search"]) input[type="submit"],
 html:not([data-ef="off"]) #gbqfbb {
@@ -298,7 +298,7 @@ html:not([data-ef="off"]) div[role="navigation"] :is(
   [selected],
   [selected] *
 ) {
-  color: var(--ef-blue) !important;
+  color: var(--ef-green) !important;
   fill: currentColor !important;
 }
 html:not([data-ef="off"]) :is(footer, #fbar, footer a, #fbar a, .c93Gbe a, .pHiOh) { color: var(--ef-muted) !important; }

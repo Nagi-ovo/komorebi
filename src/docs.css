@@ -24,12 +24,13 @@ html:not([data-ef="off"]) {
      reads as washed-out on dense menus/toolbars); Everforest fg in dark. */
   --ef-ink: #3c4043;
   --ef-outline: #939f91; --ef-outline-var: #e0dcc7;
-  --ef-blue: #3a94c5; --ef-blue-c: #e9f0e9; --ef-on-blue: #fffbef; --ef-on-blue-c: #2f7da8;
-  --ef-green: #8da101; --ef-green-c: #e6ead0; --ef-on-green: #fffbef; --ef-on-green-c: #687d3e;
+  --ef-blue: #28678a; --ef-blue-c: #dbe7eb; --ef-on-blue: #fffbef; --ef-on-blue-c: #28678a;
+  --ef-green: #5f7100; --ef-green-c: #e6ead0; --ef-on-green: #fdf6e3; --ef-on-green-c: #526200;
   --ef-red: #f85552; --ef-red-c: #fde3da; --ef-on-red: #fffbef;
+  --ef-purple: #876080; --ef-purple-c: #f0e4ec; --ef-on-purple: #fffbef; --ef-on-purple-c: #76526f;
   --ef-neutral: #708089; --ef-neutral-c: #efebd4;
   --ef-inv: #2d353b; --ef-on-inv: #fdf6e3;
-  --ef-hover: #efebd4; --ef-selected: #e9f0e9;
+  --ef-hover: #efebd4; --ef-selected: #e6ead0;
   --ef-icon-filter: none;
   color-scheme: light !important;
 }
@@ -43,9 +44,10 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-blue: #7fbbb3; --ef-blue-c: #3a515d; --ef-on-blue: #2d353b; --ef-on-blue-c: #cfe0e0;
   --ef-green: #a7c080; --ef-green-c: #425047; --ef-on-green: #2d353b; --ef-on-green-c: #cfe0b0;
   --ef-red: #e67e80; --ef-red-c: #514045; --ef-on-red: #2d353b;
+  --ef-purple: #d699b6; --ef-purple-c: #4c3743; --ef-on-purple: #2d353b; --ef-on-purple-c: #e6bfd2;
   --ef-neutral: #9da9a0; --ef-neutral-c: #3d484d;
   --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
-  --ef-hover: #3d484d; --ef-selected: #3a515d;
+  --ef-hover: #3d484d; --ef-selected: #425047;
   /* sprite-image toolbar icons are near-black; invert+hue-rotate keeps colour
      icons roughly recognisable while turning monochrome glyphs light. */
   --ef-icon-filter: invert(0.9) hue-rotate(180deg) brightness(1.05);
@@ -62,9 +64,10 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-blue: #7fbbb3; --ef-blue-c: #3a515d; --ef-on-blue: #2d353b; --ef-on-blue-c: #cfe0e0;
     --ef-green: #a7c080; --ef-green-c: #425047; --ef-on-green: #2d353b; --ef-on-green-c: #cfe0b0;
     --ef-red: #e67e80; --ef-red-c: #514045; --ef-on-red: #2d353b;
+    --ef-purple: #d699b6; --ef-purple-c: #4c3743; --ef-on-purple: #2d353b; --ef-on-purple-c: #e6bfd2;
     --ef-neutral: #9da9a0; --ef-neutral-c: #3d484d;
     --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
-    --ef-hover: #3d484d; --ef-selected: #3a515d;
+    --ef-hover: #3d484d; --ef-selected: #425047;
     --ef-icon-filter: invert(0.9) hue-rotate(180deg) brightness(1.05);
     color-scheme: dark !important;
   }
@@ -103,7 +106,7 @@ html:not([data-ef="off"]) :is(body, .KkxPLb, .LgGVmb) {
   --dt-surface-container-highest: var(--ef-c-highest) !important;
   --dt-surface-dim: var(--ef-dim) !important;
   --dt-surface-variant: var(--ef-variant) !important;
-  --dt-surface-tint: var(--ef-blue) !important;
+  --dt-surface-tint: var(--ef-green) !important;
   --dt-on-surface: var(--ef-fg) !important;
   --dt-on-surface-secondary: var(--ef-fg-sec) !important;
   --dt-on-surface-variant: var(--ef-fg-var) !important;
@@ -118,19 +121,19 @@ html:not([data-ef="off"]) :is(body, .KkxPLb, .LgGVmb) {
   --dt-outline: var(--ef-outline) !important;
   --dt-outline-variant: var(--ef-outline-var) !important;
   --dt-gray-outline: var(--ef-outline-var) !important;
-  --dt-primary: var(--ef-blue) !important;
-  --dt-primary-action: var(--ef-blue) !important;
-  --dt-on-primary: var(--ef-on-blue) !important;
-  --dt-primary-container: var(--ef-blue-c) !important;
-  --dt-on-primary-container: var(--ef-on-blue-c) !important;
+  --dt-primary: var(--ef-green) !important;
+  --dt-primary-action: var(--ef-green) !important;
+  --dt-on-primary: var(--ef-on-green) !important;
+  --dt-primary-container: var(--ef-green-c) !important;
+  --dt-on-primary-container: var(--ef-on-green-c) !important;
   --dt-blue-fill: var(--ef-blue) !important;
   --dt-blue-tonal: var(--ef-blue-c) !important;
   --dt-secondary: var(--ef-blue) !important;
   --dt-secondary-container: var(--ef-blue-c) !important;
   --dt-on-secondary-container: var(--ef-on-blue-c) !important;
-  --dt-tertiary: var(--ef-green) !important;
-  --dt-tertiary-container: var(--ef-green-c) !important;
-  --dt-on-tertiary-container: var(--ef-on-green-c) !important;
+  --dt-tertiary: var(--ef-purple) !important;
+  --dt-tertiary-container: var(--ef-purple-c) !important;
+  --dt-on-tertiary-container: var(--ef-on-purple-c) !important;
   --dt-green-fill: var(--ef-green) !important;
   --dt-green-tonal: var(--ef-green-c) !important;
   --dt-error: var(--ef-red) !important;
@@ -156,14 +159,14 @@ html:not([data-ef="off"]) {
   --gm3-sys-color-on-surface-variant: var(--ef-fg-var) !important;
   --gm3-sys-color-background: var(--ef-page) !important;
   --gm3-sys-color-on-background: var(--ef-fg) !important;
-  --gm3-sys-color-primary: var(--ef-blue) !important;
-  --gm3-sys-color-on-primary: var(--ef-on-blue) !important;
-  --gm3-sys-color-primary-container: var(--ef-blue-c) !important;
-  --gm3-sys-color-on-primary-container: var(--ef-on-blue-c) !important;
+  --gm3-sys-color-primary: var(--ef-green) !important;
+  --gm3-sys-color-on-primary: var(--ef-on-green) !important;
+  --gm3-sys-color-primary-container: var(--ef-green-c) !important;
+  --gm3-sys-color-on-primary-container: var(--ef-on-green-c) !important;
   --gm3-sys-color-secondary-container: var(--ef-blue-c) !important;
   --gm3-sys-color-on-secondary-container: var(--ef-on-blue-c) !important;
-  --gm3-sys-color-tertiary: var(--ef-green) !important;
-  --gm3-sys-color-tertiary-container: var(--ef-green-c) !important;
+  --gm3-sys-color-tertiary: var(--ef-purple) !important;
+  --gm3-sys-color-tertiary-container: var(--ef-purple-c) !important;
   --gm3-sys-color-outline: var(--ef-outline) !important;
   --gm3-sys-color-outline-variant: var(--ef-outline-var) !important;
   --gm3-sys-color-error: var(--ef-red) !important;
@@ -171,7 +174,7 @@ html:not([data-ef="off"]) {
   --gm3-sys-color-on-error: var(--ef-on-red) !important;
   --gm3-sys-color-inverse-surface: var(--ef-inv) !important;
   --gm3-sys-color-inverse-on-surface: var(--ef-on-inv) !important;
-  --gm3-sys-color-inverse-primary: var(--ef-blue) !important;
+  --gm3-sys-color-inverse-primary: var(--ef-green) !important;
   /* Workspace token layer mirrors the same names */
   --ws-sys-color-surface: var(--ef-surface) !important;
   --ws-sys-color-surface-container: var(--ef-c) !important;
@@ -185,10 +188,10 @@ html:not([data-ef="off"]) {
   --ws-sys-color-on-surface: var(--ef-fg) !important;
   --ws-sys-color-on-surface-variant: var(--ef-fg-var) !important;
   --ws-sys-color-background: var(--ef-page) !important;
-  --ws-sys-color-primary: var(--ef-blue) !important;
-  --ws-sys-color-on-primary: var(--ef-on-blue) !important;
-  --ws-sys-color-primary-container: var(--ef-blue-c) !important;
-  --ws-sys-color-on-primary-container: var(--ef-on-blue-c) !important;
+  --ws-sys-color-primary: var(--ef-green) !important;
+  --ws-sys-color-on-primary: var(--ef-on-green) !important;
+  --ws-sys-color-primary-container: var(--ef-green-c) !important;
+  --ws-sys-color-on-primary-container: var(--ef-on-green-c) !important;
   --ws-sys-color-secondary-container: var(--ef-blue-c) !important;
   --ws-sys-color-outline: var(--ef-outline) !important;
   --ws-sys-color-outline-variant: var(--ef-outline-var) !important;
@@ -232,6 +235,19 @@ html:not([data-ef="off"]):has(#punch-start-presentation-container)
 html:not([data-ef="off"]) :is(#docs-chrome, #docs-header, .docs-titlebar-buttons,
   .docs-title-outer, #docs-menubar, .docs-menubar, .docs-menubar-container) {
   background-color: var(--ef-surface) !important;
+}
+/* Native material branding uses `background: inherit`. Painting #docs-header
+   makes that 64×64 box opaque, and it sits over File (starts at x=54).
+   The menubar is flush to that overlap and overflow:hidden; keep both
+   transparent and unclipped so the F is not shaved. */
+html:not([data-ef="off"]) #docs-branding-container {
+  background-color: transparent !important;
+}
+html:not([data-ef="off"]) :is(#docs-menubar, #docs-file-menu) {
+  overflow: visible !important;
+}
+html:not([data-ef="off"]) #docs-menubar {
+  margin-left: 64px !important;
 }
 html:not([data-ef="off"]):has(#punch-start-presentation-container) #docs-header {
   border-bottom: 1px solid var(--ef-outline-var) !important;
@@ -300,7 +316,7 @@ html:not([data-ef="off"]) [class*="ContentLibraryRailToolbarButtonContainer"]:ho
   background-color: var(--ef-hover) !important;
 }
 html:not([data-ef="off"]) [class*="ContentLibraryRailToolbarButtonContainer"]:focus-visible {
-  outline: 2px solid var(--ef-blue) !important;
+  outline: 2px solid var(--ef-green) !important;
   outline-offset: -2px;
 }
 
@@ -381,8 +397,8 @@ html:not([data-ef="off"]) .jfk-button-standard {
   box-shadow: none !important;
 }
 html:not([data-ef="off"]) :is(.jfk-button-action, .jfk-button-primary, .jfk-button-clear-outline.jfk-button-action) {
-  background-color: var(--ef-blue) !important;
-  color: var(--ef-on-blue) !important;
+  background-color: var(--ef-green) !important;
+  color: var(--ef-on-green) !important;
   border-color: transparent !important;
 }
 

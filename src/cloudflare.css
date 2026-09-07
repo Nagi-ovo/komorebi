@@ -12,10 +12,10 @@ html:not([data-ef="off"]) {
   --ef-page: #fdf6e3; --ef-surface: #fdf6e3; --ef-bg2: #f4f0d9;
   --ef-card: #fffbef; --ef-elev: #fffbef; --ef-fill: #efebd4;
   --ef-hover: #e6e2cc; --ef-active: #e0dcc7; --ef-border: #e0dcc7;
-  --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-fg3: #829181; --ef-on-accent: #fffbef;
-  --ef-blue: #3a94c5; --ef-blue-fade: #dbe7eb;
+  --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-fg3: #829181; --ef-on-accent: #fdf6e3;
+  --ef-blue: #28678a; --ef-blue-fade: #dbe7eb;
   --ef-red: #f85552; --ef-red-fade: #fde3da;
-  --ef-green: #8da101; --ef-green-fade: #e6ead0;
+  --ef-green: #5f7100; --ef-action-hover: #526200; --ef-green-fade: #e6ead0;
   --ef-gold: #dfa000; --ef-gold-fade: #f0e9c8;
   color-scheme: light !important;
 }
@@ -26,7 +26,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-on-accent: #2d353b;
   --ef-blue: #7fbbb3; --ef-blue-fade: #3a515d;
   --ef-red: #e67e80; --ef-red-fade: #514045;
-  --ef-green: #a7c080; --ef-green-fade: #425047;
+  --ef-green: #a7c080; --ef-action-hover: #b5ca95; --ef-green-fade: #425047;
   --ef-gold: #dbbc7f; --ef-gold-fade: #45433a;
   color-scheme: dark !important;
 }
@@ -38,7 +38,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-on-accent: #2d353b;
     --ef-blue: #7fbbb3; --ef-blue-fade: #3a515d;
     --ef-red: #e67e80; --ef-red-fade: #514045;
-    --ef-green: #a7c080; --ef-green-fade: #425047;
+    --ef-green: #a7c080; --ef-action-hover: #b5ca95; --ef-green-fade: #425047;
     --ef-gold: #dbbc7f; --ef-gold-fade: #45433a;
     color-scheme: dark !important;
   }
@@ -71,18 +71,18 @@ html:not([data-ef="off"]) {
   --color-kumo-muted: var(--ef-fill) !important;
   --color-surface-elevated: var(--ef-elev) !important;
   --color-hover: var(--ef-hover) !important;
-  --color-active: var(--ef-active) !important;
+  --color-active: var(--ef-green-fade) !important;
   /* borders */
   --color-border: var(--ef-border) !important;
   --color-divider: var(--ef-border) !important;
   --color-input: var(--ef-elev) !important;
-  /* accents — primary/info = Everforest blue */
-  --color-primary: var(--ef-blue) !important;
-  --color-primary-hover: var(--ef-blue) !important;
+  /* Green actions stay distinct from blue information. */
+  --color-primary: var(--ef-green) !important;
+  --color-primary-hover: var(--ef-action-hover) !important;
   --color-info: var(--ef-blue) !important;
   --color-info-selection: var(--ef-blue-fade) !important;
-  --color-kumo-brand: var(--ef-blue) !important;
-  --color-kumo-brand-hover: var(--ef-blue) !important;
+  --color-kumo-brand: var(--ef-green) !important;
+  --color-kumo-brand-hover: var(--ef-action-hover) !important;
   /* semantic colours */
   --color-error: var(--ef-red) !important;
   --color-error-selection: var(--ef-red-fade) !important;
@@ -114,3 +114,66 @@ html:not([data-ef="off"]) ::-webkit-scrollbar-thumb {
   border: 3px solid var(--ef-page); background-clip: padding-box;
 }
 html:not([data-ef="off"]) ::-webkit-scrollbar-track { background-color: var(--ef-page); }
+
+/* Kumo dashboard shell and semantic ink (the newer UI uses this namespace). */
+html:not([data-ef="off"]) {
+  --color-kumo-canvas: var(--ef-page) !important;
+  --color-kumo-recessed: var(--ef-bg2) !important;
+  --color-kumo-tint: var(--ef-hover) !important;
+  --color-kumo-interact: var(--ef-active) !important;
+  --color-kumo-line: var(--ef-border) !important;
+  --color-kumo-hairline: var(--ef-border) !important;
+  --color-kumo-focus: var(--ef-green) !important;
+  --text-color-kumo-default: var(--ef-fg) !important;
+  --text-color-kumo-strong: var(--ef-fg) !important;
+  --text-color-kumo-subtle: var(--ef-fg2) !important;
+  --text-color-kumo-placeholder: var(--ef-fg3) !important;
+  --text-color-kumo-link: var(--ef-blue) !important;
+  --text-color-kumo-info: var(--ef-blue) !important;
+  --color-kumo-info: var(--ef-blue) !important;
+  --color-kumo-info-tint: var(--ef-blue-fade) !important;
+  --color-kumo-banner-info: var(--ef-blue-fade) !important;
+  --color-kumo-success: var(--ef-green) !important;
+  --color-kumo-success-tint: var(--ef-green-fade) !important;
+  --text-color-kumo-success: var(--ef-green) !important;
+}
+
+/* Emphasis buttons otherwise mix brand with white and force white ink,
+   including in dark mode. Keep this pair scoped away from inverse tooltips. */
+html:not([data-ef="off"]) :is([data-kumo-component="Button"], [data-kumo-component="LinkButton"])[style*="--kumo-button-emphasis-bg"] {
+  --kumo-button-emphasis-bg: var(--ef-green) !important;
+  --kumo-button-emphasis-gradient-start: var(--ef-green) !important;
+  --kumo-button-emphasis-gradient-end: var(--ef-green) !important;
+  --kumo-button-emphasis-ring: var(--ef-green) !important;
+  color: var(--ef-on-accent) !important;
+}
+html:not([data-ef="off"]) :is([data-kumo-component="Button"], [data-kumo-component="LinkButton"])[style*="--kumo-button-emphasis-bg"]:not(:disabled):not([aria-disabled="true"]):hover {
+  --kumo-button-emphasis-bg: var(--ef-action-hover) !important;
+  --kumo-button-emphasis-gradient-start: var(--ef-action-hover) !important;
+  --kumo-button-emphasis-gradient-end: var(--ef-action-hover) !important;
+}
+html:not([data-ef="off"]) aside {
+  --sidebar-active-bg: var(--ef-green-fade) !important;
+}
+html:not([data-ef="off"]) [data-kumo-component="Tabs"][role="tab"][aria-selected="true"] {
+  background-color: var(--ef-green-fade) !important;
+  color: var(--ef-fg) !important;
+}
+
+/* Layered !text-white wins against unlayered !important; match the earlier
+   Cloudflare layer so the foreground follows the same mode as its button. */
+@layer cf {
+  html:not([data-ef="off"]) :is([data-kumo-component="Button"], [data-kumo-component="LinkButton"])[style*="--kumo-button-emphasis-bg"] {
+    color: var(--ef-on-accent) !important;
+  }
+  html:not([data-ef="off"]) main table thead {
+    background-color: var(--ef-bg2) !important;
+  }
+  html:not([data-ef="off"]) main table :is(th, td) {
+    border-color: var(--ef-border) !important;
+  }
+  html:not([data-ef="off"]) main table :is(th, td)[class~="to-white"] {
+    background-image: none !important;
+    background-color: var(--ef-card) !important;
+  }
+}

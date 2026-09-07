@@ -7,26 +7,26 @@
 
 html:not([data-ef="off"]) {
   --ef-page: #efebd4; --ef-panel: #fdf6e3; --ef-elev: #fffbef;
-  --ef-row-read: #fdf6e3; --ef-row-unread: #fffbef; --ef-hover: #efebd4; --ef-selected: #e9f0e9;
+  --ef-row-read: #fdf6e3; --ef-row-unread: #fffbef; --ef-hover: #efebd4; --ef-selected: #e6ead0;
   --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-ink: #3c4043; --ef-border: #e0dcc7;
-  --ef-blue: #3a94c5; --ef-green: #8da101; --ef-on-accent: #2d353b;
+  --ef-blue: #28678a; --ef-info-bg: #dbe7eb; --ef-green: #5f7100; --ef-on-accent: #fdf6e3;
   --ef-search: #efebd4; --ef-mail-card: #fdf6e3;
   color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-page: #1e2326; --ef-panel: #2d353b; --ef-elev: #343f44;
-  --ef-row-read: #2d353b; --ef-row-unread: #343f44; --ef-hover: #3d484d; --ef-selected: #3a515d;
+  --ef-row-read: #2d353b; --ef-row-unread: #343f44; --ef-hover: #3d484d; --ef-selected: #425047;
   --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-ink: #d3c6aa; --ef-border: #4f585e;
-  --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
+  --ef-blue: #7fbbb3; --ef-info-bg: #3a515d; --ef-green: #a7c080; --ef-on-accent: #2d353b;
   --ef-search: #343f44; --ef-mail-card: #fdf6e3;
   color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
     --ef-page: #1e2326; --ef-panel: #2d353b; --ef-elev: #343f44;
-    --ef-row-read: #2d353b; --ef-row-unread: #343f44; --ef-hover: #3d484d; --ef-selected: #3a515d;
+    --ef-row-read: #2d353b; --ef-row-unread: #343f44; --ef-hover: #3d484d; --ef-selected: #425047;
     --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-ink: #d3c6aa; --ef-border: #4f585e;
-    --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
+    --ef-blue: #7fbbb3; --ef-info-bg: #3a515d; --ef-green: #a7c080; --ef-on-accent: #2d353b;
     --ef-search: #343f44; --ef-mail-card: #fdf6e3;
     color-scheme: dark !important;
   }
@@ -128,7 +128,7 @@ html:not([data-ef="off"]) .zA.aps { background-color: var(--ef-selected) !import
 
 /* account rollouts: desktop notification strip, mail toolbar, input tools */
 html:not([data-ef="off"]) .b8.UC.bAp {
-  background-color: var(--ef-elev) !important;
+  background-color: var(--ef-info-bg) !important;
   border-bottom: 1px solid var(--ef-border) !important;
   color: var(--ef-fg) !important;
 }

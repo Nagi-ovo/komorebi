@@ -13,12 +13,13 @@ html:not([data-ef="off"]) :is(body, .theme-host, .lm-component-theme) {
   --ef-sidebar: #efebd4; --ef-sidebar-hover: #e6e2cc;
   --ef-on: #5c6a72; --ef-on-var: #708089; --ef-on-low: #829181;
   --ef-outline: #939f91; --ef-outline-var: #e0dcc7;
-  --ef-primary: #3a94c5; --ef-on-primary: #fffbef;
-  --ef-primary-c: #e9f0e9; --ef-on-primary-c: #3a94c5;
-  --ef-tertiary: #8da101; --ef-tertiary-c: #f0f1d2;
+  --ef-primary: #5f7100; --ef-on-primary: #fdf6e3;
+  --ef-secondary: #286f96; --ef-secondary-c: #e9f0e9;
+  --ef-primary-c: #e6ead0; --ef-on-primary-c: #536300;
+  --ef-tertiary: #5f7100; --ef-tertiary-c: #f0f1d2;
   --ef-error: #f85552; --ef-error-c: #fde3da; --ef-on-error: #fffbef;
   --ef-inv-surface: #2d353b; --ef-inv-on: #fdf6e3; --ef-inv-primary: #7fbbb3;
-  --ef-fixed-dim: #3a94c5; --ef-purple: #df69ba; --ef-purple-c: #fae8e2;
+  --ef-fixed-dim: #8da101; --ef-purple: #a34285; --ef-purple-c: #f3e5ef;
   color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] :is(body, .theme-host, .lm-component-theme) {
@@ -28,12 +29,13 @@ html:not([data-ef="off"])[data-ef-mode="dark"] :is(body, .theme-host, .lm-compon
   --ef-sidebar: #232a2e; --ef-sidebar-hover: #343f44;
   --ef-on: #d3c6aa; --ef-on-var: #9da9a0; --ef-on-low: #859289;
   --ef-outline: #859289; --ef-outline-var: #4f585e;
-  --ef-primary: #7fbbb3; --ef-on-primary: #2d353b;
-  --ef-primary-c: #3a515d; --ef-on-primary-c: #7fbbb3;
+  --ef-primary: #a7c080; --ef-on-primary: #2d353b;
+  --ef-secondary: #7fbbb3; --ef-secondary-c: #3a515d;
+  --ef-primary-c: #425047; --ef-on-primary-c: #d3c6aa;
   --ef-tertiary: #a7c080; --ef-tertiary-c: #425047;
   --ef-error: #e67e80; --ef-error-c: #514045; --ef-on-error: #2d353b;
   --ef-inv-surface: #fdf6e3; --ef-inv-on: #2d353b; --ef-inv-primary: #3a94c5;
-  --ef-fixed-dim: #7fbbb3; --ef-purple: #d699b6; --ef-purple-c: #4a444e;
+  --ef-fixed-dim: #a7c080; --ef-purple: #d699b6; --ef-purple-c: #4a444e;
   color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
@@ -44,12 +46,13 @@ html:not([data-ef="off"])[data-ef-mode="dark"] :is(body, .theme-host, .lm-compon
     --ef-sidebar: #232a2e; --ef-sidebar-hover: #343f44;
     --ef-on: #d3c6aa; --ef-on-var: #9da9a0; --ef-on-low: #859289;
     --ef-outline: #859289; --ef-outline-var: #4f585e;
-    --ef-primary: #7fbbb3; --ef-on-primary: #2d353b;
-    --ef-primary-c: #3a515d; --ef-on-primary-c: #7fbbb3;
+    --ef-primary: #a7c080; --ef-on-primary: #2d353b;
+    --ef-secondary: #7fbbb3; --ef-secondary-c: #3a515d;
+    --ef-primary-c: #425047; --ef-on-primary-c: #d3c6aa;
     --ef-tertiary: #a7c080; --ef-tertiary-c: #425047;
     --ef-error: #e67e80; --ef-error-c: #514045; --ef-on-error: #2d353b;
     --ef-inv-surface: #fdf6e3; --ef-inv-on: #2d353b; --ef-inv-primary: #3a94c5;
-    --ef-fixed-dim: #7fbbb3; --ef-purple: #d699b6; --ef-purple-c: #4a444e;
+    --ef-fixed-dim: #a7c080; --ef-purple: #d699b6; --ef-purple-c: #4a444e;
     color-scheme: dark !important;
   }
 }
@@ -72,14 +75,14 @@ html:not([data-ef="off"]) :is(body, .theme-host, .lm-component-theme) {
   --gem-sys-color--outline: var(--ef-outline) !important;
   --gem-sys-color--outline-variant: var(--ef-outline-var) !important;
   --gem-sys-color--outline-low: var(--ef-outline-var) !important;
-  /* primary (blue) + secondary (blue) */
+  /* Green actions and selected states; blue secondary information. */
   --gem-sys-color--primary: var(--ef-primary) !important;
   --gem-sys-color--on-primary: var(--ef-on-primary) !important;
   --gem-sys-color--primary-container: var(--ef-primary-c) !important;
   --gem-sys-color--on-primary-container: var(--ef-on-primary-c) !important;
-  --gem-sys-color--secondary: var(--ef-primary) !important;
-  --gem-sys-color--secondary-container: var(--ef-primary-c) !important;
-  --gem-sys-color--on-secondary-container: var(--ef-on-primary-c) !important;
+  --gem-sys-color--secondary: var(--ef-secondary) !important;
+  --gem-sys-color--secondary-container: var(--ef-secondary-c) !important;
+  --gem-sys-color--on-secondary-container: var(--ef-secondary) !important;
   /* tertiary (green) */
   --gem-sys-color--tertiary: var(--ef-tertiary) !important;
   --gem-sys-color--tertiary-container: var(--ef-tertiary-c) !important;
@@ -104,8 +107,8 @@ html:not([data-ef="off"]) :is(body, .theme-host, .lm-component-theme) {
   --bard-color-synthetic--chat-window-surface-container-highest: var(--ef-bright) !important;
   --bard-color-synthetic--mat-card-background: var(--ef-c-high) !important;
   --bard-color-response-container-flipped-background: var(--ef-c-high) !important;
-  --bard-color-new-conversation-button: var(--ef-c-highest) !important;
-  --bard-color-on-new-conversation-button: var(--ef-on) !important;
+  --bard-color-new-conversation-button: var(--ef-primary-c) !important;
+  --bard-color-on-new-conversation-button: var(--ef-on-primary-c) !important;
   --bard-color-onhover-conversation-metadata-button-v2: var(--ef-c-highest) !important;
   --bard-color-neutral-90: var(--ef-variant) !important;
   --bard-color-neutral-95: var(--ef-c) !important;
@@ -178,3 +181,13 @@ html:not([data-ef="off"]) :is(.hljs-variable, .hljs-params, .hljs-template-varia
 
 /* safety paint for the app shell */
 html:not([data-ef="off"]) body { background-color: var(--ef-surface) !important; }
+
+/* Library/project navigation declares MDC foregrounds locally after activation. */
+html:not([data-ef="off"]) a.gem-nav-list-item:is(.is-active, [aria-current="page"], .mdc-list-item--activated) {
+  background-color: var(--ef-primary-c) !important;
+  color: var(--ef-on-primary-c) !important;
+}
+html:not([data-ef="off"]) a.gem-nav-list-item:is(.is-active, [aria-current="page"], .mdc-list-item--activated)
+  :is(.mdc-list-item__primary-text, .label-and-badge, .title-text, mat-icon) {
+  color: var(--ef-on-primary-c) !important;
+}

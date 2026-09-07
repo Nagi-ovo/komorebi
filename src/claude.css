@@ -10,22 +10,22 @@
 
 /* ── internal palette — triplets (--ef-*) + full colours (--efc-*) ─────────── */
 html:not([data-ef="off"]) {
-  --ef-s0: 45 100% 97%; --ef-s1: 44 87% 94%; --ef-s2: 51 55% 90%;
-  --ef-s3: 51 46% 88%; --ef-s4: 51 34% 85%; --ef-s5: 50 29% 83%;
+  --ef-s0: 45 100% 97%; --ef-s1: 44 87% 94%; --ef-s2: 69 37% 87%;
+  --ef-s3: 69 37% 87%; --ef-s4: 51 34% 85%; --ef-s5: 50 29% 83%;
   --ef-t0: 202 11% 40%; --ef-t1: 202 10% 49%; --ef-t2: 116 7% 54%;
   --ef-bd: 50 29% 83%;
-  --ef-accent: 201 55% 50%; --ef-accent-fade: 120 19% 93%;
+  --ef-accent: 201 58% 37%; --ef-accent-fade: 120 19% 93%;
   --ef-brand: 15 63% 60%; --ef-on: 0 0% 100%;  /* Claude's own coral #d97757 — keep the logo/brand orange, not Everforest green */
   --ef-danger: 1 92% 65%; --ef-danger-fade: 15 90% 92%;
   --ef-success: 68 99% 32%; --ef-success-fade: 62 53% 88%;
   --ef-warning: 43 100% 44%; --ef-warning-fade: 43 82% 89%;
-  --ef-pro: 319 65% 64%; --ef-pro-fade: 15 71% 93%;
-  --efc-s0: #efebd4; --efc-s1: #fdf6e3; --efc-s2: #fffbef; --efc-s3: #fffbef;
-  --efc-panel: #fdf6e3; --efc-popover: #fffbef; --efc-page: #efebd4;
+  --ef-pro: 319 42% 44%; --ef-pro-fade: 319 35% 93%;
+  --efc-s0: #e6ead0; --efc-s1: #fdf6e3; --efc-s2: #fffbef; --efc-s3: #fffbef;
+  --efc-panel: #fdf6e3; --efc-popover: #fffbef; --efc-page: #e6ead0;
   --efc-tprimary: #5c6a72; --efc-tsec: #708089; --efc-tmuted: #829181;
   --efc-border: rgba(92,106,114,.18); --efc-border-strong: rgba(92,106,114,.30);
   --efc-fill-control: rgba(92,106,114,.10); --efc-neutral: rgba(92,106,114,.06); --efc-neutral-hover: rgba(92,106,114,.10);
-  --efc-fill-primary: #8da101; --efc-fill-secondary: rgba(92,106,114,.10);
+  --efc-fill-primary: #5f7100; --efc-on-action: #fdf6e3; --efc-fill-secondary: rgba(92,106,114,.10);
   color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
@@ -44,7 +44,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --efc-tprimary: #d3c6aa; --efc-tsec: #9da9a0; --efc-tmuted: #859289;
   --efc-border: rgba(211,198,170,.16); --efc-border-strong: rgba(211,198,170,.26);
   --efc-fill-control: rgba(211,198,170,.10); --efc-neutral: rgba(211,198,170,.06); --efc-neutral-hover: rgba(211,198,170,.10);
-  --efc-fill-primary: #a7c080; --efc-fill-secondary: rgba(211,198,170,.10);
+  --efc-fill-primary: #a7c080; --efc-on-action: #2d353b; --efc-fill-secondary: rgba(211,198,170,.10);
   color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
@@ -64,7 +64,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --efc-tprimary: #d3c6aa; --efc-tsec: #9da9a0; --efc-tmuted: #859289;
     --efc-border: rgba(211,198,170,.16); --efc-border-strong: rgba(211,198,170,.26);
     --efc-fill-control: rgba(211,198,170,.10); --efc-neutral: rgba(211,198,170,.06); --efc-neutral-hover: rgba(211,198,170,.10);
-    --efc-fill-primary: #a7c080; --efc-fill-secondary: rgba(211,198,170,.10);
+    --efc-fill-primary: #a7c080; --efc-on-action: #2d353b; --efc-fill-secondary: rgba(211,198,170,.10);
     color-scheme: dark !important;
   }
 }
@@ -86,7 +86,7 @@ html:not([data-ef="off"]) :is([data-theme], [data-mode]) {
   /* blue accent — links, focus, info */
   --accent-000: var(--ef-accent) !important; --accent-100: var(--ef-accent) !important;
   --accent-200: var(--ef-accent) !important; --accent-900: var(--ef-accent-fade) !important;
-  /* brand — primary call-to-action (Everforest green) */
+  /* Brand artwork keeps Claude coral; primary control fills use Everforest green. */
   --brand-000: var(--ef-brand) !important; --brand-100: var(--ef-brand) !important;
   --brand-200: var(--ef-brand) !important; --accent-brand: var(--ef-brand) !important;
   --oncolor-100: var(--ef-on) !important;
@@ -117,7 +117,7 @@ html:not([data-ef="off"]) :is([data-theme], [data-mode]) {
 }
 
 /* claude.ai/code runs inside a "dframe" desktop shell with its OWN --df-* token
-   layer (separate from the --bg-*/--cds-* layers above), declared on .dframe-root.
+   layer (separate from the --bg-* and --cds-* layers above), declared on .dframe-root.
    Redefine them there so the /code sidebar, page canvas and session cards follow
    Everforest too. The greeting sunburst there is already Claude's coral. */
 html:not([data-ef="off"]) :is(.dframe-root, .dframe-sidebar, .dframe-content) {
@@ -130,9 +130,9 @@ html:not([data-ef="off"]) :is(.dframe-root, .dframe-sidebar, .dframe-content) {
 }
 
 /* claude.ai/code's newer pages (Routines, Dispatch, …) use yet a THIRD design
-   system — "epitaxy" — whose tokens (--surface-*/--fill-*/--border-*) are declared
-   on .epitaxy-root, distinct from the --bg-*/--cds-*/--df-* layers. Map its opaque
-   surfaces, cards and primary button onto Everforest (mode-aware via --efc-*/--ef-*).
+   system — "epitaxy" — whose tokens (--surface-* and --fill-* and --border-*) are declared
+   on .epitaxy-root, distinct from the --bg-* and --cds-* and --df-* layers. Map its opaque
+   surfaces, cards and primary button onto Everforest (mode-aware via --efc-* and --ef-*).
    Its translucent overlay fills (hsl(0 0% 4% / .04) etc.) read fine on either mode,
    so we leave them; the numeric --text-000..500 are already mapped above. */
 html:not([data-ef="off"]) .epitaxy-root {
@@ -143,8 +143,8 @@ html:not([data-ef="off"]) .epitaxy-root {
   --surface-prompt-focus-hover: var(--efc-s2) !important;
   --surface-toast: var(--efc-popover) !important;
   --fill-contained-default: var(--efc-s2) !important;
-  --fill-primary-default: hsl(var(--ef-brand)) !important;
-  --fill-primary-hover: hsl(var(--ef-brand)) !important;
+  --fill-primary-default: var(--efc-fill-primary) !important;
+  --fill-primary-hover: var(--efc-fill-primary) !important;
   --text-assistant-primary: var(--efc-tprimary) !important;
   --text-assistant-secondary: var(--efc-tsec) !important;
   --border-default: var(--efc-border) !important;
@@ -158,4 +158,24 @@ html:not([data-ef="off"]) :is(div, label, fieldset):has(> svg.cds-input),
 html:not([data-ef="off"]) .cds-input:is(textarea) {
   background-color: hsl(var(--ef-s3)) !important;
   border: 1px solid var(--efc-border-strong) !important;
+}
+
+/* Brand tokens also paint the logo: target control classes, not the artwork. */
+html:not([data-ef="off"]) button:is(.bg-accent-brand, .bg-brand-000, .bg-brand-100, .cds-button-primary):not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--efc-fill-primary) !important;
+  color: var(--efc-on-action) !important;
+}
+
+/* Prose owns its own link token; navigation keeps its separate selected state. */
+html:not([data-ef="off"]) .prose {
+  --tw-prose-links: hsl(var(--ef-accent)) !important;
+  --tw-prose-invert-links: hsl(var(--ef-accent)) !important;
+}
+html:not([data-ef="off"]) .prose a[href]:not([role="button"]) {
+  color: hsl(var(--ef-accent)) !important;
+}
+html:not([data-ef="off"]) nav a[aria-current="page"],
+html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
+  background-color: hsl(var(--ef-success-fade)) !important;
+  color: hsl(var(--ef-t0)) !important;
 }

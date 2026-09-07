@@ -16,14 +16,15 @@ html:not([data-ef="off"]) {
   --eft-inset: 51 46% 88%; --eft-muted: 51 55% 90%; --eft-border: 50 29% 83%;
   /* triplets — ink + accents */
   --eft-fg: 202 11% 40%; --eft-fg2: 202 10% 49%; --eft-fg3: 116 7% 54%; --eft-invert: 206 13% 20%;
-  --eft-green: 68 99% 32%; --eft-aqua: 158 52% 43%; --eft-blue: 201 55% 50%;
+  --eft-green: 68 99% 32%; --eft-aqua: 158 52% 43%; --eft-blue: 201 58% 37%;
   --eft-orange: 23 91% 55%; --eft-yellow: 43 100% 44%; --eft-red: 1 92% 65%; --eft-purple: 319 65% 64%;
   --eft-link: var(--eft-blue);
+  --eft-action: 69.56 100% 22.16%; --eft-on-action: 44 87% 94%;
   /* full colours */
   --efh-bg: #fdf6e3; --efh-elev: #fffbef; --efh-side: #efebd4; --efh-composer: #f4f0d9;
   --efh-bubble: #e6ead0; --efh-visual: #eaedc8; --efh-card: #fffbef; --efh-popover: #fffbef; --efh-input: #fffbef;
-  --efh-fg: #5c6a72; --efh-green: #8da101; --efh-green-hover: #798a00; --efh-green-fade: #e6ead0;
-  --efh-aqua: #35a77c; --efh-blue: #3a94c5; --efh-orange: #f57d26; --efh-yellow: #dfa000;
+  --efh-fg: #5c6a72; --efh-green: #5f7100; --efh-green-hover: #516100; --efh-green-fade: #e6ead0;
+  --efh-aqua: #35a77c; --efh-blue: #286f96; --efh-orange: #f57d26; --efh-yellow: #dfa000;
   --efh-red: #f85552; --efh-purple: #df69ba;
   --efh-border-faint: rgba(92,106,114,.10); --efh-border: rgba(92,106,114,.20);
   --efh-hover: rgba(141,161,1,.08); --efh-toggle: rgba(141,161,1,.14);
@@ -35,7 +36,8 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --eft-side: 205 13% 16%; --eft-composer: 199 13% 24%; --eft-bubble: 141 10% 29%; --eft-visual: 141 10% 29%;
   --eft-inset: 202 12% 13%; --eft-muted: 199 13% 24%; --eft-border: 204 9% 34%;
   --eft-fg: 41 32% 75%; --eft-fg2: 135 7% 64%; --eft-fg3: 138 6% 55%; --eft-invert: 41 32% 75%;
-  --eft-green: 83 34% 63%; --eft-aqua: 47 40% 64%; --eft-blue: 172 31% 62%;
+  --eft-action: 83 34% 63%; --eft-on-action: 206 13% 20%;
+  --eft-green: 83 34% 63%; --eft-aqua: 135 33% 63%; --eft-blue: 172 31% 62%;
   --eft-orange: 20 68% 68%; --eft-yellow: 40 56% 68%; --eft-red: 359 68% 70%; --eft-purple: 331 43% 72%;
   --eft-link: var(--eft-blue);
   --efh-bg: #2d353b; --efh-elev: #343f44; --efh-side: #232a2e; --efh-composer: #343f44;
@@ -54,7 +56,8 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --eft-side: 205 13% 16%; --eft-composer: 199 13% 24%; --eft-bubble: 141 10% 29%; --eft-visual: 141 10% 29%;
     --eft-inset: 202 12% 13%; --eft-muted: 199 13% 24%; --eft-border: 204 9% 34%;
     --eft-fg: 41 32% 75%; --eft-fg2: 135 7% 64%; --eft-fg3: 138 6% 55%; --eft-invert: 41 32% 75%;
-    --eft-green: 83 34% 63%; --eft-aqua: 47 40% 64%; --eft-blue: 172 31% 62%;
+    --eft-action: 83 34% 63%; --eft-on-action: 206 13% 20%;
+    --eft-green: 83 34% 63%; --eft-aqua: 135 33% 63%; --eft-blue: 172 31% 62%;
     --eft-orange: 20 68% 68%; --eft-yellow: 40 56% 68%; --eft-red: 359 68% 70%; --eft-purple: 331 43% 72%;
     --eft-link: var(--eft-blue);
     --efh-bg: #2d353b; --efh-elev: #343f44; --efh-side: #232a2e; --efh-composer: #343f44;
@@ -92,7 +95,7 @@ html:not([data-ef="off"]) :is(.light, .dark, .wd-refresh) {
   --muted: var(--eft-muted) !important; --muted-foreground: var(--eft-fg2) !important;
   --accent: var(--eft-visual) !important; --accent-foreground: var(--eft-fg) !important;
   --border: var(--eft-border) !important;
-  --primary: var(--eft-fg) !important; --primary-foreground: var(--eft-bg) !important;
+  --primary: var(--eft-action) !important; --primary-foreground: var(--eft-on-action) !important;
   --secondary-foreground: var(--eft-fg) !important;
   --card-foreground: var(--eft-fg) !important; --popover-foreground: var(--eft-fg) !important;
   --fg-primary: var(--eft-fg) !important; --fg-secondary: var(--eft-fg2) !important;
@@ -104,7 +107,7 @@ html:not([data-ef="off"]) :is(.light, .dark, .wd-refresh) {
   --sidebar-background: var(--eft-side) !important;
   --sidebar-foreground: var(--eft-fg2) !important; --sidebar-accent: var(--eft-visual) !important;
   --sidebar-accent-foreground: var(--eft-fg) !important; --sidebar-border: var(--eft-border) !important;
-  --sidebar-primary: var(--eft-green) !important; --sidebar-primary-foreground: var(--eft-bg) !important;
+  --sidebar-primary: var(--eft-action) !important; --sidebar-primary-foreground: var(--eft-on-action) !important;
   --sidebar-ring: var(--eft-green) !important;
   --wd-user-bubble: var(--eft-bubble) !important; --wd-composer-bg: var(--eft-composer) !important;
   --wd-accent: var(--eft-green) !important; --wd-accent-hover: var(--eft-green) !important;
@@ -176,3 +179,23 @@ html:not([data-ef="off"]) ::selection { background: color-mix(in srgb, var(--efh
 html:not([data-ef="off"]) :is(.shiki, pre.shiki, .shiki pre) { background-color: var(--efh-code-bg) !important; }
 html:not([data-ef="off"]) :is(.shiki, .shiki code) { color: var(--efh-code-fg) !important; }
 html:not([data-ef="off"]) div:has(> .shiki) { background-color: var(--efh-code-head) !important; }
+
+/* Prose owns its own link token; navigation keeps its separate selected state. */
+html:not([data-ef="off"]) .prose {
+  --tw-prose-links: var(--efh-blue) !important;
+  --tw-prose-invert-links: var(--efh-blue) !important;
+}
+html:not([data-ef="off"]) .prose a[href]:not([role="button"]) {
+  color: var(--efh-blue) !important;
+}
+html:not([data-ef="off"]) nav a[aria-current="page"],
+html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
+  background-color: var(--efh-green-fade) !important;
+  color: var(--efh-fg) !important;
+}
+
+/* Library upload uses inverse ink on its filled action, independently of tooltips. */
+html:not([data-ef="off"]) button[data-slot="button"].bg-button-filled.text-fg-invert:not(:disabled):not([aria-disabled="true"]),
+html:not([data-ef="off"]) button[data-slot="button"].bg-button-filled.text-fg-invert:not(:disabled):not([aria-disabled="true"]) span {
+  color: hsl(var(--eft-on-action)) !important;
+}

@@ -292,6 +292,16 @@ describe("Slides visual regressions", () => {
     expect(docsCss).toContain('[class*="ContentLibraryRailToolbar"]:not([class*="Button"])');
     expect(docsCss).not.toContain(':is([class*="ContentLibraryRailContainer"], [class*="ContentLibraryRailToolbar"]');
   });
+
+  test("keeps the Docs home branding box transparent so File is not clipped", () => {
+    expect(docsCss).toContain("#docs-branding-container");
+    expect(docsCss).toContain(
+      "html:not([data-ef=\"off\"]) #docs-branding-container {\n  background-color: transparent !important;\n}",
+    );
+    expect(docsCss).toContain(":is(#docs-menubar, #docs-file-menu)");
+    expect(docsCss).toContain("overflow: visible !important");
+    expect(docsCss).toContain("margin-left: 64px !important");
+  });
 });
 
 describe("X visual regressions", () => {
@@ -332,8 +342,8 @@ describe("X visual regressions", () => {
   });
 
   test("preserves active and hover colours for reposts and likes", () => {
-    expect(xCss).toContain("--ef-x-retweet: #00ba7c");
-    expect(xCss).toContain("--ef-x-like: #f91880");
+    expect(xCss).toContain("--ef-x-retweet: var(--ef-green-ink)");
+    expect(xCss).toContain("--ef-x-like: var(--ef-like-ink)");
     expect(xCss).toContain('[data-testid="unretweet"]');
     expect(xCss).toContain('[data-testid="retweet"]:hover');
     expect(xCss).toContain('[data-testid="unlike"]');

@@ -13,19 +13,23 @@
 
 html:not([data-ef="off"]) {
   --ef-bg: #fdf6e3; --ef-bg1: #f4f0d9; --ef-bg2: #efebd4; --ef-fg: #5c6a72; --ef-border: #e0dcc7;
-  --ef-muted: #829181; --ef-blue: #3a94c5; --ef-green: #8da101; --ef-on-accent: #2d353b;
+  --ef-muted: #829181; --ef-blue: #3a94c5; --ef-green: #5f7100; --ef-on-accent: #fdf6e3;
   --ef-x-verified: #1d9bf0;
-  --ef-x-retweet: #00ba7c;
-  --ef-x-like: #f91880;
+  --ef-green-ink: var(--ef-green);
+  --ef-like-ink: color-mix(in srgb, #df69ba 65%, #2d353b);
+  --ef-selected: #f0f1d2;
+  --ef-x-retweet: var(--ef-green-ink);
+  --ef-x-like: var(--ef-like-ink);
   /* HSL triplets for x-web tokens consumed as hsl(var(--…)) */
   --ef-hsl-bg: 44 87% 94%; --ef-hsl-bg1: 51 55% 90%; --ef-hsl-bg2: 51 46% 88%;
   --ef-hsl-fg: 202 11% 40%; --ef-hsl-muted: 116 7% 54%; --ef-hsl-border: 50 29% 83%;
-  --ef-hsl-green: 68 99% 32%; --ef-hsl-blue: 201 55% 50%;
+  --ef-hsl-green: 70 100% 22%; --ef-hsl-blue: 201 55% 50%;
   color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-bg: #2d353b; --ef-bg1: #343f44; --ef-bg2: #3d484d; --ef-fg: #d3c6aa; --ef-border: #4f585e;
   --ef-muted: #9da9a0; --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
+  --ef-green-ink: color-mix(in srgb, var(--ef-green) 60%, var(--ef-fg)); --ef-like-ink: #d699b6; --ef-selected: #425047;
   --ef-hsl-bg: 206 13% 20%; --ef-hsl-bg1: 199 13% 24%; --ef-hsl-bg2: 199 12% 27%;
   --ef-hsl-fg: 41 32% 75%; --ef-hsl-muted: 135 7% 64%; --ef-hsl-border: 204 9% 34%;
   --ef-hsl-green: 83 34% 63%; --ef-hsl-blue: 172 31% 62%;
@@ -35,6 +39,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
     --ef-bg: #2d353b; --ef-bg1: #343f44; --ef-bg2: #3d484d; --ef-fg: #d3c6aa; --ef-border: #4f585e;
     --ef-muted: #9da9a0; --ef-blue: #7fbbb3; --ef-green: #a7c080; --ef-on-accent: #2d353b;
+    --ef-green-ink: color-mix(in srgb, var(--ef-green) 60%, var(--ef-fg)); --ef-like-ink: #d699b6; --ef-selected: #425047;
     --ef-hsl-bg: 206 13% 20%; --ef-hsl-bg1: 199 13% 24%; --ef-hsl-bg2: 199 12% 27%;
     --ef-hsl-fg: 41 32% 75%; --ef-hsl-muted: 135 7% 64%; --ef-hsl-border: 204 9% 34%;
     --ef-hsl-green: 83 34% 63%; --ef-hsl-blue: 172 31% 62%;
@@ -112,7 +117,7 @@ html:not([data-ef="off"]) :is([data-theme], .light-theme, .dark-theme) {
   --x-neutral-1000: var(--ef-bg1) !important;
   --x-neutral-1100: var(--ef-bg) !important;
   --pill: var(--ef-bg1) !important;
-  --pill-active: var(--ef-border) !important;
+  --pill-active: var(--ef-selected) !important;
   --pill-hover: var(--ef-bg2) !important;
   --chat-accent: var(--ef-hsl-blue) !important;
   --chat-accent-foreground: 206 13% 20% !important;
@@ -452,7 +457,7 @@ html:not([data-ef="off"]) [data-testid="tweet-text-show-more-link"] span {
 
 /* Preserve X's semantic interaction states. The generic timeline text rule
    intentionally keeps inactive actions muted, while active and hover states
-   retain the familiar retweet green and like pink on both icon and count. */
+   use Everforest green and purple on both icon and count. */
 html:not([data-ef="off"])
   :is([data-testid="unretweet"], [data-testid="retweet"]:hover),
 html:not([data-ef="off"])
@@ -471,6 +476,7 @@ html:not([data-ef="off"])
 /* primary buttons → Everforest green pill (scoped for specificity over the paint) */
 html:not([data-ef="off"]) [data-testid="sidebarColumn"] :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])),
 html:not([data-ef="off"]) [data-testid="primaryColumn"] :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])),
+html:not([data-ef="off"]) #layers :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])),
 html:not([data-ef="off"]) [data-testid="tweetButtonInline"],
 html:not([data-ef="off"]) [data-testid="tweetButton"],
 html:not([data-ef="off"]) [data-testid="SideNav_NewTweet_Button"],
@@ -510,6 +516,7 @@ html:not([data-ef="off"]) #layers :is([role="dialog"], [role="menu"], [role="lis
 html:not([data-ef="off"]) #layers :is([role="dialog"], [role="menu"], [role="listbox"], [data-testid="Dropdown"]) :where(div, span, button) {
   color: var(--ef-fg) !important;
 }
+html:not([data-ef="off"]) #layers :is([data-testid="follow"], [data-testid$="-follow"]:not([data-testid$="unfollow"])) :is(div, span, svg),
 html:not([data-ef="off"]) #layers :is([data-testid="tweetButtonInline"], [data-testid="tweetButton"]) :is(div, span, svg) {
   color: var(--ef-on-accent) !important;
   fill: currentColor !important;
@@ -522,7 +529,7 @@ html:not([data-ef="off"]) [style*="border-bottom-color"] {
   border-bottom-color: var(--ef-border) !important;
 }
 html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
-  border-bottom-color: var(--ef-blue) !important;
+  border-bottom-color: var(--ef-green) !important;
 }
 /* X draws the selected-tab underline as an empty child div carrying its own
    native-blue paint, and rules the strip off with the native grey border —
@@ -530,7 +537,7 @@ html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
 html:not([data-ef="off"]) [role="tab"][aria-selected="true"] > div:empty,
 html:not([data-ef="off"]) [role="tab"][aria-selected="true"] > div > div:last-child:empty,
 html:not([data-ef="off"]) [role="tab"][aria-selected="true"] > div > div > div:last-child:empty {
-  background-color: var(--ef-blue) !important;
+  background-color: var(--ef-green) !important;
 }
 html:not([data-ef="off"]) [role="tablist"],
 html:not([data-ef="off"]) div:has(> [role="tablist"]),
@@ -571,4 +578,14 @@ html:not([data-ef="off"])[data-ef-x-grok]
   [data-testid="primaryColumn"] [aria-label="Grok"]
   :is(button, [role="button"]):is(.r-l5o3uw, .r-1m3jxhj) :where(div, span, svg) {
   color: var(--ef-on-accent) !important;
+}
+
+/* Navigation uses a green surface; links keep their separate blue role. */
+html:not([data-ef="off"]) :is(header, nav) a[aria-current="page"],
+html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
+  background-color: var(--ef-selected) !important;
+}
+html:not([data-ef="off"]) :is(header, nav) a[aria-current="page"] :is(div, span, svg),
+html:not([data-ef="off"]) [role="tab"][aria-selected="true"] :is(span, svg) {
+  color: var(--ef-green-ink) !important;
 }
