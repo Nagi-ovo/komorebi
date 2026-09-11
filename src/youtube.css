@@ -132,10 +132,10 @@ html:not([data-ef="off"]) #subscribe-button .yt-spec-button-shape-next--mono.yt-
 html:not([data-ef="off"]) ytd-guide-entry-renderer[active] #endpoint,
 html:not([data-ef="off"]) ytd-mini-guide-entry-renderer[is-active] {
   background-color: var(--ef-tint) !important;
-  color: var(--ef-accent-ink) !important;
+  color: var(--ef-fg1) !important;
 }
 html:not([data-ef="off"]) ytd-guide-entry-renderer[active] :is(yt-icon, yt-formatted-string) {
-  color: var(--ef-accent-ink) !important;
+  color: var(--ef-fg1) !important;
 }
 html:not([data-ef="off"]) .ytSearchboxComponentInputBox:focus-within {
   border-color: var(--ef-accent-ink) !important;

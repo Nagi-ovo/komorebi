@@ -8,7 +8,7 @@ html:not([data-ef="off"]) {
   --ef-bg: #fdf6e3; --ef-surface: #fffbef; --ef-fg: #5c6a72; --ef-muted: #687568;
   --ef-link: #28678a; --ef-visited: #9b4f82; --ef-border: #e0dcc7;
   --ef-footer: #efebd4; --ef-bar: #2d353b; --ef-bar2: #232a2e;
-  --ef-action: #5f7100; --ef-on-action: #fdf6e3; --ef-selected: #e6ead0; --ef-selected-ink: #526200;
+  --ef-action: #5f7100; --ef-on-action: #fdf6e3; --ef-selected: #e6ead0; --ef-selected-ink: #5c6a72;
   color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {

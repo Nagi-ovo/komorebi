@@ -69,10 +69,10 @@ html:not([data-ef="off"]) body { background-color: var(--ef-bg3) !important; }
 html:not([data-ef="off"]) :is(.channel-link, .channel-link__right, .vui_tabs--nav-item).active,
 html:not([data-ef="off"]) .vui_tabs--nav-item-active {
   background-color: var(--ef-selected) !important;
-  color: var(--ef-accent-ink) !important;
+  color: var(--ef-t1) !important;
 }
 html:not([data-ef="off"]) .vui_tabs--nav-item-active :is(span, a) {
-  color: var(--ef-accent-ink) !important;
+  color: var(--ef-t1) !important;
 }
 html:not([data-ef="off"]) :is(.vui_tabs--nav-wbi, .vui_tabs--nav-slider) {
   background-color: var(--ef-accent) !important;
@@ -93,12 +93,12 @@ html:not([data-ef="off"]) .header-upload-entry :is(.header-upload-entry__text, s
   color: var(--ef-on-accent) !important;
 }
 html:not([data-ef="off"]) a.nav-tab__item.active[aria-current="page"] {
-  --Gr6_u: var(--ef-accent-ink) !important;
+  --Gr6_u: var(--ef-t1) !important;
   background-color: var(--ef-selected) !important;
-  color: var(--ef-accent-ink) !important;
+  color: var(--ef-t1) !important;
 }
 html:not([data-ef="off"]) a.nav-tab__item.active[aria-current="page"] :is(.nav-tab__item-text, svg) {
-  color: var(--ef-accent-ink) !important;
+  color: var(--ef-t1) !important;
 }
 html:not([data-ef="off"]) .radio-filter__item.radio-filter__item--active {
   background-color: var(--ef-accent) !important;

@@ -282,12 +282,12 @@ html:not([data-ef="off"]) #rcnt .tb_h :where(div, span, p, li, h1, h2, h3, h4, a
   fill: currentColor !important;
 }
 
-/* url (cite), snippet body, bold matches */
-html:not([data-ef="off"]) cite, html:not([data-ef="off"]) #search cite { color: var(--ef-green) !important; }
+/* Snippet body and bold matches. Leave <cite> to Google so result URLs
+   keep the site's own colour instead of Everforest green. */
 html:not([data-ef="off"]) #search .VwiC3b, html:not([data-ef="off"]) #rso .VwiC3b { color: var(--ef-fg) !important; }
 html:not([data-ef="off"]) #search em, html:not([data-ef="off"]) #rso em { color: var(--ef-fg) !important; font-style: normal; font-weight: 600; }
 
-/* tabs (All / Images / …) */
+/* tabs (All / Images / …) — current tab uses page ink, not green */
 html:not([data-ef="off"]) div[role="navigation"] a { color: var(--ef-muted) !important; }
 html:not([data-ef="off"]) div[role="navigation"] :is(
   a[aria-current="page"],
@@ -298,7 +298,7 @@ html:not([data-ef="off"]) div[role="navigation"] :is(
   [selected],
   [selected] *
 ) {
-  color: var(--ef-green) !important;
+  color: var(--ef-fg) !important;
   fill: currentColor !important;
 }
 html:not([data-ef="off"]) :is(footer, #fbar, footer a, #fbar a, .c93Gbe a, .pHiOh) { color: var(--ef-muted) !important; }

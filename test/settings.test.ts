@@ -8,6 +8,10 @@ const docsCss = await Bun.file(`${import.meta.dir}/../src/docs.css`).text();
 const googleCss = await Bun.file(`${import.meta.dir}/../src/google.css`).text();
 const xCss = await Bun.file(`${import.meta.dir}/../src/x.css`).text();
 const youtubeCss = await Bun.file(`${import.meta.dir}/../src/youtube.css`).text();
+const driveCss = await Bun.file(`${import.meta.dir}/../src/drive.css`).text();
+const geminiCss = await Bun.file(`${import.meta.dir}/../src/gemini.css`).text();
+const bilibiliCss = await Bun.file(`${import.meta.dir}/../src/bilibili.css`).text();
+const arxivCss = await Bun.file(`${import.meta.dir}/../src/arxiv.css`).text();
 const grokCss = await Bun.file(`${import.meta.dir}/../src/grok.css`).text();
 const grokFixture = await Bun.file(`${import.meta.dir}/fixtures/grok-light.html`).text();
 const contentTs = await Bun.file(`${import.meta.dir}/../src/content.ts`).text();
@@ -209,6 +213,45 @@ describe("Google visual regressions", () => {
     expect(googleCss).toContain("#rcnt .imso-loa.imso-thor");
     expect(googleCss).toContain("#rcnt .tb_h");
     expect(googleCss).toContain("color: #fff !important");
+  });
+});
+
+describe("page text is not forced green", () => {
+  test("Google does not recolor cite URLs or current-tab labels to green", () => {
+    expect(googleCss).not.toContain("cite { color: var(--ef-green)");
+    expect(googleCss).not.toMatch(/#search cite \{ color: var\(--ef-green\)/);
+    expect(googleCss).toContain("div[role=\"navigation\"] :is(");
+    expect(googleCss).toContain("color: var(--ef-fg) !important;");
+    expect(googleCss).not.toMatch(
+      /div\[role="navigation"\][\s\S]*?color: var\(--ef-green\)/,
+    );
+  });
+
+  test("X / YouTube / Bilibili current-nav labels use page ink", () => {
+    expect(xCss).toContain(
+      '[role="tab"][aria-selected="true"] :is(span, svg) {\n  color: var(--ef-fg) !important;',
+    );
+    expect(xCss).not.toContain(
+      '[role="tab"][aria-selected="true"] :is(span, svg) {\n  color: var(--ef-green-ink) !important;',
+    );
+    expect(youtubeCss).toContain(
+      "ytd-guide-entry-renderer[active] :is(yt-icon, yt-formatted-string) {\n  color: var(--ef-fg1) !important;",
+    );
+    expect(bilibiliCss).toContain("color: var(--ef-t1) !important;");
+    expect(bilibiliCss).not.toContain(
+      ".vui_tabs--nav-item-active {\n  background-color: var(--ef-selected) !important;\n  color: var(--ef-accent-ink) !important;",
+    );
+  });
+
+  test("Drive / Docs / Gemini / arXiv selected labels are not green ink", () => {
+    expect(driveCss).toContain("--dt-on-primary-container: var(--ef-fg) !important;");
+    expect(driveCss).not.toContain("--dt-on-primary-container: var(--ef-on-green-c)");
+    expect(docsCss).toContain("--gm3-sys-color-on-primary-container: var(--ef-fg) !important;");
+    expect(docsCss).toContain("--ws-sys-color-on-primary-container: var(--ef-fg) !important;");
+    expect(geminiCss).toContain("--ef-on-primary-c: #5c6a72;");
+    expect(geminiCss).not.toContain("--ef-on-primary-c: #536300;");
+    expect(arxivCss).toContain("--ef-selected-ink: #5c6a72;");
+    expect(arxivCss).not.toContain("--ef-selected-ink: #526200;");
   });
 });
 
