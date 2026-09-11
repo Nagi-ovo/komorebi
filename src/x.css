@@ -580,12 +580,12 @@ html:not([data-ef="off"])[data-ef-x-grok]
   color: var(--ef-on-accent) !important;
 }
 
-/* Navigation uses a green surface; links keep their separate blue role. */
+/* Navigation uses a soft selected surface; labels keep page ink, not green. */
 html:not([data-ef="off"]) :is(header, nav) a[aria-current="page"],
 html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
   background-color: var(--ef-selected) !important;
 }
 html:not([data-ef="off"]) :is(header, nav) a[aria-current="page"] :is(div, span, svg),
 html:not([data-ef="off"]) [role="tab"][aria-selected="true"] :is(span, svg) {
-  color: var(--ef-green-ink) !important;
+  color: var(--ef-fg) !important;
 }

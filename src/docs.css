@@ -125,7 +125,7 @@ html:not([data-ef="off"]) :is(body, .KkxPLb, .LgGVmb) {
   --dt-primary-action: var(--ef-green) !important;
   --dt-on-primary: var(--ef-on-green) !important;
   --dt-primary-container: var(--ef-green-c) !important;
-  --dt-on-primary-container: var(--ef-on-green-c) !important;
+  --dt-on-primary-container: var(--ef-fg) !important;
   --dt-blue-fill: var(--ef-blue) !important;
   --dt-blue-tonal: var(--ef-blue-c) !important;
   --dt-secondary: var(--ef-blue) !important;
@@ -162,7 +162,7 @@ html:not([data-ef="off"]) {
   --gm3-sys-color-primary: var(--ef-green) !important;
   --gm3-sys-color-on-primary: var(--ef-on-green) !important;
   --gm3-sys-color-primary-container: var(--ef-green-c) !important;
-  --gm3-sys-color-on-primary-container: var(--ef-on-green-c) !important;
+  --gm3-sys-color-on-primary-container: var(--ef-fg) !important;
   --gm3-sys-color-secondary-container: var(--ef-blue-c) !important;
   --gm3-sys-color-on-secondary-container: var(--ef-on-blue-c) !important;
   --gm3-sys-color-tertiary: var(--ef-purple) !important;
@@ -191,7 +191,7 @@ html:not([data-ef="off"]) {
   --ws-sys-color-primary: var(--ef-green) !important;
   --ws-sys-color-on-primary: var(--ef-on-green) !important;
   --ws-sys-color-primary-container: var(--ef-green-c) !important;
-  --ws-sys-color-on-primary-container: var(--ef-on-green-c) !important;
+  --ws-sys-color-on-primary-container: var(--ef-fg) !important;
   --ws-sys-color-secondary-container: var(--ef-blue-c) !important;
   --ws-sys-color-outline: var(--ef-outline) !important;
   --ws-sys-color-outline-variant: var(--ef-outline-var) !important;

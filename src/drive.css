@@ -105,9 +105,9 @@ html:not([data-ef="off"]) :is(body, .KkxPLb, .LgGVmb) {
   --dt-primary-link: var(--ef-on-green) !important;
   --dt-on-primary: var(--ef-on-green) !important;
   --dt-primary-container: var(--ef-green-c) !important;
-  --dt-on-primary-container: var(--ef-on-green-c) !important;
-  --dt-primary-container-icon: var(--ef-on-green-c) !important;
-  --dt-primary-container-link: var(--ef-on-green-c) !important;
+  --dt-on-primary-container: var(--ef-fg) !important;
+  --dt-primary-container-icon: var(--ef-fg) !important;
+  --dt-primary-container-link: var(--ef-fg) !important;
   --dt-blue-fill: var(--ef-blue) !important;
   --dt-blue-tonal: var(--ef-blue-c) !important;
   --dt-blue-outline: var(--ef-blue-c) !important;
@@ -164,11 +164,11 @@ html:not([data-ef="off"]) :is(header, .gb_Md, .gb_Ld, .gb_Jd, [role="banner"]) {
 html:not([data-ef="off"]) [role="treeitem"][aria-selected="true"] > .a-U-J[role="link"],
 html:not([data-ef="off"]) button[data-test-id="list-layout-button"][role="radio"][aria-checked="true"] {
   background-color: var(--ef-selected) !important;
-  color: var(--ef-on-green-c) !important;
+  color: var(--ef-fg) !important;
 }
 html:not([data-ef="off"]) [role="treeitem"][aria-selected="true"] > .a-U-J[role="link"] :is(span, svg),
 html:not([data-ef="off"]) button[data-test-id="list-layout-button"][role="radio"][aria-checked="true"] :is(span, svg) {
-  color: var(--ef-on-green-c) !important;
+  color: var(--ef-fg) !important;
 }
 
 /* scrollbars */
