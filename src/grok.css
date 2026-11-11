@@ -1,7 +1,7 @@
 /* Everforest for Grok (grok.com) — token-level retheme.
    Grok mixes two token formats: HSL component triplets consumed via hsl(var(--x))
-   (--fg-*, --surface-*, --wd-*, --sidebar-*, …) and oklch()/hex full-colour tokens
-   (--background, --card, --button-*, --input-*, --foreground, …). --eft-* are
+   (--muted, --wd-*, --sidebar-*, …) and oklch()/hex full-colour tokens
+   (--surface-*, --fg-*, --background, --card, --button-*, …). --eft-* are
    triplets, --efh-* are full colours.
    Surfaces are a ladder, not one beige: canvas / sidebar moss / green bubble /
    blue links / green actions. The 2026 rewrite added a `wd-refresh` layer on
@@ -15,7 +15,7 @@ html:not([data-ef="off"]) {
   --eft-side: 51 46% 88%; --eft-composer: 51 55% 90%; --eft-bubble: 69 37% 87%; --eft-visual: 65 51% 86%;
   --eft-inset: 51 46% 88%; --eft-muted: 51 55% 90%; --eft-border: 50 29% 83%;
   /* triplets — ink + accents */
-  --eft-fg: 202 11% 40%; --eft-fg2: 202 10% 49%; --eft-fg3: 116 7% 54%; --eft-invert: 206 13% 20%;
+  --eft-fg: 200.00 13.79% 34.12%; --eft-fg2: 195.79 9.45% 39.41%; --eft-fg3: 132.86 6.54% 41.96%; --eft-invert: 206 13% 20%;
   --eft-green: 68 99% 32%; --eft-aqua: 158 52% 43%; --eft-blue: 201 58% 37%;
   --eft-orange: 23 91% 55%; --eft-yellow: 43 100% 44%; --eft-red: 1 92% 65%; --eft-purple: 319 65% 64%;
   --eft-link: var(--eft-blue);
@@ -23,19 +23,19 @@ html:not([data-ef="off"]) {
   /* full colours */
   --efh-bg: #fdf6e3; --efh-elev: #fffbef; --efh-side: #efebd4; --efh-composer: #f4f0d9;
   --efh-bubble: #e6ead0; --efh-visual: #eaedc8; --efh-card: #fffbef; --efh-popover: #fffbef; --efh-input: #fffbef;
-  --efh-fg: #5c6a72; --efh-green: #5f7100; --efh-green-hover: #516100; --efh-green-fade: #e6ead0;
+  --efh-fg: #4b5b63; --efh-green: #5f7100; --efh-green-hover: #516100; --efh-green-fade: #e6ead0;
   --efh-aqua: #35a77c; --efh-blue: #286f96; --efh-orange: #f57d26; --efh-yellow: #dfa000;
   --efh-red: #f85552; --efh-purple: #df69ba;
   --efh-border-faint: rgba(92,106,114,.10); --efh-border: rgba(92,106,114,.20);
   --efh-hover: rgba(141,161,1,.08); --efh-toggle: rgba(141,161,1,.14);
-  --efh-code-bg: #efebd4; --efh-code-head: #f4f0d9; --efh-code-fg: #5c6a72;
+  --efh-code-bg: #efebd4; --efh-code-head: #f4f0d9; --efh-code-fg: #4b5b63;
   color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --eft-bg: 206 13% 20%; --eft-s1: 205 13% 18%; --eft-s2: 199 13% 24%; --eft-s3: 199 12% 27%; --eft-s4: 201 11% 31%;
   --eft-side: 205 13% 16%; --eft-composer: 199 13% 24%; --eft-bubble: 141 10% 29%; --eft-visual: 141 10% 29%;
   --eft-inset: 202 12% 13%; --eft-muted: 199 13% 24%; --eft-border: 204 9% 34%;
-  --eft-fg: 41 32% 75%; --eft-fg2: 135 7% 64%; --eft-fg3: 138 6% 55%; --eft-invert: 41 32% 75%;
+  --eft-fg: 41 32% 75%; --eft-fg2: 130.00 6.98% 66.27%; --eft-fg3: 138 6% 55%; --eft-invert: 41 32% 75%;
   --eft-action: 83 34% 63%; --eft-on-action: 206 13% 20%;
   --eft-green: 83 34% 63%; --eft-aqua: 135 33% 63%; --eft-blue: 172 31% 62%;
   --eft-orange: 20 68% 68%; --eft-yellow: 40 56% 68%; --eft-red: 359 68% 70%; --eft-purple: 331 43% 72%;
@@ -55,7 +55,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --eft-bg: 206 13% 20%; --eft-s1: 205 13% 18%; --eft-s2: 199 13% 24%; --eft-s3: 199 12% 27%; --eft-s4: 201 11% 31%;
     --eft-side: 205 13% 16%; --eft-composer: 199 13% 24%; --eft-bubble: 141 10% 29%; --eft-visual: 141 10% 29%;
     --eft-inset: 202 12% 13%; --eft-muted: 199 13% 24%; --eft-border: 204 9% 34%;
-    --eft-fg: 41 32% 75%; --eft-fg2: 135 7% 64%; --eft-fg3: 138 6% 55%; --eft-invert: 41 32% 75%;
+    --eft-fg: 41 32% 75%; --eft-fg2: 130.00 6.98% 66.27%; --eft-fg3: 138 6% 55%; --eft-invert: 41 32% 75%;
     --eft-action: 83 34% 63%; --eft-on-action: 206 13% 20%;
     --eft-green: 83 34% 63%; --eft-aqua: 135 33% 63%; --eft-blue: 172 31% 62%;
     --eft-orange: 20 68% 68%; --eft-yellow: 40 56% 68%; --eft-red: 359 68% 70%; --eft-purple: 331 43% 72%;
@@ -82,27 +82,34 @@ html:not([data-ef="off"]) body.wd-refresh,
 html:not([data-ef="off"]).light body.wd-refresh,
 html:not([data-ef="off"]).dark body.wd-refresh,
 html:not([data-ef="off"]) :is(.light, .dark, .wd-refresh) {
-  /* ── triplet tokens (hsl(var(--x))) ──────────────────────────────────────── */
+  /* Legacy shadcn/sidebar tokens consume HSL triplets. Native surface/fg
+     utilities consume full colors: raw triplets invalidate their paint. */
   --background-color: var(--eft-bg) !important;
-  --surface-base: var(--eft-bg) !important; --surface-base-hover: var(--eft-visual) !important;
-  --surface-l1: var(--eft-composer) !important; --surface-l1-hover: var(--eft-visual) !important;
-  --surface-l2: var(--eft-s3) !important; --surface-l2-active: var(--eft-s4) !important;
-  --surface-l3: var(--eft-s3) !important;
-  --surface-l4: var(--eft-s4) !important; --surface-l4-hover: var(--eft-s4) !important;
-  --surface-inset: var(--eft-inset) !important; --surface-elevated: var(--eft-s1) !important;
-  --surface-invert: var(--eft-invert) !important;
+  --surface-base: hsl(var(--eft-bg)) !important; --surface-base-hover: hsl(var(--eft-visual)) !important;
+  --surface-l1: hsl(var(--eft-composer)) !important; --surface-l1-hover: hsl(var(--eft-visual)) !important;
+  --surface-l2: hsl(var(--eft-s3)) !important; --surface-l2-active: hsl(var(--eft-s4)) !important;
+  --surface-l3: hsl(var(--eft-s3)) !important;
+  --surface-l4: hsl(var(--eft-s4)) !important; --surface-l4-hover: hsl(var(--eft-s4)) !important;
+  --surface-inset: hsl(var(--eft-inset)) !important; --surface-elevated: hsl(var(--eft-s1)) !important;
+  --surface-invert: hsl(var(--eft-invert)) !important;
+  --surface-composer: var(--efh-composer) !important;
+  --surface-user-bubble: var(--efh-bubble) !important;
+  --border-composer: var(--efh-border) !important;
   --warm-white: var(--eft-s1) !important; --warm-black: var(--eft-invert) !important;
   --muted: var(--eft-muted) !important; --muted-foreground: var(--eft-fg2) !important;
-  --accent: var(--eft-visual) !important; --accent-foreground: var(--eft-fg) !important;
+  --accent: hsl(var(--eft-visual)) !important; --accent-foreground: var(--eft-fg) !important;
   --border: var(--eft-border) !important;
   --primary: var(--eft-action) !important; --primary-foreground: var(--eft-on-action) !important;
   --secondary-foreground: var(--eft-fg) !important;
   --card-foreground: var(--eft-fg) !important; --popover-foreground: var(--eft-fg) !important;
-  --fg-primary: var(--eft-fg) !important; --fg-secondary: var(--eft-fg2) !important;
-  --fg-tertiary: var(--eft-fg3) !important; --fg-quaternary: var(--eft-fg3) !important;
-  --fg-invert: var(--eft-invert) !important;
-  --fg-link: var(--eft-blue) !important; --fg-danger: var(--eft-red) !important;
-  --fg-positive: var(--eft-green) !important; --fg-warning: var(--eft-yellow) !important;
+  --fg-primary: hsl(var(--eft-fg)) !important; --fg-secondary: hsl(var(--eft-fg2)) !important;
+  --fg-tertiary: hsl(var(--eft-fg3)) !important; --fg-quaternary: hsl(var(--eft-fg3)) !important;
+  --fg-invert: hsl(var(--eft-on-action)) !important; /* ink on surface-invert / button-filled */
+  --fg-link: hsl(var(--eft-blue)) !important; --fg-link-hover: hsl(var(--eft-blue)) !important;
+  --fg-danger: hsl(var(--eft-red)) !important;
+  --fg-success: hsl(var(--eft-green)) !important;
+  --fg-accent: var(--efh-blue) !important; --fg-accent-hover: var(--efh-blue) !important;
+  --fg-positive: hsl(var(--eft-green)) !important; --fg-warning: hsl(var(--eft-yellow)) !important;
   --destructive: var(--eft-red) !important; --destructive-foreground: var(--eft-invert) !important;
   --sidebar-background: var(--eft-side) !important;
   --sidebar-foreground: var(--eft-fg2) !important; --sidebar-accent: var(--eft-visual) !important;
@@ -154,7 +161,7 @@ html:not([data-ef="off"]) :is(body, main, [role="main"]) {
   background-color: var(--efh-bg) !important;
   color: hsl(var(--eft-fg)) !important;
 }
-html:not([data-ef="off"]) :is(aside, nav, .bg-sidebar, [data-sidebar="sidebar"]),
+html:not([data-ef="off"]) :is(.bg-sidebar, [data-sidebar="sidebar"]),
 html:not([data-ef="off"]) .inset-y-0.bg-surface-base:has([data-sidebar="sidebar"]) {
   background-color: var(--efh-side) !important;
   color: hsl(var(--eft-fg)) !important;
@@ -198,4 +205,10 @@ html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
 html:not([data-ef="off"]) button[data-slot="button"].bg-button-filled.text-fg-invert:not(:disabled):not([aria-disabled="true"]),
 html:not([data-ef="off"]) button[data-slot="button"].bg-button-filled.text-fg-invert:not(:disabled):not([aria-disabled="true"]) span {
   color: hsl(var(--eft-on-action)) !important;
+}
+
+/* X Premium badge in Settings › Account hardcodes text-[#426db1]; its dark:
+   variant keys off Grok's own .dark, not our mode, so it stays unreadable. */
+html:not([data-ef="off"]) .text-\[\#426db1\] {
+  color: var(--efh-blue) !important;
 }

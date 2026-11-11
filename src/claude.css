@@ -12,7 +12,7 @@
 html:not([data-ef="off"]) {
   --ef-s0: 45 100% 97%; --ef-s1: 44 87% 94%; --ef-s2: 69 37% 87%;
   --ef-s3: 69 37% 87%; --ef-s4: 51 34% 85%; --ef-s5: 50 29% 83%;
-  --ef-t0: 202 11% 40%; --ef-t1: 202 10% 49%; --ef-t2: 116 7% 54%;
+  --ef-t0: 200.00 13.79% 34.12%; --ef-t1: 195.79 9.45% 39.41%; --ef-t2: 132.86 6.54% 41.96%;
   --ef-bd: 50 29% 83%;
   --ef-accent: 201 58% 37%; --ef-accent-fade: 120 19% 93%;
   --ef-brand: 15 63% 60%; --ef-on: 0 0% 100%;  /* Claude's own coral #d97757 — keep the logo/brand orange, not Everforest green */
@@ -20,9 +20,9 @@ html:not([data-ef="off"]) {
   --ef-success: 68 99% 32%; --ef-success-fade: 62 53% 88%;
   --ef-warning: 43 100% 44%; --ef-warning-fade: 43 82% 89%;
   --ef-pro: 319 42% 44%; --ef-pro-fade: 319 35% 93%;
-  --efc-s0: #e6ead0; --efc-s1: #fdf6e3; --efc-s2: #fffbef; --efc-s3: #fffbef;
-  --efc-panel: #fdf6e3; --efc-popover: #fffbef; --efc-page: #e6ead0;
-  --efc-tprimary: #5c6a72; --efc-tsec: #708089; --efc-tmuted: #829181;
+  --efc-s0: #efebd4; --efc-s1: #fdf6e3; --efc-s2: #fffbef; --efc-s3: #fffbef;
+  --efc-panel: #fdf6e3; --efc-popover: #fffbef; --efc-page: #fdf6e3;
+  --efc-tprimary: #4b5b63; --efc-tsec: #5b696e; --efc-tmuted: #647267;
   --efc-border: rgba(92,106,114,.18); --efc-border-strong: rgba(92,106,114,.30);
   --efc-fill-control: rgba(92,106,114,.10); --efc-neutral: rgba(92,106,114,.06); --efc-neutral-hover: rgba(92,106,114,.10);
   --efc-fill-primary: #5f7100; --efc-on-action: #fdf6e3; --efc-fill-secondary: rgba(92,106,114,.10);
@@ -31,7 +31,7 @@ html:not([data-ef="off"]) {
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-s0: 199 13% 24%; --ef-s1: 206 13% 20%; --ef-s2: 205 13% 18%;
   --ef-s3: 202 14% 16%; --ef-s4: 202 12% 13%; --ef-s5: 202 12% 13%;
-  --ef-t0: 41 32% 75%; --ef-t1: 135 7% 64%; --ef-t2: 138 6% 55%;
+  --ef-t0: 41 32% 75%; --ef-t1: 130.00 6.98% 66.27%; --ef-t2: 138 6% 55%;
   --ef-bd: 204 9% 34%;
   --ef-accent: 172 31% 62%; --ef-accent-fade: 201 23% 30%;
   --ef-brand: 16 66% 66%; --ef-on: 206 13% 20%;  /* Claude coral (lightened for dark) */
@@ -40,8 +40,8 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-warning: 40 56% 68%; --ef-warning-fade: 54 7% 28%;
   --ef-pro: 331 43% 72%; --ef-pro-fade: 276 7% 29%;
   --efc-s0: #232a2e; --efc-s1: #2d353b; --efc-s2: #343f44; --efc-s3: #3d484d;
-  --efc-panel: #2d353b; --efc-popover: #3d484d; --efc-page: #232a2e;
-  --efc-tprimary: #d3c6aa; --efc-tsec: #9da9a0; --efc-tmuted: #859289;
+  --efc-panel: #2d353b; --efc-popover: #3d484d; --efc-page: #2d353b;
+  --efc-tprimary: #d3c6aa; --efc-tsec: #a3afa5; --efc-tmuted: #859289;
   --efc-border: rgba(211,198,170,.16); --efc-border-strong: rgba(211,198,170,.26);
   --efc-fill-control: rgba(211,198,170,.10); --efc-neutral: rgba(211,198,170,.06); --efc-neutral-hover: rgba(211,198,170,.10);
   --efc-fill-primary: #a7c080; --efc-on-action: #2d353b; --efc-fill-secondary: rgba(211,198,170,.10);
@@ -51,7 +51,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
     --ef-s0: 199 13% 24%; --ef-s1: 206 13% 20%; --ef-s2: 205 13% 18%;
     --ef-s3: 202 14% 16%; --ef-s4: 202 12% 13%; --ef-s5: 202 12% 13%;
-    --ef-t0: 41 32% 75%; --ef-t1: 135 7% 64%; --ef-t2: 138 6% 55%;
+    --ef-t0: 41 32% 75%; --ef-t1: 130.00 6.98% 66.27%; --ef-t2: 138 6% 55%;
     --ef-bd: 204 9% 34%;
     --ef-accent: 172 31% 62%; --ef-accent-fade: 201 23% 30%;
     --ef-brand: 16 66% 66%; --ef-on: 206 13% 20%;  /* Claude coral (lightened for dark) */
@@ -60,8 +60,8 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-warning: 40 56% 68%; --ef-warning-fade: 54 7% 28%;
     --ef-pro: 331 43% 72%; --ef-pro-fade: 276 7% 29%;
     --efc-s0: #232a2e; --efc-s1: #2d353b; --efc-s2: #343f44; --efc-s3: #3d484d;
-    --efc-panel: #2d353b; --efc-popover: #3d484d; --efc-page: #232a2e;
-    --efc-tprimary: #d3c6aa; --efc-tsec: #9da9a0; --efc-tmuted: #859289;
+    --efc-panel: #2d353b; --efc-popover: #3d484d; --efc-page: #2d353b;
+    --efc-tprimary: #d3c6aa; --efc-tsec: #a3afa5; --efc-tmuted: #859289;
     --efc-border: rgba(211,198,170,.16); --efc-border-strong: rgba(211,198,170,.26);
     --efc-fill-control: rgba(211,198,170,.10); --efc-neutral: rgba(211,198,170,.06); --efc-neutral-hover: rgba(211,198,170,.10);
     --efc-fill-primary: #a7c080; --efc-on-action: #2d353b; --efc-fill-secondary: rgba(211,198,170,.10);
@@ -114,6 +114,106 @@ html:not([data-ef="off"]) :is([data-theme], [data-mode]) {
   --cds-border: var(--efc-border) !important; --cds-border-strong: var(--efc-border-strong) !important;
   --cds-fill-control: var(--efc-fill-control) !important; --cds-bg-neutral: var(--efc-neutral) !important; --cds-bg-neutral-hover: var(--efc-neutral-hover) !important;
   --cds-fill-primary: var(--efc-fill-primary) !important; --cds-fill-secondary: var(--efc-fill-secondary) !important;
+}
+
+/* The 2026 CDS layer adds many more full-colour tokens that still carry the
+   stock light values: #0b0b0b-based alpha ink (hover fills, switch/slider
+   tracks, disabled text), white "on" ink, dark-saturated role text (menu
+   Delete, links, tint labels) and a translucent-white field fill. Those wash
+   out or vanish on the dark canvas, so remap them from the mode-aware ink. */
+html:not([data-ef="off"]),
+html:not([data-ef="off"]) :is([data-theme], [data-mode]) {
+  --cds-alpha-0: transparent !important;
+  --cds-alpha-1: color-mix(in srgb, var(--efc-tprimary) 5%, transparent) !important;
+  --cds-alpha-2: color-mix(in srgb, var(--efc-tprimary) 10%, transparent) !important;
+  --cds-alpha-3: color-mix(in srgb, var(--efc-tprimary) 20%, transparent) !important;
+  --cds-alpha-4: color-mix(in srgb, var(--efc-tprimary) 35%, transparent) !important;
+  --cds-alpha-5: color-mix(in srgb, var(--efc-tprimary) 50%, transparent) !important;
+  --cds-alpha-6: color-mix(in srgb, var(--efc-tprimary) 60%, transparent) !important;
+  --cds-alpha-7: color-mix(in srgb, var(--efc-tprimary) 70%, transparent) !important;
+  --cds-alpha-8: color-mix(in srgb, var(--efc-tprimary) 85%, transparent) !important;
+  --cds-alpha-9: color-mix(in srgb, var(--efc-tprimary) 95%, transparent) !important;
+
+  --cds-text-accent: hsl(var(--ef-accent)) !important;
+  --cds-text-danger: hsl(var(--ef-danger)) !important;
+  --cds-text-success: hsl(var(--ef-success)) !important;
+  --cds-text-warning: hsl(var(--ef-warning)) !important;
+  --cds-text-pro: hsl(var(--ef-pro)) !important;
+  --cds-text-user-message-personal: hsl(var(--ef-accent)) !important;
+  --cds-text-stays-secondary: var(--efc-tsec) !important;
+  --cds-text-disabled: color-mix(in srgb, var(--efc-tprimary) 40%, transparent) !important;
+  --cds-text-button-disabled: color-mix(in srgb, var(--efc-tprimary) 45%, transparent) !important;
+  --cds-text-tint-aqua: hsl(var(--ef-accent)) !important;
+  --cds-text-tint-blue: hsl(var(--ef-accent)) !important;
+  --cds-text-tint-green: hsl(var(--ef-success)) !important;
+  --cds-text-tint-yellow: hsl(var(--ef-warning)) !important;
+  --cds-text-tint-red: hsl(var(--ef-danger)) !important;
+  --cds-text-tint-orange: hsl(var(--ef-brand)) !important;
+  --cds-text-tint-violet: hsl(var(--ef-pro)) !important;
+  --cds-text-tint-magenta: hsl(var(--ef-pro)) !important;
+  --cds-chat-composer-link: hsl(var(--ef-accent)) !important;
+  --cds-chat-composer-link-hover: hsl(var(--ef-accent)) !important;
+  --cds-shortcut-cap-ink: var(--efc-tmuted) !important;
+
+  --cds-on-primary: var(--efc-on-action) !important;
+  --cds-on-accent: var(--efc-on-action) !important;
+  --cds-on-danger: var(--efc-on-action) !important;
+  --cds-on-success: var(--efc-on-action) !important;
+  --cds-fill-primary-hover: color-mix(in srgb, var(--efc-fill-primary) 88%, var(--efc-tprimary)) !important;
+  --cds-fill-accent: hsl(var(--ef-accent)) !important;
+  --cds-fill-accent-hover: hsl(var(--ef-accent) / .88) !important;
+  --cds-fill-danger: hsl(var(--ef-danger)) !important;
+  --cds-fill-danger-hover: hsl(var(--ef-danger) / .88) !important;
+  --cds-fill-success: hsl(var(--ef-success)) !important;
+  --cds-fill-success-hover: hsl(var(--ef-success) / .88) !important;
+
+  --cds-fill-control-hover: color-mix(in srgb, var(--efc-tprimary) 16%, transparent) !important;
+  --cds-fill-button-ghost-hover: color-mix(in srgb, var(--efc-tprimary) 10%, transparent) !important;
+  --cds-fill-button-layer: color-mix(in srgb, var(--efc-tprimary) 6%, transparent) !important;
+  --cds-fill-ghost-hover: color-mix(in srgb, var(--efc-tprimary) 8%, transparent) !important;
+  --cds-fill-ghost-selected: color-mix(in srgb, var(--efc-tprimary) 12%, transparent) !important;
+  --cds-fill-card: color-mix(in srgb, var(--efc-tprimary) 4%, transparent) !important;
+  --cds-fill-card-hover: color-mix(in srgb, var(--efc-tprimary) 7%, transparent) !important;
+  --cds-fill-disabled: color-mix(in srgb, var(--efc-tprimary) 3%, transparent) !important;
+  --cds-fill-secondary-hover: color-mix(in srgb, var(--efc-tprimary) 14%, transparent) !important;
+  --cds-fill-secondary-layer: color-mix(in srgb, var(--efc-tprimary) 3%, transparent) !important;
+  --cds-fill-secondary-ring: var(--efc-border) !important;
+  --cds-fill-secondary-pressed-ring: var(--efc-border) !important;
+  --cds-fill-field: color-mix(in srgb, var(--efc-s2) 60%, transparent) !important;
+  --cds-border-line: var(--efc-border) !important;
+  --cds-border-line-muted: var(--efc-border) !important;
+  --cds-border-stronger: var(--efc-border-strong) !important;
+  --cds-segmented-control-track: color-mix(in srgb, var(--efc-tprimary) 6%, transparent) !important;
+  --cds-switch-track: color-mix(in srgb, var(--efc-tprimary) 22%, transparent) !important;
+  --cds-switch-track-hover: color-mix(in srgb, var(--efc-tprimary) 32%, transparent) !important;
+  --cds-slider-track: color-mix(in srgb, var(--efc-tprimary) 12%, transparent) !important;
+  --cds-slider-fill: color-mix(in srgb, var(--efc-tprimary) 24%, transparent) !important;
+  --cds-slider-stop-dot: color-mix(in srgb, var(--efc-tprimary) 28%, transparent) !important;
+  --cds-skeleton-base: color-mix(in srgb, var(--efc-tprimary) 6%, transparent) !important;
+  --cds-skeleton-sheen: color-mix(in srgb, var(--efc-tprimary) 6%, transparent) !important;
+  --cds-radio-group-card-selected: hsl(var(--ef-accent-fade)) !important;
+  --cds-bg-editor-canvas: var(--efc-s0) !important;
+  --cds-tooltip-bg: var(--efc-tprimary) !important;
+  --cds-tooltip-fg: var(--efc-s1) !important;
+  --cds-role-tooltip-bg: var(--efc-tprimary) !important;
+  --cds-role-tooltip-fg: var(--efc-s1) !important;
+
+  /* "fizzy-lake" shell tokens (sidebar, cards, composer ring) */
+  --cds-fizzy-lake-color-sidebar: var(--efc-s0) !important;
+  --cds-fizzy-lake-color-card-hover: var(--efc-s2) !important;
+  --cds-fizzy-lake-color-solid-primary: var(--efc-tprimary) !important;
+  --cds-fizzy-lake-color-solid-secondary: var(--efc-tsec) !important;
+  --cds-fizzy-lake-color-solid-muted: var(--efc-tmuted) !important;
+  --cds-fizzy-lake-color-secondary: var(--efc-tsec) !important;
+  --cds-fizzy-lake-color-plain-secondary: var(--efc-tsec) !important;
+  --cds-fizzy-lake-color-plain-muted: var(--efc-tmuted) !important;
+  --cds-fizzy-lake-color-placeholder: var(--efc-tmuted) !important;
+  --cds-fizzy-lake-color-icon-only-disabled: var(--efc-tmuted) !important;
+  --cds-fizzy-lake-color-selected-hover: color-mix(in srgb, var(--efc-tprimary) 14%, transparent) !important;
+  --cds-fizzy-lake-color-composer-ring: var(--efc-border) !important;
+  --cds-fizzy-lake-color-banner-line: var(--efc-border) !important;
+  --cds-fizzy-lake-color-badge-line: var(--efc-border-strong) !important;
+  --cds-fizzy-lake-color-banner-button-warning-text: hsl(var(--ef-warning)) !important;
 }
 
 /* claude.ai/code runs inside a "dframe" desktop shell with its OWN --df-* token
@@ -178,4 +278,44 @@ html:not([data-ef="off"]) nav a[aria-current="page"],
 html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
   background-color: hsl(var(--ef-success-fade)) !important;
   color: hsl(var(--ef-t0)) !important;
+}
+
+/* Code blocks are highlighted with inline colours from Claude's *native* theme
+   (html[data-mode]), not from tokens. When our mode differs from the native one
+   the ink lands on the wrong ground (near-black on dark, or pale on light).
+   The <pre> is transparent and holds only text, so flipping lightness while
+   keeping hue re-inks the whole highlight without touching the block surface. */
+html:not([data-ef="off"])[data-mode="light"][data-ef-mode="dark"] pre.code-block__code,
+html:not([data-ef="off"])[data-mode="dark"][data-ef-mode="light"] pre.code-block__code {
+  filter: invert(1) hue-rotate(180deg);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"])[data-mode="light"]:not([data-ef-mode]) pre.code-block__code {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+@media (prefers-color-scheme: light) {
+  html:not([data-ef="off"])[data-mode="dark"]:not([data-ef-mode]) pre.code-block__code {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+
+/* Artifact thumbnails on /new ship a light variant plus Tailwind dark: variants
+   keyed to Claude's native mode. With native light and our dark mode the
+   pastel backdrop, white page sheet and white/86 caption veil stay up, hiding
+   the pale caption text. Drop only those light-only layers inside cards; the
+   tinted card base underneath is already mode-aware. */
+html:not([data-ef="off"])[data-mode="light"][data-ef-mode="dark"] .group\/card :is(.dark\:hidden) {
+  display: none !important;
+}
+html:not([data-ef="off"])[data-mode="light"][data-ef-mode="dark"] .group\/card .bg-white.dark\:bg-surface-1 {
+  background-color: var(--efc-s1) !important;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"])[data-mode="light"]:not([data-ef-mode]) .group\/card :is(.dark\:hidden) {
+    display: none !important;
+  }
+  html:not([data-ef="off"])[data-mode="light"]:not([data-ef-mode]) .group\/card .bg-white.dark\:bg-surface-1 {
+    background-color: var(--efc-s1) !important;
+  }
 }

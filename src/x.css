@@ -12,8 +12,8 @@
    Broad + fragile by nature. Mode follows the popup, or the OS on "sync". */
 
 html:not([data-ef="off"]) {
-  --ef-bg: #fdf6e3; --ef-bg1: #f4f0d9; --ef-bg2: #efebd4; --ef-fg: #5c6a72; --ef-border: #e0dcc7;
-  --ef-muted: #829181; --ef-blue: #3a94c5; --ef-green: #5f7100; --ef-on-accent: #fdf6e3;
+  --ef-bg: #fdf6e3; --ef-bg1: #f4f0d9; --ef-bg2: #efebd4; --ef-fg: #4b5b63; --ef-border: #e0dcc7;
+  --ef-muted: #5b696e; --ef-blue: #3a94c5; --ef-green: #5f7100; --ef-on-accent: #fdf6e3;
   --ef-x-verified: #1d9bf0;
   --ef-green-ink: var(--ef-green);
   --ef-like-ink: color-mix(in srgb, #df69ba 65%, #2d353b);
@@ -22,7 +22,7 @@ html:not([data-ef="off"]) {
   --ef-x-like: var(--ef-like-ink);
   /* HSL triplets for x-web tokens consumed as hsl(var(--…)) */
   --ef-hsl-bg: 44 87% 94%; --ef-hsl-bg1: 51 55% 90%; --ef-hsl-bg2: 51 46% 88%;
-  --ef-hsl-fg: 202 11% 40%; --ef-hsl-muted: 116 7% 54%; --ef-hsl-border: 50 29% 83%;
+  --ef-hsl-fg: 200.00 13.79% 34.12%; --ef-hsl-muted: 195.79 9.45% 39.41%; --ef-hsl-border: 50 29% 83%;
   --ef-hsl-green: 70 100% 22%; --ef-hsl-blue: 201 55% 50%;
   color-scheme: light !important;
 }
@@ -303,6 +303,12 @@ html:not([data-ef="off"]) [role="main"],
 html:not([data-ef="off"]) [data-testid="primaryColumn"],
 html:not([data-ef="off"]) [data-testid="sidebarColumn"],
 html:not([data-ef="off"]) [data-testid="sidebarColumn"] div { background-color: var(--ef-bg) !important; }
+/* Display settings use a classic white card inside the newer landmark shell.
+   Paint the card only; keep the background/color preview swatches intact. */
+html:not([data-ef="off"]) main section[role="region"] .r-qocrb3.r-14lw9ot {
+  background-color: var(--ef-bg1) !important;
+  border-color: var(--ef-border) !important;
+}
 html:not([data-ef="off"]) [data-testid="primaryColumn"] div:has([data-testid="tweetTextarea_0"]) {
   background-color: var(--ef-bg) !important;
 }
@@ -588,4 +594,55 @@ html:not([data-ef="off"]) [role="tab"][aria-selected="true"] {
 html:not([data-ef="off"]) :is(header, nav) a[aria-current="page"] :is(div, span, svg),
 html:not([data-ef="off"]) [role="tab"][aria-selected="true"] :is(span, svg) {
   color: var(--ef-green-ink) !important;
+}
+
+/* Classic SPA borders come from atomic light-theme classes (#EFF3F4, #CFD9DE,
+   #9FB5C3 …). They vanish on the cream page but read as bright rules in dark
+   mode, because X's own display setting stays "Default" while Komorebi is dark.
+   Only neutral greys are remapped; blue/red/pink state borders stay native. */
+html:not([data-ef="off"]) :is(.r-jxzhtn, .r-1ets6dv, .r-1wl2o3p, .r-1xsrhxi, .r-1d6w8o1, .r-15ma8z, .r-1mr45hq) {
+  border-color: var(--ef-border) !important;
+}
+html:not([data-ef="off"]) :is(.r-113pe33, .r-1lsmntn, .r-1dgieki, .r-j5o65s, .r-c554xy, .r-140t1nj) {
+  border-left-color: var(--ef-border) !important;
+  border-right-color: var(--ef-border) !important;
+  border-top-color: var(--ef-border) !important;
+  border-bottom-color: var(--ef-border) !important;
+}
+/* Floating Grok / Chat drawers sit on a frosted white pill (.r-6026j). */
+html:not([data-ef="off"]) :is([data-testid="GrokDrawer"], [data-testid="DMDrawer"], [data-testid="chat-drawer-root"]) :is(.r-6026j, .r-14lw9ot) {
+  background-color: color-mix(in srgb, var(--ef-bg1) 92%, transparent) !important;
+  border-color: var(--ef-border) !important;
+}
+html:not([data-ef="off"]) :is([data-testid="GrokDrawer"], [data-testid="DMDrawer"], [data-testid="chat-drawer-root"]) :is(svg, span) {
+  color: var(--ef-fg) !important;
+}
+
+/* Profile hover card (hover an avatar / name). It lives in #layers but has no
+   role, so the dialog/menu rule above misses it; the card paints through the
+   classic light atomic class .r-14lw9ot (white). Follow buttons keep their
+   green pill via the #layers rule above. */
+html:not([data-ef="off"]) #layers [data-testid="HoverCard"] {
+  background-color: var(--ef-bg) !important;
+  color: var(--ef-fg) !important;
+  box-shadow: 0 0 0 1px var(--ef-border), 0 4px 16px rgb(0 0 0 / 0.18) !important;
+}
+html:not([data-ef="off"]) #layers [data-testid="HoverCard"] :where(div, span, a) {
+  color: var(--ef-fg) !important;
+}
+/* Leave every avatar layer alone: X stacks several absolutely positioned
+   divs per avatar (white disc, photo, hover overlay), and an opaque fill on
+   the wrong layer hides the photo. "Follows you" chip is #EFF3F4. */
+html:not([data-ef="off"]) #layers [data-testid="HoverCard"] [data-testid="userFollowIndicator"] {
+  background-color: var(--ef-bg2) !important;
+}
+html:not([data-ef="off"]) #layers [data-testid="HoverCard"] a.r-1wvb978,
+html:not([data-ef="off"]) #layers [data-testid="HoverCard"] a.r-1wvb978 span {
+  color: var(--ef-blue) !important;
+}
+html:not([data-ef="off"]) #layers [data-testid="HoverCard"] [data-testid$="-unfollow"] {
+  border-color: var(--ef-border) !important;
+}
+html:not([data-ef="off"]) #layers [data-testid="HoverCard"] svg:not([data-testid="icon-verified"]) {
+  color: var(--ef-fg) !important;
 }

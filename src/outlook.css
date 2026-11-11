@@ -9,7 +9,7 @@
 html:not([data-ef="off"]) {
   --ef-s1: #fdf6e3; --ef-s2: #f4f0d9; --ef-s3: #efebd4; --ef-s4: #e6e2cc; --ef-s5: #e0dcc7;
   --ef-hover: #efebd4; --ef-selected: #e6ead0; --ef-pressed: #e6e2cc;
-  --ef-fg1: #5c6a72; --ef-fg2: #708089; --ef-fg3: #829181; --ef-fg4: #939f91;
+  --ef-fg1: #4b5b63; --ef-fg2: #5b696e; --ef-fg3: #647267; --ef-fg4: #939f91;
   --ef-stroke1: #e0dcc7; --ef-stroke2: #e6e2cc;
   --ef-brand: #5f7100; --ef-brand-hover: #526200; --ef-brand-pressed: #455300;
   --ef-brand-tint: #e6ead0; --ef-on-brand: #fdf6e3; --ef-link: #28678a;
@@ -20,7 +20,7 @@ html:not([data-ef="off"]) {
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-s1: #343f44; --ef-s2: #2d353b; --ef-s3: #272e33; --ef-s4: #232a2e; --ef-s5: #1e2326;
   --ef-hover: #3d484d; --ef-selected: #425047; --ef-pressed: #475258;
-  --ef-fg1: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-fg4: #7a8478;
+  --ef-fg1: #d3c6aa; --ef-fg2: #a3afa5; --ef-fg3: #859289; --ef-fg4: #7a8478;
   --ef-stroke1: #4f585e; --ef-stroke2: #3d484d;
   --ef-brand: #a7c080; --ef-brand-hover: #b5ca95; --ef-brand-pressed: #c3d5aa;
   --ef-brand-tint: #425047; --ef-on-brand: #2d353b; --ef-link: #7fbbb3;
@@ -32,7 +32,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
     --ef-s1: #343f44; --ef-s2: #2d353b; --ef-s3: #272e33; --ef-s4: #232a2e; --ef-s5: #1e2326;
     --ef-hover: #3d484d; --ef-selected: #425047; --ef-pressed: #475258;
-    --ef-fg1: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-fg4: #7a8478;
+    --ef-fg1: #d3c6aa; --ef-fg2: #a3afa5; --ef-fg3: #859289; --ef-fg4: #7a8478;
     --ef-stroke1: #4f585e; --ef-stroke2: #3d484d;
     --ef-brand: #a7c080; --ef-brand-hover: #b5ca95; --ef-brand-pressed: #c3d5aa;
     --ef-brand-tint: #425047; --ef-on-brand: #2d353b; --ef-link: #7fbbb3;
@@ -96,9 +96,70 @@ html:not([data-ef="off"]) [class*="fui-FluentProvider"] {
   --colorCompoundBrandBackgroundHover: var(--ef-brand-hover) !important;
   --colorCompoundBrandForeground1: var(--ef-brand) !important;
   --colorCompoundBrandStroke: var(--ef-brand) !important;
+  /* State and card variants the 2026 shell reads directly; left alone they
+     keep stock greys/whites, so hover/pressed rows and cards flash light and
+     ribbon buttons (Fluent v8 var(--black)) go black on the dark theme. */
+  --colorNeutralBackground2Pressed: var(--ef-pressed) !important;
+  --colorNeutralBackground3Pressed: var(--ef-pressed) !important;
+  --colorNeutralBackground4Pressed: var(--ef-pressed) !important;
+  --colorNeutralBackground4Selected: var(--ef-selected) !important;
+  --colorNeutralBackground5Hover: var(--ef-hover) !important;
+  --colorNeutralBackground5Pressed: var(--ef-pressed) !important;
+  --colorNeutralBackground5Selected: var(--ef-selected) !important;
+  --colorNeutralBackground7Hover: var(--ef-hover) !important;
+  --colorNeutralBackground7Pressed: var(--ef-pressed) !important;
+  --colorNeutralBackgroundAlpha2: color-mix(in srgb, var(--ef-s1) 80%, transparent) !important;
+  --colorNeutralBackgroundDisabled2: var(--ef-s2) !important;
+  --colorNeutralBackgroundInvertedHover: color-mix(in srgb, var(--ef-inv-bg) 88%, var(--ef-inv-fg)) !important;
+  --colorNeutralBackgroundInvertedPressed: color-mix(in srgb, var(--ef-inv-bg) 80%, var(--ef-inv-fg)) !important;
+  --colorNeutralBackgroundInvertedSelected: color-mix(in srgb, var(--ef-inv-bg) 84%, var(--ef-inv-fg)) !important;
+  --colorNeutralCardBackground: var(--ef-s1) !important;
+  --colorNeutralCardBackgroundHover: var(--ef-hover) !important;
+  --colorNeutralCardBackgroundPressed: var(--ef-pressed) !important;
+  --colorNeutralCardBackgroundSelected: var(--ef-selected) !important;
+  --colorNeutralCardBackgroundDisabled: var(--ef-s3) !important;
+  --colorSubtleBackgroundLightAlphaHover: color-mix(in srgb, var(--ef-hover) 70%, transparent) !important;
+  --colorNeutralStencil1: var(--ef-s4) !important;
+  --colorNeutralStencil2: var(--ef-s2) !important;
+  --colorNeutralForeground1Pressed: var(--ef-fg1) !important;
+  --colorNeutralForeground1Static: var(--ef-fg1) !important;
+  --colorNeutralForeground2Pressed: var(--ef-fg1) !important;
+  --colorNeutralForeground2Selected: var(--ef-fg1) !important;
+  --colorNeutralForeground2LinkHover: var(--ef-fg1) !important;
+  --colorNeutralForeground2LinkPressed: var(--ef-fg1) !important;
+  --colorNeutralForeground2LinkSelected: var(--ef-fg1) !important;
+  --colorNeutralForeground3Hover: var(--ef-fg2) !important;
+  --colorNeutralForeground3Pressed: var(--ef-fg2) !important;
+  --colorNeutralForeground3Selected: var(--ef-fg2) !important;
+  --colorNeutralForeground5: var(--ef-fg3) !important;
+  --colorNeutralForeground5Hover: var(--ef-fg1) !important;
+  --colorNeutralForeground5Pressed: var(--ef-fg1) !important;
+  --colorNeutralForeground5Selected: var(--ef-fg1) !important;
+  --colorNeutralForegroundInverted2: var(--ef-inv-fg) !important;
+  --colorNeutralForegroundInvertedHover: var(--ef-inv-fg) !important;
+  --colorNeutralForegroundInvertedPressed: var(--ef-inv-fg) !important;
+  --colorNeutralForegroundInvertedSelected: var(--ef-inv-fg) !important;
+  --colorNeutralForegroundInvertedLink: var(--ef-inv-fg) !important;
+  --colorNeutralForegroundInvertedLinkHover: var(--ef-inv-fg) !important;
+  --colorNeutralForegroundInvertedLinkPressed: var(--ef-inv-fg) !important;
+  --colorNeutralForegroundInvertedLinkSelected: var(--ef-inv-fg) !important;
+  --colorNeutralStroke1Hover: var(--ef-fg4) !important;
+  --colorNeutralStroke1Pressed: var(--ef-fg4) !important;
+  --colorNeutralStroke1Selected: var(--ef-fg4) !important;
+  --colorNeutralStroke4: var(--ef-stroke2) !important;
+  --colorNeutralStroke4Hover: var(--ef-stroke1) !important;
+  --colorNeutralStroke4Pressed: var(--ef-stroke1) !important;
+  --colorNeutralStroke4Selected: var(--ef-stroke2) !important;
+  --colorNeutralStrokeSubtle: var(--ef-stroke2) !important;
+  --colorNeutralStrokeDisabled: var(--ef-stroke2) !important;
+  --colorNeutralStrokeDisabled2: var(--ef-stroke2) !important;
+  --colorNeutralStrokeAccessibleHover: var(--ef-fg2) !important;
+  --colorNeutralStrokeAccessiblePressed: var(--ef-fg2) !important;
+  --colorStrokeFocus2: var(--ef-fg1) !important;
 
   /* ── Fluent v8 / OWA palette ──────────────────────────────────────────── */
   --white: var(--ef-s1) !important;
+  --black: var(--ef-fg1) !important;
   --neutralLighterAlt: var(--ef-s2) !important;
   --neutralLighter: var(--ef-s3) !important;
   --neutralLight: var(--ef-s4) !important;
@@ -129,6 +190,13 @@ html:not([data-ef="off"]) [class*="fui-FluentProvider"] {
   --customBrandBackground3Pressed: var(--ef-pressed) !important;
   --customBrandBackground4Hover: var(--ef-hover) !important;
   --customBrandBackground4Pressed: var(--ef-pressed) !important;
+  /* selected row once focus leaves the list (e.g. into search) — stock #E0E0E0 */
+  --customNeutralNonFocusBackground: var(--ef-pressed) !important;
+  /* pinned / flagged row tint — stock #FFFAD6 */
+  --customYellowBackground: color-mix(in srgb, #dfa000 14%, var(--ef-s1)) !important;
+  --customNeutralStrokeOnBackground1: var(--ef-fg4) !important;
+  --customNeutralStrokeOnBackground1Hover: var(--ef-fg3) !important;
+  --customNeutralStrokeOnBackground1Pressed: var(--ef-fg3) !important;
 
   /* ── suite header (top bar) ───────────────────────────────────────────── */
   --headerBackground: var(--ef-header) !important;
@@ -163,4 +231,13 @@ html:not([data-ef="off"]) :is(#loadingScreen, #owaLoadingScreen, #initialLoading
   #appLoadingScreen, .loadingScreenContainer, [class*="loadingScreen"], [class*="LoadingScreen"],
   .splashScreen, #renderingHostContainer, [class*="bootSplash"]) {
   background-color: var(--ef-s2) !important;
+}
+
+/* Reading-pane notices ("Some content in this message has been blocked…") are
+   Fluent MessageBars whose fill and edges are written inline as stock light
+   greys, while their ink follows our tokens — pale text on #f5f5f5. Repaint
+   only the inline-grey bars; coloured (warning/error) bars keep their intent. */
+html:not([data-ef="off"]) .fui-MessageBar[style*="background-color: rgb(245, 245, 245)"] {
+  background-color: var(--ef-s3) !important;
+  border-color: var(--ef-stroke2) !important;
 }

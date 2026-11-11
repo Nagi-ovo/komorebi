@@ -19,7 +19,7 @@ html:not([data-ef="off"]) {
   --ef-page: #fdf6e3; --ef-surface: #fdf6e3; --ef-bright: #fffbef;
   --ef-c-lowest: #fffbef; --ef-c-low: #fdf6e3; --ef-c: #f4f0d9;
   --ef-c-high: #efebd4; --ef-c-highest: #e6e2cc; --ef-dim: #e0dcc7; --ef-variant: #e6e2cc;
-  --ef-fg: #5c6a72; --ef-fg-sec: #708089; --ef-fg-var: #708089;
+  --ef-fg: #4b5b63; --ef-fg-sec: #5b696e; --ef-fg-var: #5b696e;
   /* editor-chrome text/icons: crisp near-native ink in light (the muted --ef-fg
      reads as washed-out on dense menus/toolbars); Everforest fg in dark. */
   --ef-ink: #3c4043;
@@ -28,7 +28,7 @@ html:not([data-ef="off"]) {
   --ef-green: #5f7100; --ef-green-c: #e6ead0; --ef-on-green: #fdf6e3; --ef-on-green-c: #526200;
   --ef-red: #f85552; --ef-red-c: #fde3da; --ef-on-red: #fffbef;
   --ef-purple: #876080; --ef-purple-c: #f0e4ec; --ef-on-purple: #fffbef; --ef-on-purple-c: #76526f;
-  --ef-neutral: #708089; --ef-neutral-c: #efebd4;
+  --ef-neutral: #5b696e; --ef-neutral-c: #efebd4;
   --ef-inv: #2d353b; --ef-on-inv: #fdf6e3;
   --ef-hover: #efebd4; --ef-selected: #e6ead0;
   --ef-icon-filter: none;
@@ -38,14 +38,14 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-page: #2d353b; --ef-surface: #2d353b; --ef-bright: #343f44;
   --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
   --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-dim: #232a2e; --ef-variant: #3d484d;
-  --ef-fg: #d3c6aa; --ef-fg-sec: #9da9a0; --ef-fg-var: #9da9a0;
+  --ef-fg: #d3c6aa; --ef-fg-sec: #a3afa5; --ef-fg-var: #a3afa5;
   --ef-ink: #d3c6aa;
   --ef-outline: #859289; --ef-outline-var: #4f585e;
   --ef-blue: #7fbbb3; --ef-blue-c: #3a515d; --ef-on-blue: #2d353b; --ef-on-blue-c: #cfe0e0;
   --ef-green: #a7c080; --ef-green-c: #425047; --ef-on-green: #2d353b; --ef-on-green-c: #cfe0b0;
   --ef-red: #e67e80; --ef-red-c: #514045; --ef-on-red: #2d353b;
   --ef-purple: #d699b6; --ef-purple-c: #4c3743; --ef-on-purple: #2d353b; --ef-on-purple-c: #e6bfd2;
-  --ef-neutral: #9da9a0; --ef-neutral-c: #3d484d;
+  --ef-neutral: #a3afa5; --ef-neutral-c: #3d484d;
   --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
   --ef-hover: #3d484d; --ef-selected: #425047;
   /* sprite-image toolbar icons are near-black; invert+hue-rotate keeps colour
@@ -58,14 +58,14 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-page: #2d353b; --ef-surface: #2d353b; --ef-bright: #343f44;
     --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
     --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-dim: #232a2e; --ef-variant: #3d484d;
-    --ef-fg: #d3c6aa; --ef-fg-sec: #9da9a0; --ef-fg-var: #9da9a0;
+    --ef-fg: #d3c6aa; --ef-fg-sec: #a3afa5; --ef-fg-var: #a3afa5;
     --ef-ink: #d3c6aa;
     --ef-outline: #859289; --ef-outline-var: #4f585e;
     --ef-blue: #7fbbb3; --ef-blue-c: #3a515d; --ef-on-blue: #2d353b; --ef-on-blue-c: #cfe0e0;
     --ef-green: #a7c080; --ef-green-c: #425047; --ef-on-green: #2d353b; --ef-on-green-c: #cfe0b0;
     --ef-red: #e67e80; --ef-red-c: #514045; --ef-on-red: #2d353b;
     --ef-purple: #d699b6; --ef-purple-c: #4c3743; --ef-on-purple: #2d353b; --ef-on-purple-c: #e6bfd2;
-    --ef-neutral: #9da9a0; --ef-neutral-c: #3d484d;
+    --ef-neutral: #a3afa5; --ef-neutral-c: #3d484d;
     --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
     --ef-hover: #3d484d; --ef-selected: #425047;
     --ef-icon-filter: invert(0.9) hue-rotate(180deg) brightness(1.05);
@@ -213,6 +213,11 @@ html:not([data-ef="off"]) :is(.docs-homescreen-drawer, .docs-homescreen-drawer-c
 html:not([data-ef="off"]) :is(.docs-homescreen-grid-item-title, .docs-homescreen-fcc-content,
   .docs-homescreen-floater-header-cell, .docs-homescreen-templates-view-header) {
   color: var(--ef-fg) !important;
+}
+/* Card metadata ("Opened Oct 10, 2026") keeps a fixed #5e5e5e that
+   disappears on the dark grid. */
+html:not([data-ef="off"]) :is(.docs-homescreen-grid-item-time, .docs-homescreen-grid-item-sort-identifier) {
+  color: var(--ef-fg-sec) !important;
 }
 
 /* ════ 2. EDITOR chrome (Slides / Docs / Sheets) ═══════════════════════════ */
@@ -413,6 +418,19 @@ html:not([data-ef="off"]) :is(.goog-menu, .goog-menu-vertical, .docs-material-me
 html:not([data-ef="off"]) :is(.goog-menuitem-highlight, .goog-menuitem-hover,
   .goog-menuitem-active, .docs-material-menu-button-hover) {
   background-color: var(--ef-hover) !important;
+}
+/* The checked option (e.g. the home "Owned by anyone" filter) pins its label
+   to #333, which vanishes on the dark menu. */
+html:not([data-ef="off"]) .goog-menuitem:not(.goog-menuitem-disabled) .goog-menuitem-content {
+  color: var(--ef-ink) !important;
+}
+/* Shortcut hints and disabled rows use rgba(31,31,31,.38) — invisible on the
+   dark menu. Keep them quieter than the label, but readable. */
+html:not([data-ef="off"]) .goog-menuitem .goog-menuitem-accel {
+  color: var(--ef-fg-sec) !important;
+}
+html:not([data-ef="off"]) .goog-menuitem-disabled :is(.goog-menuitem-content, .goog-menuitem-label, .goog-menuitem-accel) {
+  color: color-mix(in srgb, var(--ef-ink) 45%, transparent) !important;
 }
 html:not([data-ef="off"]) :is(.goog-menuseparator, .docs-menu-separator) {
   border-color: var(--ef-outline-var) !important;

@@ -11,7 +11,7 @@ html:not([data-ef="off"]) {
   --ef-elev: #fffbef; --ef-elev2: #f4f0d9;
   --ef-side: #efebd4; --ef-side-hover: #e6e2cc; --ef-side-active: #e6ead0;
   --ef-bubble: #e6ead0; --ef-composer: #f4f0d9; --ef-tint-blue: #e9f0e9;
-  --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-fg3: #829181; --ef-fg4: #a6b0a0;
+  --ef-fg: #4b5b63; --ef-fg2: #5b696e; --ef-fg3: #647267; --ef-fg4: #a6b0a0;
   --ef-inv-bg: #2d353b; --ef-inv-fg: #fdf6e3;
   --ef-blue: #286f96; --ef-blue-hover: #225e80; --ef-blue-fade: rgba(58, 148, 197, .10);
   --ef-action: #5f7100; --ef-on-action: #fdf6e3;
@@ -26,7 +26,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-elev: #343f44; --ef-elev2: #232a2e;
   --ef-side: #232a2e; --ef-side-hover: #343f44; --ef-side-active: #425047;
   --ef-bubble: #425047; --ef-composer: #343f44; --ef-tint-blue: #3a515d;
-  --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-fg4: #7a8478;
+  --ef-fg: #d3c6aa; --ef-fg2: #a3afa5; --ef-fg3: #859289; --ef-fg4: #7a8478;
   --ef-inv-bg: #fdf6e3; --ef-inv-fg: #2d353b;
   --ef-blue: #7fbbb3; --ef-blue-hover: #6aa39b; --ef-blue-fade: rgba(127, 187, 179, .14);
   --ef-action: #a7c080; --ef-on-action: #2d353b;
@@ -42,7 +42,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-elev: #343f44; --ef-elev2: #232a2e;
     --ef-side: #232a2e; --ef-side-hover: #343f44; --ef-side-active: #425047;
     --ef-bubble: #425047; --ef-composer: #343f44; --ef-tint-blue: #3a515d;
-    --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #859289; --ef-fg4: #7a8478;
+    --ef-fg: #d3c6aa; --ef-fg2: #a3afa5; --ef-fg3: #859289; --ef-fg4: #7a8478;
     --ef-inv-bg: #fdf6e3; --ef-inv-fg: #2d353b;
     --ef-blue: #7fbbb3; --ef-blue-hover: #6aa39b; --ef-blue-fade: rgba(127, 187, 179, .14);
     --ef-action: #a7c080; --ef-on-action: #2d353b;
@@ -56,7 +56,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
 
 /* ── map ChatGPT's tokens onto Everforest (also inside .light/.dark islands) ── */
 html:not([data-ef="off"]),
-html:not([data-ef="off"]) :is(.light, .dark) {
+html:not([data-ef="off"]) :is(.light, .dark, [data-theme="light"], [data-theme="dark"]) {
   --bg-primary: var(--ef-canvas) !important;
   --bg-secondary: var(--ef-side-hover) !important;
   --bg-tertiary: var(--ef-elev2) !important;
@@ -110,6 +110,237 @@ html:not([data-ef="off"]) :is(.light, .dark) {
   --accent-purple: var(--ef-purple) !important;
   --accent-yellow: var(--ef-yellow) !important;
   --accent-default: var(--ef-grey) !important;
+
+  /* The current app shell uses app-color + color-token names rather than the
+     legacy bg/text names above. Map the sources and their locally declared
+     aliases together, including portals with a data-theme host. */
+  --app-color-background-surface: var(--ef-canvas) !important;
+  --app-color-background-surface-under: var(--ef-side) !important;
+  --app-color-background-elevated-primary: var(--ef-elev) !important;
+  --app-color-background-elevated-primary-opaque: var(--ef-elev) !important;
+  --app-color-background-elevated-secondary: var(--ef-elev2) !important;
+  --app-color-background-elevated-secondary-opaque: var(--ef-elev2) !important;
+  --app-color-background-elevated-tertiary-opaque: var(--ef-side-hover) !important;
+  --app-color-background-application-menu: var(--ef-elev) !important;
+  --app-color-background-card: var(--ef-elev) !important;
+  --app-color-background-control: var(--ef-elev) !important;
+  --app-color-background-editor-opaque: var(--ef-elev2) !important;
+  --color-background-control-opaque: var(--ef-elev) !important;
+  --color-background-panel: var(--ef-canvas) !important;
+  --color-surface: var(--ef-canvas) !important;
+  --color-surface-secondary: var(--ef-side) !important;
+  --color-surface-tertiary: var(--ef-elev2) !important;
+  --color-surface-elevated: var(--ef-elev) !important;
+  --color-surface-elevated-secondary: var(--ef-elev2) !important;
+  --color-surface-canvas: var(--ef-canvas) !important;
+  --color-token-main-surface-primary: var(--ef-canvas) !important;
+  --color-token-sidebar-surface-primary: var(--ef-side) !important;
+  --color-token-sidebar-surface-secondary: var(--ef-side-hover) !important;
+  --color-token-sidebar-surface-tertiary: var(--ef-side-active) !important;
+  --color-background-user-message: var(--ef-bubble) !important;
+  --color-text-user-message: var(--ef-fg) !important;
+  --user-message-text-color: var(--ef-fg) !important;
+  --composer-background-color: var(--ef-composer) !important;
+  --color-background-composer-action-bar: var(--ef-composer) !important;
+  --color-background-composer-primary: var(--ef-action) !important;
+  --color-text-composer-primary: var(--ef-on-action) !important;
+
+  --app-color-text-foreground: var(--ef-fg) !important;
+  --app-color-text-foreground-secondary: var(--ef-fg2) !important;
+  --app-color-text-foreground-tertiary: var(--ef-fg3) !important;
+  --app-color-foreground-application-menu: var(--ef-fg) !important;
+  --app-color-text-primary: var(--ef-fg) !important;
+  --app-color-text-secondary: var(--ef-fg2) !important;
+  --app-color-icon-primary: var(--ef-fg) !important;
+  --app-color-icon-secondary: var(--ef-fg2) !important;
+  --app-color-icon-tertiary: var(--ef-fg3) !important;
+  --color-text-primary: var(--ef-fg) !important;
+  --color-text-secondary: var(--ef-fg2) !important;
+  --color-text-tertiary: var(--ef-fg3) !important;
+  --color-text-prose: var(--ef-fg) !important;
+  --color-token-text-primary: var(--ef-fg) !important;
+  --color-token-text-secondary: var(--ef-fg2) !important;
+  --color-token-text-tertiary: var(--ef-fg3) !important;
+  --color-token-text-link-foreground: var(--ef-blue) !important;
+  --app-color-text-accent: var(--ef-blue) !important;
+  --app-color-icon-accent: var(--ef-blue) !important;
+  --app-color-accent-blue: var(--ef-blue) !important;
+  --app-color-background-accent: var(--ef-side-active) !important;
+  --app-color-background-accent-hover: var(--ef-side-hover) !important;
+  --app-color-background-accent-active: var(--ef-side-active) !important;
+  --app-color-background-button-primary: var(--ef-action) !important;
+  --app-color-background-button-primary-hover: color-mix(in srgb, var(--ef-action) 90%, var(--ef-fg)) !important;
+  --app-color-background-button-primary-active: color-mix(in srgb, var(--ef-action) 80%, var(--ef-fg)) !important;
+  --app-color-text-button-primary: var(--ef-on-action) !important;
+  --app-color-text-button-secondary: var(--ef-fg) !important;
+  --app-color-background-button-secondary: var(--ef-elev2) !important;
+  --app-color-background-button-secondary-hover: var(--ef-side-hover) !important;
+  --app-color-background-button-secondary-active: var(--ef-side-active) !important;
+  --color-background-accent-action: var(--ef-action) !important;
+  --color-text-accent-action: var(--ef-on-action) !important;
+  --app-color-border: var(--ef-bd) !important;
+  --app-color-border-light: var(--ef-bd-light) !important;
+  --app-color-border-heavy: var(--ef-bd-heavy) !important;
+  --app-color-border-focus: var(--ef-action) !important;
+  --color-token-border-default: var(--ef-bd) !important;
+  --color-token-border-light: var(--ef-bd-light) !important;
+  --color-token-border-heavy: var(--ef-bd-heavy) !important;
+  --color-background-text-selection: color-mix(in srgb, var(--ef-green) 32%, transparent) !important;
+}
+
+/* 2026-11 shell: neutral component tokens still ship the stock light values
+   (#fff toggles, #000 accents, #f3f3f3 cards, white tooltip ink). Map them so
+   the mode toggle, sliders, reactions, callouts, tooltips and solid buttons
+   follow the active Everforest mode instead of staying stock light. */
+html:not([data-ef="off"]),
+html:not([data-ef="off"]) :is(.light, .dark, [data-theme="light"], [data-theme="dark"]) {
+  --color-background-mode-toggle-selected: var(--ef-elev) !important;
+  --color-background-mode-toggle-track: color-mix(in srgb, var(--ef-fg) 6%, transparent) !important;
+  --color-border-mode-toggle-selected: var(--ef-bd) !important;
+  --color-text-mode-toggle-primary: var(--ef-fg) !important;
+  --color-text-mode-toggle-inactive: var(--ef-fg3) !important;
+  --segmented-control-background: var(--ef-elev2) !important;
+  --segmented-control-thumb-background: var(--ef-elev) !important;
+  --segmented-control-option-highlight-background-color: var(--ef-side-hover) !important;
+
+  --color-accent: var(--ef-action) !important;
+  --color-button-accent: var(--ef-action) !important;
+  --color-button-accent-hover: color-mix(in srgb, var(--ef-action) 90%, var(--ef-fg)) !important;
+  --color-button-accent-active: color-mix(in srgb, var(--ef-action) 80%, var(--ef-fg)) !important;
+  --color-background-accent-solid: var(--ef-action) !important;
+  --color-background-accent-solid-hover: color-mix(in srgb, var(--ef-action) 90%, var(--ef-fg)) !important;
+  --color-background-accent-solid-active: color-mix(in srgb, var(--ef-action) 80%, var(--ef-fg)) !important;
+  --color-background-accent-action-hover: color-mix(in srgb, var(--ef-action) 90%, var(--ef-fg)) !important;
+  --color-background-accent-action-active: color-mix(in srgb, var(--ef-action) 80%, var(--ef-fg)) !important;
+  --color-background-accent-soft-alpha: color-mix(in srgb, var(--ef-fg) 10%, transparent) !important;
+  --color-background-accent-soft-alt: color-mix(in srgb, var(--ef-fg) 10%, transparent) !important;
+  --color-background-accent-soft-alpha-hover: color-mix(in srgb, var(--ef-fg) 16%, transparent) !important;
+  --color-background-accent-soft-alpha-active: color-mix(in srgb, var(--ef-fg) 22%, transparent) !important;
+  --color-background-accent-ghost-hover: color-mix(in srgb, var(--ef-fg) 12%, transparent) !important;
+  --color-background-accent-ghost-active: color-mix(in srgb, var(--ef-fg) 18%, transparent) !important;
+  --color-background-accent-outline-hover: color-mix(in srgb, var(--ef-fg) 12%, transparent) !important;
+  --color-background-accent-outline-active: color-mix(in srgb, var(--ef-fg) 18%, transparent) !important;
+  --color-background-primary-soft-alt: color-mix(in srgb, var(--ef-fg) 10%, transparent) !important;
+  --color-text-accent-solid: var(--ef-on-action) !important;
+  --color-text-on-accent: var(--ef-on-action) !important;
+  --color-token-on-accent: var(--ef-on-action) !important;
+  --app-color-text-on-accent: var(--ef-on-action) !important;
+  --color-text-accent: var(--ef-fg) !important;
+  --color-text-accent-hover: var(--ef-fg) !important;
+  --color-text-accent-ghost: var(--ef-fg) !important;
+  --color-text-accent-ghost-hover: var(--ef-fg) !important;
+  --color-text-accent-outline: var(--ef-fg) !important;
+  --color-text-accent-outline-hover: var(--ef-fg) !important;
+  --color-text-accent-soft: var(--ef-fg) !important;
+  --color-text-accent-soft-alt: var(--ef-fg) !important;
+  --color-text-primary-soft-alt: var(--ef-fg) !important;
+  --color-border-accent-outline: var(--ef-bd-xheavy) !important;
+  --color-border-accent-outline-hover: var(--ef-bd-xheavy) !important;
+  --color-border-accent-soft-alt: var(--ef-bd-heavy) !important;
+  --color-border-primary-soft-alt: var(--ef-bd-heavy) !important;
+  --color-border-button-outline: var(--ef-bd-heavy) !important;
+
+  /* primary/neutral "solid" fills already resolve to --ef-fg (inverse); their
+     ink and hover states did not. */
+  --color-text-primary-solid: var(--ef-inv-fg) !important;
+  --color-text-neutral-solid: var(--ef-inv-fg) !important;
+  --app-color-text-primary-solid: var(--ef-inv-fg) !important;
+  --color-background-primary-solid-hover: color-mix(in srgb, var(--ef-fg) 88%, var(--ef-canvas)) !important;
+  --color-background-primary-solid-active: color-mix(in srgb, var(--ef-fg) 78%, var(--ef-canvas)) !important;
+  --color-background-neutral-solid-hover: color-mix(in srgb, var(--ef-fg) 88%, var(--ef-canvas)) !important;
+  --app-color-background-button-primary-inactive: var(--ef-fg4) !important;
+  --app-color-text-button-tertiary: var(--ef-fg3) !important;
+
+  /* tooltips paint --ef-fg (inverse); their ink must be the inverse too */
+  --color-text-tooltip: var(--ef-inv-fg) !important;
+  --tooltip-text-color: var(--ef-inv-fg) !important;
+  --color-text-tooltip-shortcut: var(--ef-inv-fg) !important;
+  --color-text-tooltip-secondary: color-mix(in srgb, var(--ef-inv-fg) 85%, transparent) !important;
+  --color-text-tooltip-description: color-mix(in srgb, var(--ef-inv-fg) 85%, transparent) !important;
+  --color-text-tooltip-tertiary: color-mix(in srgb, var(--ef-inv-fg) 72%, transparent) !important;
+  --color-background-tooltip-shortcut: color-mix(in srgb, var(--ef-inv-fg) 22%, transparent) !important;
+  --tooltip-shortcut-background-color: color-mix(in srgb, var(--ef-inv-fg) 22%, transparent) !important;
+  --color-border-tooltip: color-mix(in srgb, var(--ef-inv-fg) 8%, transparent) !important;
+  --tooltip-border-color: color-mix(in srgb, var(--ef-inv-fg) 8%, transparent) !important;
+  --color-background-tooltip-classic: var(--ef-elev) !important;
+  --color-text-tooltip-classic: var(--ef-fg) !important;
+
+  /* neutral cards and activity rows */
+  --color-background-callout-surface: var(--ef-elev2) !important;
+  --color-background-message-reaction: var(--ef-elev2) !important;
+  --color-background-user-message-compact: var(--ef-bubble) !important;
+  --color-background-button-outline-hover: var(--ef-side-hover) !important;
+  --color-text-button-outline: var(--ef-fg) !important;
+  --color-background-activity-current: var(--ef-elev) !important;
+  --color-background-activity-soft: var(--ef-elev2) !important;
+  --color-background-activity-control: var(--ef-side-hover) !important;
+  --color-background-activity-control-hover: var(--ef-side-active) !important;
+  --color-background-activity-input: var(--ef-side-hover) !important;
+  --color-background-activity-stop-hover: var(--ef-fg4) !important;
+  --color-text-activity-context: var(--ef-fg3) !important;
+  --color-text-activity-control: var(--ef-fg3) !important;
+  --color-text-activity-control-active: var(--ef-fg) !important;
+  --color-background-execution-output: var(--ef-elev2) !important;
+  --color-text-execution-output: var(--ef-fg) !important;
+  --color-text-execution-output-label: var(--ef-fg3) !important;
+  --app-color-background-recovery: var(--ef-canvas) !important;
+  --color-surface-recovery: var(--ef-canvas) !important;
+  --color-starter-prompt-icon: var(--ef-fg2) !important;
+  --color-chart-empty: var(--ef-elev2) !important;
+  --color-usage-meter-surface: var(--ef-elev2) !important;
+  --color-usage-meter-track: var(--ef-side-hover) !important;
+
+  /* form controls */
+  --checkbox-checked-background-color: var(--ef-action) !important;
+  --checkbox-checked-mark-color: var(--ef-on-action) !important;
+  --switch-track-color-checked: var(--ef-action) !important;
+  --switch-track-color-disabled: var(--ef-side-hover) !important;
+  --slider-track-color: var(--ef-side-hover) !important;
+  --slider-range-color: var(--ef-fg3) !important;
+  --focus-outline-color: var(--ef-blue) !important;
+  --color-token-focus-border: var(--ef-blue) !important;
+  --color-ring: var(--ef-blue) !important;
+  --color-ring-accent: var(--ef-blue) !important;
+  --color-ring-primary: var(--ef-blue) !important;
+
+  /* Code blocks use stock light-theme syntax ink regardless of our mode, which
+     drops below 3:1 on the dark canvas. Re-ink from the palette, pulled
+     toward the body text so it stays readable on both canvases. */
+  --codeblock-background-color: var(--ef-elev2) !important;
+  --color-codex-syntax-attribute: color-mix(in srgb, var(--ef-yellow) 70%, var(--ef-fg)) !important;
+  --color-codex-syntax-comment: var(--ef-fg3) !important;
+  --color-codex-syntax-error: var(--ef-red) !important;
+  --color-codex-syntax-keyword: color-mix(in srgb, var(--ef-red) 75%, var(--ef-fg)) !important;
+  --color-codex-syntax-literal: color-mix(in srgb, var(--ef-orange) 70%, var(--ef-fg)) !important;
+  --color-codex-syntax-name: var(--ef-blue) !important;
+  --color-codex-syntax-string: color-mix(in srgb, var(--ef-green) 70%, var(--ef-fg)) !important;
+  --color-codex-syntax-variable: color-mix(in srgb, var(--ef-purple) 75%, var(--ef-fg)) !important;
+  --codeblock-syntax-1: color-mix(in srgb, var(--ef-orange) 70%, var(--ef-fg)) !important;
+  --codeblock-syntax-2: var(--ef-blue) !important;
+  --codeblock-syntax-3: color-mix(in srgb, var(--ef-green) 70%, var(--ef-fg)) !important;
+  --codeblock-syntax-4: color-mix(in srgb, var(--ef-red) 75%, var(--ef-fg)) !important;
+  --codeblock-syntax-5: color-mix(in srgb, var(--ef-purple) 75%, var(--ef-fg)) !important;
+
+  /* status "soft" fills are stock pastels; tint them from the active canvas */
+  --color-background-danger-soft: color-mix(in srgb, var(--ef-red) 16%, var(--ef-canvas)) !important;
+  --color-background-danger-soft-hover: color-mix(in srgb, var(--ef-red) 24%, var(--ef-canvas)) !important;
+  --color-background-danger-soft-active: color-mix(in srgb, var(--ef-red) 24%, var(--ef-canvas)) !important;
+  --color-background-caution-soft: color-mix(in srgb, var(--ef-yellow) 16%, var(--ef-canvas)) !important;
+  --color-background-caution-soft-hover: color-mix(in srgb, var(--ef-yellow) 24%, var(--ef-canvas)) !important;
+  --color-background-caution-soft-active: color-mix(in srgb, var(--ef-yellow) 24%, var(--ef-canvas)) !important;
+  --color-background-info-soft: color-mix(in srgb, var(--ef-blue) 16%, var(--ef-canvas)) !important;
+  --color-background-info-soft-hover: color-mix(in srgb, var(--ef-blue) 24%, var(--ef-canvas)) !important;
+  --color-background-info-soft-active: color-mix(in srgb, var(--ef-blue) 24%, var(--ef-canvas)) !important;
+  --color-background-tip-soft: color-mix(in srgb, var(--ef-blue) 14%, var(--ef-canvas)) !important;
+  --color-background-success-soft: color-mix(in srgb, var(--ef-green) 16%, var(--ef-canvas)) !important;
+  --color-background-success-soft-hover: color-mix(in srgb, var(--ef-green) 24%, var(--ef-canvas)) !important;
+  --color-background-success-soft-active: color-mix(in srgb, var(--ef-green) 24%, var(--ef-canvas)) !important;
+  --color-background-warning-soft: color-mix(in srgb, var(--ef-orange) 16%, var(--ef-canvas)) !important;
+  --color-background-warning-soft-hover: color-mix(in srgb, var(--ef-orange) 24%, var(--ef-canvas)) !important;
+  --color-background-warning-soft-active: color-mix(in srgb, var(--ef-orange) 24%, var(--ef-canvas)) !important;
+  --color-background-discovery-soft: color-mix(in srgb, var(--ef-purple) 16%, var(--ef-canvas)) !important;
+  --color-background-discovery-soft-hover: color-mix(in srgb, var(--ef-purple) 24%, var(--ef-canvas)) !important;
+  --color-background-discovery-soft-active: color-mix(in srgb, var(--ef-purple) 24%, var(--ef-canvas)) !important;
 }
 
 /* safety paint for the root canvas (some shells set body bg directly) */
@@ -120,7 +351,12 @@ html:not([data-ef="off"]) :is([data-testid="send-button"], [data-testid="stop-bu
   background-color: var(--ef-action) !important;
   color: var(--ef-on-action) !important;
 }
-html:not([data-ef="off"]) ::selection { background: var(--ef-side-active); color: var(--ef-fg); }
+/* User bubbles reuse --ef-side-active (#e6ead0 / #425047). A solid selection
+   fill of that token disappears on the question itself. Tint instead. */
+html:not([data-ef="off"]) ::selection {
+  background: color-mix(in srgb, var(--ef-green) 32%, transparent) !important;
+  color: var(--ef-fg) !important;
+}
 
 /* Prose owns its own link token; navigation keeps its separate selected state. */
 html:not([data-ef="off"]) .prose {
