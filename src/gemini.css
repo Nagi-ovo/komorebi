@@ -15,7 +15,7 @@ html:not([data-ef="off"]) :is(body, .theme-host, .lm-component-theme) {
   --ef-outline: #939f91; --ef-outline-var: #e0dcc7;
   --ef-primary: #5f7100; --ef-on-primary: #fdf6e3;
   --ef-secondary: #286f96; --ef-secondary-c: #e9f0e9;
-  --ef-primary-c: #e6ead0; --ef-on-primary-c: #536300;
+  --ef-primary-c: #e6ead0; --ef-on-primary-c: #5c6a72;
   --ef-tertiary: #5f7100; --ef-tertiary-c: #f0f1d2;
   --ef-error: #f85552; --ef-error-c: #fde3da; --ef-on-error: #fffbef;
   --ef-inv-surface: #2d353b; --ef-inv-on: #fdf6e3; --ef-inv-primary: #7fbbb3;
