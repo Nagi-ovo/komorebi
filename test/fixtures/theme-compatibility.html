@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Komorebi · 主题兼容性检查</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f4f0d9; color: #4b5b63; font: 15px/1.6 system-ui,sans-serif; }
+  main { max-width: 1400px; margin: auto; padding: 28px; }
+  h1 { margin: 0; font-size: 26px; letter-spacing: -.02em; }
+  p { margin: 6px 0 20px; }
+  button,select { font: inherit; padding: 7px 16px; border: 1px solid #bdc3af; border-radius: 6px; }
+  button { background: #5f7100; color: #fdf6e3; cursor: pointer; }
+  button:focus-visible,select:focus-visible { outline: 2px solid #28678a; outline-offset: 3px; }
+  .controls { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; }
+  .previews { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+  h2 { font-size: 15px; margin: 0 0 6px; }
+  iframe { border: 1px solid #bdc3af; border-radius: 10px; width: 100%; height: 400px; background: #fffbef; }
+  .probe { display: none; }
+  table { width: 100%; border-collapse: collapse; margin-top: 18px; font-variant-numeric: tabular-nums; }
+  th,td { text-align: left; padding: 6px 12px; border-bottom: 1px solid #e0dcc7; }
+  td.fail { color: #a22e30; font-weight: 600; }
+  #status { font-weight: 600; }
+  @media(max-width:800px) { .previews { grid-template-columns: 1fr; } }
+</style>
+<main>
+  <h1>Komorebi · 主题兼容性检查</h1>
+  <p>使用匿名示例核对各站的颜色适配。包含浅色、深色、系统模式、嵌套主题和关闭主题后的原生样式。</p>
+  <div class="controls">
+    <label>预览模式 <select id="mode"><option value="light">浅色</option><option value="dark">深色</option><option value="off">关闭主题</option></select></label>
+    <button id="run">运行检查</button><output id="status">准备中</output>
+  </div>
+  <div class="previews" id="previews"></div>
+  <table><thead><tr><th>网站</th><th>浅色正文 / 次要文字</th><th>深色正文 / 次要文字</th><th>检查结果</th></tr></thead><tbody id="results"></tbody></table>
+</main>
+<script type="module">
+const baseline = new URL(location.href).searchParams.has('baseline');
+const profiles = [
+  ['chatgpt','ChatGPT','--color-text-primary','--color-text-secondary','--color-token-main-surface-primary'],
+  ['claude','Claude','--cds-text-primary','--cds-text-secondary','--efc-s1'],
+  ['gmail','Gmail','--ef-fg','--ef-fg2','--ef-panel'],
+  ['github','GitHub','--fgColor-default','--fgColor-muted','--bgColor-default'],
+  ['google','Google','--ef-fg','--ef-muted','--ef-bg'],
+  ['x','X','--x-fg-primary','--x-fg-secondary','--x-bg-primary'],
+  ['gemini','Gemini','--gem-sys-color--on-surface','--gem-sys-color--on-surface-variant','--gem-sys-color--surface'],
+  ['drive','Drive','--dt-on-surface','--dt-on-surface-secondary','--dt-surface'],
+  ['docs','Docs','--dt-on-surface','--dt-on-surface-secondary','--dt-surface'],
+  ['outlook','Outlook','--colorNeutralForeground1','--colorNeutralForeground2','--colorNeutralBackground2'],
+  ['cloudflare','Cloudflare','--text-color-primary','--text-color-secondary','--color-bg-primary'],
+  ['bilibili','Bilibili','--text1','--text2','--bg1'],
+  ['youtube','YouTube','--yt-spec-text-primary','--yt-spec-text-secondary','--yt-spec-base-background'],
+  ['arxiv','arXiv','--ef-fg','--ef-muted','--ef-bg'],
+  ['grok','Grok','--fg-primary','--fg-secondary','--surface-base'],
+];
+const frames = new Map();
+for (const [site,name,primary,secondary,surface,format] of profiles) {
+  const css = site === 'github' ? '/github.css' : `/src/${site}.css${baseline?'?baseline=1':''}`;
+  const value = (token,fallback) => format === 'hsl' ? `hsl(var(${token},${fallback}))` : `var(${token},${fallback})`;
+  const ink = value(primary,format==='hsl'?'0 0% 10%':'#191919');
+  const muted = value(secondary,format==='hsl'?'0 0% 30%':'#4c4c4c');
+  const bg = value(surface,format==='hsl'?'0 0% 100%':'#ffffff');
+  const card=document.createElement('section');
+  card.className=['chatgpt','claude','gmail','grok','drive','youtube'].includes(site)?'':'probe';
+  card.innerHTML=`<h2>${name}</h2>`;
+  const frame=document.createElement('iframe'); frame.title=`${name} 主题预览`;
+  // Native rules intentionally follow the extension sheet, as on real pages.
+  const native = site==='chatgpt' ? `
+    @layer theme { html,[data-theme] { --app-color-background-surface:#fcfcfc; --color-token-main-surface-primary:#fcfcfc; --color-text-primary:#0d0d0d; --color-text-secondary:#5d5d5d; --color-background-user-message:#000; --color-text-user-message:#fff; --composer-background-color:#fff; } }
+    .shell .bubble { background:var(--color-background-user-message);color:var(--color-text-user-message); }
+    .shell .composer { background:var(--composer-background-color); }
+    .island { color:var(--color-text-primary);background:var(--color-token-main-surface-primary); }
+  ` : site==='claude' ? '.dock {background:var(--cds-page-bg)} .shell .bubble {background:hsl(var(--bg-300));color:hsl(var(--text-000))} .composer {background:var(--cds-surface-3)}' : site==='grok' ? `
+    body {--surface-base:#f9f8f7;--surface-l1:#f0eeed;--surface-elevated:#fff;--surface-composer:#fff;--surface-user-bubble:#f0efed;--fg-primary:#050505;--fg-secondary:#636363;}
+    .bg-surface-base{background-color:var(--surface-base)}.bg-surface-l1{background-color:var(--surface-l1)}.bg-surface-elevated{background-color:var(--surface-elevated)}.bg-surface-composer{background-color:var(--surface-composer)}.bg-surface-user-bubble{background-color:var(--surface-user-bubble)}.text-fg-primary{color:var(--fg-primary)}
+  ` : '';
+  const surfaces = {
+    grok:`<div id="surface-probes"><div id="settings" role="dialog" class="bg-surface-base text-fg-primary">设置弹窗</div><div id="menu" role="menu" class="bg-surface-elevated text-fg-primary">Imagine 菜单</div><div id="card" class="bg-surface-l1 text-fg-primary">Library 卡片</div><div id="native-composer" class="bg-surface-composer text-fg-primary">输入框</div><div id="native-bubble" class="bg-surface-user-bubble text-fg-primary">消息气泡</div><aside id="right-panel" class="bg-surface-elevated text-fg-primary">引用侧栏</aside><nav id="top-nav" class="bg-surface-base text-fg-primary">顶部导航</nav></div>`,
+    gmail:`<div class="aUx"><div id="quick-settings" class="IU" role="menu">快速设置</div></div><div id="advanced-search" class="SK ZF-zT">高级搜索</div>`,
+    youtube:`<ytd-multi-page-menu-renderer id="account-menu"><ytd-simple-menu-header-renderer id="menu-header"><h2>外观</h2></ytd-simple-menu-header-renderer></ytd-multi-page-menu-renderer><tp-yt-paper-dialog id="shortcuts"><ytd-hotkey-dialog-renderer>快捷键</ytd-hotkey-dialog-renderer></tp-yt-paper-dialog>`,
+    google:`<div id="tools-menu" class="vH6rvf FJCJfd"><div role="button">任意时间</div></div><div id="date-range" role="dialog"><div class="goog-date-picker">自定义日期范围</div></div>`,
+    drive:`<div id="advanced-search" role="dialog">高级搜索 <button id="search-action">搜索</button><span id="state-layer">选中状态</span></div>`,
+    x:`<main><section role="region"><div id="display-card" class="r-qocrb3 r-14lw9ot">显示设置 <span id="native-swatch">暗黑预览</span></div></section></main>`,
+  }[site] || '';
+  const componentRules = {
+    gmail:'.IU,.SK.ZF-zT{background-color:#fff}',
+    youtube:'ytd-multi-page-menu-renderer,ytd-simple-menu-header-renderer,tp-yt-paper-dialog{display:block;background-color:#fff;color:#0f0f0f}ytd-simple-menu-header-renderer h2{color:#0f0f0f}',
+    google:'.vH6rvf.FJCJfd,#date-range{background-color:#fff}',
+    drive:'body{--gm3-sys-color-surface-container-high:#e9eef6;--gm3-sys-color-on-surface:#1f1f1f;--gm3-sys-color-primary:#0b57d0;--gm3-sys-color-on-primary:#fff;--gm3-sys-color-primary-rgb:11,87,208}#advanced-search{background-color:var(--gm3-sys-color-surface-container-high);color:var(--gm3-sys-color-on-surface)}#search-action{background-color:var(--gm3-sys-color-primary);color:var(--gm3-sys-color-on-primary)}#state-layer{background-color:rgba(var(--gm3-sys-color-primary-rgb),.12)}',
+    x:'.r-qocrb3.r-14lw9ot{background-color:#fff}#native-swatch{background-color:#000;color:#fff}',
+  }[site] || '';
+  frame.srcdoc=`<!doctype html><html data-ef-mode="light" data-theme="light" data-color-mode="light"><head><meta charset="utf-8"><link rel="stylesheet" href="${css}"><style>
+    ${native}
+    ${componentRules}
+    #surface-probes>div,#quick-settings,#advanced-search,#tools-menu,#display-card,ytd-multi-page-menu-renderer,tp-yt-paper-dialog{padding:10px;margin:8px 0;border-radius:8px}
+    *{box-sizing:border-box}body{margin:0;font:15px/1.6 system-ui,sans-serif;background:${bg};color:${ink}}
+    .shell{padding:22px}.sub{color:${muted}}h3{margin:0 0 6px;font-size:20px}p{margin:8px 0 14px}
+    .bubble{padding:14px;border-radius:14px;margin:20px 0;background:var(--ef-bubble,var(--ef-selected,#efefef));color:${ink}}
+    .composer{border:1px solid var(--efc-border,var(--ef-bd,#bdc3af));border-radius:12px;padding:12px;margin-top:20px;background:var(--ef-composer,var(--efc-s3,var(--ef-elev,#fafafa)))}
+    .dock{padding:6px;margin:0 -6px}.island{padding:10px;border-radius:8px}button{font:inherit;border:0;border-radius:7px;padding:6px 12px;background:var(--ef-action,var(--ef-green,var(--efc-fill-primary,#444)));color:var(--ef-on-action,var(--ef-on-accent,var(--efc-on-action,#fff)))}
+    .row{padding:10px 0;border-bottom:1px solid #e0dcc7}.z0>.L3{padding:12px 16px;display:inline-block;border-radius:12px}.z0>.L3:before{content:'';display:inline-block;width:24px;height:24px;vertical-align:middle;margin-right:8px;background:center/24px url(https://www.gstatic.com/images/icons/material/system_gm/1x/create_black_24dp.png) no-repeat}
+  </style></head><body class="theme-host lm-component-theme KkxPLb ${site==='grok'?'wd-refresh':''}"><div class="shell"><h3>${name}</h3><p class="sub descriptor" id="secondary">轻松阅读，清晰分辨。</p><p id="primary">正文与界面保持协调，同时让重要信息更容易找到。</p>
+  ${site==='gmail'?'<div class="z0"><div class="L3" role="button" tabindex="0">撰写邮件</div></div><div class="zA zE row"><span class="yW"><span>未读邮件</span></span> <span class="bog">项目更新</span></div><div class="zA yO row"><span class="bog">已读邮件</span></div>':'<div class="bubble" id="bubble">请帮我整理这份资料。</div><div class="island" data-theme="dark" id="island">嵌套主题保持同一配色。</div><div class="dock" id="dock"><div class="composer" id="composer">输入内容… <button>发送</button></div></div>'}
+  ${surfaces}</div>${site==='grok'?`<link rel="stylesheet" href="/grok-page.css${baseline?'?baseline=1':''}">`:''}</body></html>`;
+  card.append(frame);document.querySelector('#previews').append(card);frames.set(site,frame);
+}
+await Promise.all([...frames.values()].map(f=>new Promise(resolve=>f.addEventListener('load',resolve,{once:true}))));
+const rgb = s => s.match(/[\d.]+/g).slice(0,3).map(Number);
+const luminance = s => rgb(s).map(v=>v/255).map(v=>v<=.04045?v/12.92:((v+.055)/1.055)**2.4).reduce((sum,v,i)=>sum+v*[.2126,.7152,.0722][i],0);
+const contrast=(a,b)=>{const x=luminance(a),y=luminance(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+const style=(f,selector,pseudo)=>f.contentWindow.getComputedStyle(f.contentDocument.querySelector(selector),pseudo);
+function mode(f,m) {const root=f.contentDocument.documentElement;root.setAttribute('data-color-mode',m==='sync'?'auto':m);m==='sync'?root.removeAttribute('data-ef-mode'):root.setAttribute('data-ef-mode',m);root.toggleAttribute('data-ef',m==='off');if(m==='off')root.setAttribute('data-ef','off');}
+function run() {
+  const rows=[];let assertions=0,failures=0;
+  const check=(ok,errors,message)=>{assertions++;if(!ok){failures++;errors.push(message)}};
+  for(const [site,name] of profiles){
+    const f=frames.get(site),errors=[],pairs=[];
+    for(const m of ['light','dark']){
+      mode(f,m);const bg=style(f,'body').backgroundColor;
+      const ratios=['#primary','#secondary'].map(sel=>contrast(style(f,sel).color,bg));pairs.push(ratios.map(r=>r.toFixed(2)).join(' / '));
+      ratios.forEach((r,i)=>check(r>=4.5,errors,`${m} ${i?'次要文字':'正文'}对比度 ${r.toFixed(2)}`));
+      if(site==='chatgpt'){
+        check(style(f,'#island').color===style(f,'#primary').color,errors,`${m} 嵌套主题文字`);
+        check(style(f,'#island').backgroundColor===bg,errors,`${m} 嵌套主题背景`);
+        check(contrast(style(f,'#bubble').color,style(f,'#bubble').backgroundColor)>=4.5,errors,`${m} 消息文字`);
+        check(style(f,'#composer').backgroundColor!== 'rgb(255, 255, 255)',errors,`${m} 输入框仍是纯白`);
+      }
+      if(site==='claude'){
+        check(style(f,'#dock').backgroundColor===bg,errors,`${m} 输入框周围背景`);
+        check(contrast(style(f,'#bubble').color,style(f,'#bubble').backgroundColor)>=4.5,errors,`${m} 消息文字`);
+      }
+      const painted = {
+        grok:['#settings','#menu','#card','#native-composer','#native-bubble'],
+        gmail:['#quick-settings','#advanced-search'],youtube:['#account-menu','#menu-header','#shortcuts'],
+        google:['#tools-menu','#date-range'],drive:['#advanced-search'],x:['#display-card'],
+      }[site] || [];
+      for(const selector of painted){
+        const c=style(f,selector);
+        check(c.backgroundColor!=='rgba(0, 0, 0, 0)'&&c.backgroundColor!=='rgb(255, 255, 255)',errors,`${m} ${selector} 背景无效或漏适配`);
+        check(contrast(c.color,c.backgroundColor)>=4.5,errors,`${m} ${selector} 文字对比度`);
+      }
+      if(site==='drive'){
+        check(style(f,'#advanced-search').backgroundColor===(m==='light'?'rgb(239, 235, 212)':'rgb(52, 63, 68)'),errors,`${m} 高级搜索使用主题表面`);
+        check(contrast(style(f,'#search-action').color,style(f,'#search-action').backgroundColor)>=4.5,errors,`${m} 搜索按钮对比度`);
+        check(style(f,'#state-layer').backgroundColor===(m==='light'?'rgba(95, 113, 0, 0.12)':'rgba(167, 192, 128, 0.12)'),errors,`${m} 原生 RGB 状态层`);
+      }
+      if(site==='x')check(style(f,'#native-swatch').backgroundColor==='rgb(0, 0, 0)',errors,`${m} 保留预览色块`);
+      if(site==='grok'){
+        check(style(f,'#settings').color===style(f,'#primary').color,errors,`${m} 原生全文颜色格式`);
+        check(style(f,'#right-panel').backgroundColor===style(f,'#menu').backgroundColor,errors,`${m} 引用侧栏保留浮层表面`);
+        check(style(f,'#top-nav').backgroundColor===style(f,'#settings').backgroundColor,errors,`${m} 顶部导航保留页面表面`);
+      }
+      if(site==='gmail'){
+        const pencil=style(f,'.L3','::before');
+        check(pencil.filter.includes('brightness(0)'),errors,`${m} 撰写图标颜色`);
+        check(pencil.filter.includes('invert(1)')===(m==='light'),errors,`${m} 撰写图标明暗`);
+        check(style(f,'.zE .bog').color===style(f,'#primary').color,errors,`${m} 未读主题颜色`);
+      }
+    }
+    mode(f,'sync');const sync=style(f,'#primary').color;mode(f,f.contentWindow.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');check(sync===style(f,'#primary').color,errors,'系统模式');
+    mode(f,'off');check(style(f,'#primary').color===(site==='chatgpt'?'rgb(13, 13, 13)':site==='grok'?'rgb(5, 5, 5)':'rgb(25, 25, 25)'),errors,'关闭后原生文字');
+    const nativeWhite = {gmail:'#quick-settings',youtube:'#shortcuts',google:'#tools-menu',x:'#display-card',grok:'#menu'}[site];
+    if(nativeWhite)check(style(f,nativeWhite).backgroundColor==='rgb(255, 255, 255)',errors,'关闭后恢复原生表面');
+    if(site==='drive')check(style(f,'#advanced-search').backgroundColor==='rgb(233, 238, 246)',errors,'关闭后恢复原生 Material 表面');
+    rows.push({site,name,pairs,errors});
+  }
+  document.querySelector('#results').innerHTML=rows.map(r=>`<tr><td>${r.name}</td><td>${r.pairs[0]}</td><td>${r.pairs[1]}</td><td class="${r.errors.length?'fail':''}">${r.errors.length?r.errors.join('；'):'通过'}</td></tr>`).join('');
+  document.querySelector('#status').textContent=`${assertions-failures} / ${assertions} 项通过${baseline?' · 已提交 CSS（GitHub 使用当前构建）':''}`;
+  document.querySelector('#status').dataset.failures=failures;
+  for(const f of frames.values())mode(f,document.querySelector('#mode').value);
+}
+document.querySelector('#run').addEventListener('click',run);
+document.querySelector('#mode').addEventListener('change',e=>{for(const f of frames.values())mode(f,e.target.value)});
+run();
+</script>
+</html>

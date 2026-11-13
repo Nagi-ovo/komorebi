@@ -21,13 +21,16 @@ const a = (hex: string, alpha: string): string => `${hex}${alpha}`;
 export function buildTokens(p: ResolvedPalette): Record<string, string> {
   const {
     mode,
-    fg, red, orange, yellow, green, aqua, blue, purple,
-    grey0, grey1, grey2,
+    fg: paletteFg, red, orange, yellow, green, aqua, blue, purple,
+    grey0, grey1, grey2: paletteGrey2,
     bg_dim, bg0, bg1, bg2, bg3, bg4, bg5,
     bg_visual, bg_red, bg_yellow, bg_green, bg_blue, bg_purple,
   } = p;
 
   const dark = mode === "dark";
+  // Interface ink is a semantic adaptation; the upstream palette stays intact.
+  const fg = dark ? paletteFg : "#4b5b63";
+  const grey2 = dark ? "#a3afa5" : "#5b696e";
   // Deeper light-mode inks keep Everforest hues readable on warm surfaces.
   const action = dark ? green : "#5f7100";
   const onAction = dark ? "#2d353b" : "#fdf6e3";
@@ -89,7 +92,7 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   // Semantic foregrounds — --fgColor-*
   // ──────────────────────────────────────────────────────────────────
   t["--fgColor-default"] = fg;
-  t["--fgColor-muted"] = dark ? grey2 : "#687568";
+  t["--fgColor-muted"] = grey2;
   t["--fgColor-subtle"] = grey0;
   t["--fgColor-disabled"] = grey0;
   t["--fgColor-accent"] = linkInk;
@@ -250,8 +253,10 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   t["--control-transparent-borderColor-rest"] = "#00000000";
   t["--control-transparent-borderColor-hover"] = "#00000000";
   t["--control-transparent-borderColor-active"] = "#00000000";
-  t["--controlKnob-bgColor-rest"] = warmWhite;
-  t["--controlKnob-bgColor-checked"] = warmWhite;
+  // Primer reuses the knob fill as the selected segment of SegmentedControl;
+  // native dark is near-black, so a warm-white knob hides light labels.
+  t["--controlKnob-bgColor-rest"] = dark ? bg_dim : warmWhite;
+  t["--controlKnob-bgColor-checked"] = dark ? bg_dim : warmWhite;
   t["--controlKnob-bgColor-disabled"] = bg2;
   t["--controlKnob-borderColor-rest"] = bg4;
   t["--controlKnob-borderColor-checked"] = blue;
@@ -370,7 +375,7 @@ export function buildTokens(p: ResolvedPalette): Record<string, string> {
   // ──────────────────────────────────────────────────────────────────
   t["--color-ansi-black"] = bg2;
   t["--color-ansi-black-bright"] = bg4;
-  t["--color-ansi-white"] = grey2;
+  t["--color-ansi-white"] = paletteGrey2;
   t["--color-ansi-white-bright"] = fg;
   t["--color-ansi-gray"] = grey0;
   t["--color-ansi-red"] = red;

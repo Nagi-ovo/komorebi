@@ -5,7 +5,7 @@
    text stays light). Mode follows the popup, or the OS on "sync". */
 
 html:not([data-ef="off"]) {
-  --ef-bg: #fdf6e3; --ef-surface: #fffbef; --ef-fg: #5c6a72; --ef-muted: #687568;
+  --ef-bg: #fdf6e3; --ef-surface: #fffbef; --ef-fg: #4b5b63; --ef-muted: #5b696e;
   --ef-link: #28678a; --ef-visited: #9b4f82; --ef-border: #e0dcc7;
   --ef-footer: #efebd4; --ef-bar: #2d353b; --ef-bar2: #232a2e;
   --ef-action: #5f7100; --ef-on-action: #fdf6e3; --ef-selected: #e6ead0; --ef-selected-ink: #5c6a72;
@@ -107,3 +107,40 @@ html:not([data-ef="off"]) :is(a, button, input, select):focus-visible {
   outline: 2px solid var(--ef-action) !important;
   outline-offset: 2px;
 }
+
+/* 2026 abs page: grey category subheader, lab "(What is …?)" parens, and the
+   new ds-site-footer (its <strong> link text and ack line keep stock inks). */
+html:not([data-ef="off"]) .subheader { background-color: var(--ef-footer) !important; border-color: var(--ef-border) !important; }
+html:not([data-ef="off"]) .subheader h1 { color: var(--ef-muted) !important; }
+html:not([data-ef="off"]) .labstabs :is(em, .lab-name) { color: var(--ef-fg) !important; }
+html:not([data-ef="off"]) .ds-site-footer :is(.ds-site-footer-ack, p, span) { color: var(--ef-muted) !important; }
+html:not([data-ef="off"]) .ds-site-footer a :is(strong, b, span) { color: inherit !important; }
+
+/* arXiv HTML papers (/html/…): ar5iv + arxiv-html-papers-theme design tokens.
+   The native theme follows its own data-theme toggle, so map the tokens to the
+   Everforest palette directly; the header stays the dark strip. */
+html:not([data-ef="off"]) {
+  --text-color: var(--ef-fg);
+  --secondary-text-color: var(--ef-muted);
+  --background-color: var(--ef-bg);
+  --note-highlight-color: var(--ef-surface);
+  --header-background-color: var(--ef-bar);
+  --header-text-color: #d3c6aa;
+  --header-hover-color: #a7c080;
+  --link-text-color: var(--ef-link);
+  --link-hover-color: var(--ef-visited);
+  --toc-text-highlight-color: var(--ef-link);
+  --inpage-text-highlight-color: var(--ef-link);
+  --TOC-gradient: linear-gradient(var(--ef-surface), var(--ef-bg));
+  --error-background-color: var(--ef-surface);
+  --error-link-color: var(--ef-link);
+  --error-text-color: #e67e80;
+  --form-border-color: var(--ef-border);
+  --form-input-color: var(--ef-fg);
+  --form-input-background-color: var(--ef-surface);
+  --modal-submit-btn-color: var(--ef-on-action);
+  --modal-submit-btn-background-color: var(--ef-action);
+  --modal-submit-btn-border-color: var(--ef-action);
+}
+html:not([data-ef="off"]) .ltx_page_main .ltx_title { color: var(--ef-fg) !important; }
+html:not([data-ef="off"]) [style*="--ltx-fg-color:#000000;"] { --ltx-fg-color: var(--ef-fg) !important; color: var(--ef-fg) !important; }

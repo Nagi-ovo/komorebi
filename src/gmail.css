@@ -8,26 +8,29 @@
 html:not([data-ef="off"]) {
   --ef-page: #efebd4; --ef-panel: #fdf6e3; --ef-elev: #fffbef;
   --ef-row-read: #fdf6e3; --ef-row-unread: #fffbef; --ef-hover: #efebd4; --ef-selected: #e6ead0;
-  --ef-fg: #5c6a72; --ef-fg2: #708089; --ef-ink: #3c4043; --ef-border: #e0dcc7;
+  --ef-fg: #4b5b63; --ef-fg2: #5b696e; --ef-ink: #3c4043; --ef-border: #e0dcc7;
   --ef-blue: #28678a; --ef-info-bg: #dbe7eb; --ef-green: #5f7100; --ef-on-accent: #fdf6e3;
   --ef-search: #efebd4; --ef-mail-card: #fdf6e3;
+  --ef-compose-icon-filter: brightness(0) invert(1) sepia(.15);
   color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-page: #1e2326; --ef-panel: #2d353b; --ef-elev: #343f44;
   --ef-row-read: #2d353b; --ef-row-unread: #343f44; --ef-hover: #3d484d; --ef-selected: #425047;
-  --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-ink: #d3c6aa; --ef-border: #4f585e;
+  --ef-fg: #d3c6aa; --ef-fg2: #a3afa5; --ef-ink: #d3c6aa; --ef-border: #4f585e;
   --ef-blue: #7fbbb3; --ef-info-bg: #3a515d; --ef-green: #a7c080; --ef-on-accent: #2d353b;
   --ef-search: #343f44; --ef-mail-card: #fdf6e3;
+  --ef-compose-icon-filter: brightness(0);
   color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) {
     --ef-page: #1e2326; --ef-panel: #2d353b; --ef-elev: #343f44;
     --ef-row-read: #2d353b; --ef-row-unread: #343f44; --ef-hover: #3d484d; --ef-selected: #425047;
-    --ef-fg: #d3c6aa; --ef-fg2: #9da9a0; --ef-ink: #d3c6aa; --ef-border: #4f585e;
+    --ef-fg: #d3c6aa; --ef-fg2: #a3afa5; --ef-ink: #d3c6aa; --ef-border: #4f585e;
     --ef-blue: #7fbbb3; --ef-info-bg: #3a515d; --ef-green: #a7c080; --ef-on-accent: #2d353b;
     --ef-search: #343f44; --ef-mail-card: #fdf6e3;
+    --ef-compose-icon-filter: brightness(0);
     color-scheme: dark !important;
   }
 }
@@ -54,6 +57,8 @@ html:not([data-ef="off"]) [role="main"],
 html:not([data-ef="off"]) [gh="tl"] { background-color: var(--ef-panel) !important; }
 
 /* dropdowns, dialogs, hovercards, compose window */
+html:not([data-ef="off"]) .aUx .IU[role="menu"],
+html:not([data-ef="off"]) .SK.ZF-zT,
 html:not([data-ef="off"]) .J-M,
 html:not([data-ef="off"]) .nH.aHU,
 html:not([data-ef="off"]) .b7.J-M,
@@ -123,6 +128,8 @@ html:not([data-ef="off"]) .aKh {
   box-shadow: none !important;
 }
 html:not([data-ef="off"]) .zA:hover { background-color: var(--ef-hover) !important; box-shadow: none !important; }
+/* Unread senders and subjects need stronger ink than read-message previews. */
+html:not([data-ef="off"]) .zA.zE :is(.yW, .yW span, .bog) { color: var(--ef-fg) !important; }
 html:not([data-ef="off"]) .zA.x7,
 html:not([data-ef="off"]) .zA.aps { background-color: var(--ef-selected) !important; }
 
@@ -287,8 +294,12 @@ html:not([data-ef="off"]):not([data-ef-mode="dark"]) :is(header, [role="banner"]
   top: 50%;
   width: 20px;
 }
+/* Dark mode cannot assume Gmail's own theme is dark too: with Gmail's default
+   (light) theme the rail and toolbar sprites are the p900 near-black variants
+   and vanish on the dark panel. Flatten them to black, then invert, so they
+   read light whichever native theme Gmail is on. */
 html:not([data-ef="off"])[data-ef-mode="dark"] :is(div[role="navigation"], .aeN) :is(.qj, .qr, .pM, .asa, .aik) {
-  filter: none;
+  filter: brightness(0) invert(1);
   opacity: 0.72;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] :where(.G-atb, [gh="mtb"], [role="main"]) :where(.T-I.T-I-ax7, .d-Na-JX-I) :is(span, div):empty,
@@ -296,12 +307,12 @@ html:not([data-ef="off"])[data-ef-mode="dark"] :is(div[role="navigation"], .aeN)
 html:not([data-ef="off"])[data-ef-mode="dark"] :is(header, [role="banner"], form[role="search"]) img:is([src*="white"], [src*="dark"]):not([src*="googleusercontent"]),
 html:not([data-ef="off"])[data-ef-mode="dark"] :is(header, [role="banner"], form[role="search"]) img[src*="_white_"],
 html:not([data-ef="off"])[data-ef-mode="dark"] :is(header, [role="banner"], form[role="search"]) img[src*="/white/"] {
-  filter: none;
+  filter: brightness(0) invert(1);
   opacity: 0.72;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(div[role="navigation"], .aeN) :is(.qj, .qr, .pM, .asa, .aik) {
-    filter: none;
+    filter: brightness(0) invert(1);
     opacity: 0.72;
   }
   html:not([data-ef="off"]):not([data-ef-mode="light"]) :where(.G-atb, [gh="mtb"], [role="main"]) :where(.T-I.T-I-ax7, .d-Na-JX-I) :is(span, div):empty,
@@ -309,7 +320,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] :is(header, [role="banner"], form
   html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(header, [role="banner"], form[role="search"]) img:is([src*="white"], [src*="dark"]):not([src*="googleusercontent"]),
   html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(header, [role="banner"], form[role="search"]) img[src*="_white_"],
   html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(header, [role="banner"], form[role="search"]) img[src*="/white/"] {
-    filter: none;
+    filter: brightness(0) invert(1);
     opacity: 0.72;
   }
 }
@@ -319,6 +330,11 @@ html:not([data-ef="off"]) .T-I.T-I-KE.L3,
 html:not([data-ef="off"]) .z0 > .L3 { background-color: var(--ef-green) !important; color: var(--ef-on-accent) !important; box-shadow: none !important; }
 html:not([data-ef="off"]) .T-I.T-I-KE.L3 *,
 html:not([data-ef="off"]) .z0 > .L3 * { color: var(--ef-on-accent) !important; }
+/* The compact pencil is a black bitmap on ::before, so text color cannot
+   recolour it. Filter only that bitmap; labels and other icons stay intact. */
+html:not([data-ef="off"]) .z0 > .L3::before {
+  filter: var(--ef-compose-icon-filter) !important;
+}
 
 /* selected folder / label in the left nav */
 html:not([data-ef="off"]) .TO.nZ,
@@ -422,4 +438,31 @@ html:not([data-ef="off"]) :is(.M9, [role="dialog"]) [contenteditable="true"] {
   background-color: var(--ef-elev) !important;
   color: var(--ef-fg) !important;
   caret-color: var(--ef-blue) !important;
+}
+
+/* Inbox category tabs (Primary / Promotions / Social / Updates) and their
+   preview line hardcode #444746 / #5f6368, with the active tab in #0b57d0;
+   the "1–50 of 1,156" pager uses #5e5e5e. All drop below 2:1 on the dark panel. */
+html:not([data-ef="off"]) [role="tab"] :is(.aKz, .aKs),
+html:not([data-ef="off"]) :is(.Dj, .Dj span, .ts) {
+  color: var(--ef-fg2) !important;
+}
+html:not([data-ef="off"]) [role="tab"][aria-selected="true"] .aKz {
+  color: var(--ef-blue) !important;
+}
+
+/* Row checkbox, row star and category-tab icons are nv700 bitmaps (dark grey)
+   that disappear on the dark list; same flatten-then-invert as the rail. The
+   starred state uses a separate yellow bitmap (.T-KT-Jp) and is left alone. */
+html:not([data-ef="off"])[data-ef-mode="dark"] :is(tr.zA .oZ-jc, [role="tab"] .aKp),
+html:not([data-ef="off"])[data-ef-mode="dark"] tr.zA .T-KT:not(.T-KT-Jp)::before {
+  filter: brightness(0) invert(1);
+  opacity: 0.6;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) :is(tr.zA .oZ-jc, [role="tab"] .aKp),
+  html:not([data-ef="off"]):not([data-ef-mode="light"]) tr.zA .T-KT:not(.T-KT-Jp)::before {
+    filter: brightness(0) invert(1);
+    opacity: 0.6;
+  }
 }

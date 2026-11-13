@@ -123,22 +123,23 @@ const GROK_PAGE_SEL =
   "html:not([data-ef=off]) :is(.light,.dark,.wd-refresh)";
 const GROK_PAGE_CSS =
   GROK_PAGE_SEL + "{" +
-  "--surface-base:var(--eft-bg)!important;--surface-base-hover:var(--eft-visual)!important;" +
-  "--surface-l1:var(--eft-composer)!important;--surface-l1-hover:var(--eft-visual)!important;" +
-  "--surface-l2:var(--eft-s3)!important;--warm-white:var(--eft-s1)!important;" +
+  "--surface-base:hsl(var(--eft-bg))!important;--surface-base-hover:hsl(var(--eft-visual))!important;" +
+  "--surface-l1:hsl(var(--eft-composer))!important;--surface-l1-hover:hsl(var(--eft-visual))!important;" +
+  "--surface-composer:var(--efh-composer)!important;--surface-user-bubble:var(--efh-bubble)!important;" +
+  "--border-composer:var(--efh-border)!important;--surface-l2:hsl(var(--eft-s3))!important;--warm-white:var(--eft-s1)!important;" +
   "--sidebar-background:var(--eft-side)!important;--sidebar-accent:var(--eft-visual)!important;" +
   "--sidebar-primary:var(--eft-action)!important;--sidebar-primary-foreground:var(--eft-on-action)!important;" +
   "--wd-composer-bg:var(--eft-composer)!important;" +
   "--wd-user-bubble:var(--eft-bubble)!important;--wd-accent:var(--eft-green)!important;" +
   "--wd-composer-border:var(--efh-border)!important;--background:var(--efh-bg)!important;" +
-  "--background-secondary:var(--efh-side)!important;--accent:var(--eft-visual)!important;" +
-  "--input-background:var(--efh-input)!important;--fg-primary:var(--eft-fg)!important;" +
-  "--fg-link:var(--eft-blue)!important;--fg-positive:var(--eft-green)!important;" +
+  "--background-secondary:var(--efh-side)!important;--accent:hsl(var(--eft-visual))!important;" +
+  "--input-background:var(--efh-input)!important;--fg-primary:hsl(var(--eft-fg))!important;" +
+  "--fg-link:hsl(var(--eft-blue))!important;--fg-positive:hsl(var(--eft-green))!important;" +
   "--button-primary:var(--efh-green)!important;--ring:var(--efh-green)!important;" +
   "--foreground:var(--efh-fg)!important;}" +
   "html:not([data-ef=off]) :is(body,main,[role=main]){" +
   "background-color:var(--efh-bg)!important;color:hsl(var(--eft-fg))!important;}" +
-  "html:not([data-ef=off]) :is(aside,nav,.bg-sidebar,[data-sidebar=sidebar])," +
+  "html:not([data-ef=off]) :is(.bg-sidebar,[data-sidebar=sidebar])," +
   "html:not([data-ef=off]) .inset-y-0.bg-surface-base:has([data-sidebar=sidebar]){" +
   "background-color:var(--efh-side)!important;color:hsl(var(--eft-fg))!important;}" +
   "html:not([data-ef=off]) [data-sidebar=menu-button]{color:hsl(var(--eft-fg))!important;}";

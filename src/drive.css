@@ -1,8 +1,6 @@
 /* Everforest for Google Drive (drive.google.com) — token-level retheme.
-   Drive is a Material app whose component tokens (--gm3-sys-color-*) all resolve
-   to a base "dynamic theme" layer, --dt-*  (e.g. --gm3-sys-color-primary =
-   var(--dt-primary-container, …)). So overriding the --dt-* colour tokens
-   cascades through the entire client. Those tokens are declared on the theme
+   Drive mixes dynamic-theme (--dt-*) and independent Material (--gm3-*)
+   tokens. Remap both: newer dialogs no longer inherit the dynamic-theme palette. Tokens are declared on the theme
    host — <body> carries ".KkxPLb" (light) and nested dark panels carry ".LgGVmb"
    (Drive's Material light/dark host markers) — so we redeclare them there with
    enough weight to win. mime-type-* (file-type icon colours) and the decorative
@@ -13,30 +11,90 @@ html:not([data-ef="off"]) {
   --ef-page: #fdf6e3; --ef-surface: #fdf6e3; --ef-bright: #fffbef;
   --ef-c-lowest: #fffbef; --ef-c-low: #fdf6e3; --ef-c: #f4f0d9;
   --ef-c-high: #efebd4; --ef-c-highest: #e6e2cc; --ef-dim: #e0dcc7; --ef-variant: #e6e2cc;
-  --ef-fg: #5c6a72; --ef-fg-sec: #708089; --ef-fg-var: #708089;
+  --ef-fg: #4b5b63; --ef-fg-sec: #5b696e; --ef-fg-var: #5b696e;
   --ef-outline: #939f91; --ef-outline-var: #e0dcc7;
   --ef-blue: #28678a; --ef-blue-c: #dbe7eb; --ef-on-blue: #fffbef; --ef-on-blue-c: #28678a;
   --ef-green: #5f7100; --ef-green-c: #e6ead0; --ef-on-green: #fdf6e3; --ef-on-green-c: #526200;
   --ef-red: #f85552; --ef-red-c: #fde3da; --ef-on-red: #fffbef;
   --ef-purple: #876080; --ef-purple-c: #f0e4ec; --ef-on-purple: #fffbef; --ef-on-purple-c: #76526f;
-  --ef-neutral: #708089; --ef-neutral-c: #efebd4;
+  --ef-neutral: #5b696e; --ef-neutral-c: #efebd4;
   --ef-inv: #2d353b; --ef-on-inv: #fdf6e3;
   --ef-hover: #efebd4; --ef-selected: #e6ead0;
+  --ef-surface-rgb: 253, 246, 227;
+  --ef-bright-rgb: 255, 251, 239;
+  --ef-dim-rgb: 224, 220, 199;
+  --ef-variant-rgb: 230, 226, 204;
+  --ef-c-lowest-rgb: 255, 251, 239;
+  --ef-c-low-rgb: 253, 246, 227;
+  --ef-c-rgb: 244, 240, 217;
+  --ef-c-high-rgb: 239, 235, 212;
+  --ef-c-highest-rgb: 230, 226, 204;
+  --ef-fg-rgb: 75, 91, 99;
+  --ef-fg-var-rgb: 91, 105, 110;
+  --ef-outline-rgb: 147, 159, 145;
+  --ef-outline-var-rgb: 224, 220, 199;
+  --ef-green-rgb: 95, 113, 0;
+  --ef-on-green-rgb: 253, 246, 227;
+  --ef-green-c-rgb: 230, 234, 208;
+  --ef-on-green-c-rgb: 82, 98, 0;
+  --ef-blue-rgb: 40, 103, 138;
+  --ef-on-blue-rgb: 255, 251, 239;
+  --ef-blue-c-rgb: 219, 231, 235;
+  --ef-on-blue-c-rgb: 40, 103, 138;
+  --ef-purple-rgb: 135, 96, 128;
+  --ef-on-purple-rgb: 255, 251, 239;
+  --ef-purple-c-rgb: 240, 228, 236;
+  --ef-on-purple-c-rgb: 118, 82, 111;
+  --ef-red-rgb: 248, 85, 82;
+  --ef-on-red-rgb: 255, 251, 239;
+  --ef-red-c-rgb: 253, 227, 218;
+  --ef-inv-rgb: 45, 53, 59;
+  --ef-on-inv-rgb: 253, 246, 227;
   color-scheme: light !important;
 }
 html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-page: #2d353b; --ef-surface: #2d353b; --ef-bright: #343f44;
   --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
   --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-dim: #232a2e; --ef-variant: #3d484d;
-  --ef-fg: #d3c6aa; --ef-fg-sec: #9da9a0; --ef-fg-var: #9da9a0;
+  --ef-fg: #d3c6aa; --ef-fg-sec: #a3afa5; --ef-fg-var: #a3afa5;
   --ef-outline: #859289; --ef-outline-var: #4f585e;
   --ef-blue: #7fbbb3; --ef-blue-c: #3a515d; --ef-on-blue: #2d353b; --ef-on-blue-c: #cfe0e0;
   --ef-green: #a7c080; --ef-green-c: #425047; --ef-on-green: #2d353b; --ef-on-green-c: #cfe0b0;
   --ef-red: #e67e80; --ef-red-c: #514045; --ef-on-red: #2d353b;
   --ef-purple: #d699b6; --ef-purple-c: #4c3743; --ef-on-purple: #2d353b; --ef-on-purple-c: #e6bfd2;
-  --ef-neutral: #9da9a0; --ef-neutral-c: #3d484d;
+  --ef-neutral: #a3afa5; --ef-neutral-c: #3d484d;
   --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
   --ef-hover: #3d484d; --ef-selected: #425047;
+  --ef-surface-rgb: 45, 53, 59;
+  --ef-bright-rgb: 52, 63, 68;
+  --ef-dim-rgb: 35, 42, 46;
+  --ef-variant-rgb: 61, 72, 77;
+  --ef-c-lowest-rgb: 30, 35, 38;
+  --ef-c-low-rgb: 35, 42, 46;
+  --ef-c-rgb: 39, 46, 51;
+  --ef-c-high-rgb: 52, 63, 68;
+  --ef-c-highest-rgb: 61, 72, 77;
+  --ef-fg-rgb: 211, 198, 170;
+  --ef-fg-var-rgb: 163, 175, 165;
+  --ef-outline-rgb: 133, 146, 137;
+  --ef-outline-var-rgb: 79, 88, 94;
+  --ef-green-rgb: 167, 192, 128;
+  --ef-on-green-rgb: 45, 53, 59;
+  --ef-green-c-rgb: 66, 80, 71;
+  --ef-on-green-c-rgb: 207, 224, 176;
+  --ef-blue-rgb: 127, 187, 179;
+  --ef-on-blue-rgb: 45, 53, 59;
+  --ef-blue-c-rgb: 58, 81, 93;
+  --ef-on-blue-c-rgb: 207, 224, 224;
+  --ef-purple-rgb: 214, 153, 182;
+  --ef-on-purple-rgb: 45, 53, 59;
+  --ef-purple-c-rgb: 76, 55, 67;
+  --ef-on-purple-c-rgb: 230, 191, 210;
+  --ef-red-rgb: 230, 126, 128;
+  --ef-on-red-rgb: 45, 53, 59;
+  --ef-red-c-rgb: 81, 64, 69;
+  --ef-inv-rgb: 253, 246, 227;
+  --ef-on-inv-rgb: 45, 53, 59;
   color-scheme: dark !important;
 }
 @media (prefers-color-scheme: dark) {
@@ -44,16 +102,46 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-page: #2d353b; --ef-surface: #2d353b; --ef-bright: #343f44;
     --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
     --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-dim: #232a2e; --ef-variant: #3d484d;
-    --ef-fg: #d3c6aa; --ef-fg-sec: #9da9a0; --ef-fg-var: #9da9a0;
+    --ef-fg: #d3c6aa; --ef-fg-sec: #a3afa5; --ef-fg-var: #a3afa5;
     --ef-outline: #859289; --ef-outline-var: #4f585e;
     --ef-blue: #7fbbb3; --ef-blue-c: #3a515d; --ef-on-blue: #2d353b; --ef-on-blue-c: #cfe0e0;
     --ef-green: #a7c080; --ef-green-c: #425047; --ef-on-green: #2d353b; --ef-on-green-c: #cfe0b0;
     --ef-red: #e67e80; --ef-red-c: #514045; --ef-on-red: #2d353b;
     --ef-purple: #d699b6; --ef-purple-c: #4c3743; --ef-on-purple: #2d353b; --ef-on-purple-c: #e6bfd2;
-    --ef-neutral: #9da9a0; --ef-neutral-c: #3d484d;
+    --ef-neutral: #a3afa5; --ef-neutral-c: #3d484d;
     --ef-inv: #fdf6e3; --ef-on-inv: #2d353b;
     --ef-hover: #3d484d; --ef-selected: #425047;
-    color-scheme: dark !important;
+    --ef-surface-rgb: 45, 53, 59;
+    --ef-bright-rgb: 52, 63, 68;
+    --ef-dim-rgb: 35, 42, 46;
+    --ef-variant-rgb: 61, 72, 77;
+    --ef-c-lowest-rgb: 30, 35, 38;
+    --ef-c-low-rgb: 35, 42, 46;
+    --ef-c-rgb: 39, 46, 51;
+    --ef-c-high-rgb: 52, 63, 68;
+    --ef-c-highest-rgb: 61, 72, 77;
+    --ef-fg-rgb: 211, 198, 170;
+    --ef-fg-var-rgb: 163, 175, 165;
+    --ef-outline-rgb: 133, 146, 137;
+    --ef-outline-var-rgb: 79, 88, 94;
+    --ef-green-rgb: 167, 192, 128;
+    --ef-on-green-rgb: 45, 53, 59;
+    --ef-green-c-rgb: 66, 80, 71;
+    --ef-on-green-c-rgb: 207, 224, 176;
+    --ef-blue-rgb: 127, 187, 179;
+    --ef-on-blue-rgb: 45, 53, 59;
+    --ef-blue-c-rgb: 58, 81, 93;
+    --ef-on-blue-c-rgb: 207, 224, 224;
+    --ef-purple-rgb: 214, 153, 182;
+    --ef-on-purple-rgb: 45, 53, 59;
+    --ef-purple-c-rgb: 76, 55, 67;
+    --ef-on-purple-c-rgb: 230, 191, 210;
+    --ef-red-rgb: 230, 126, 128;
+    --ef-on-red-rgb: 45, 53, 59;
+    --ef-red-c-rgb: 81, 64, 69;
+    --ef-inv-rgb: 253, 246, 227;
+    --ef-on-inv-rgb: 45, 53, 59;
+  color-scheme: dark !important;
   }
 }
 
@@ -150,6 +238,73 @@ html:not([data-ef="off"]) :is(body, .KkxPLb, .LgGVmb) {
   /* inverse (tooltips, snackbars) */
   --dt-inverse-surface: var(--ef-inv) !important;
   --dt-inverse-on-surface: var(--ef-on-inv) !important;
+}
+
+/* Independent Material tokens power Advanced search, settings, and state layers. */
+html:not([data-ef="off"]),
+html:not([data-ef="off"]) :is(body, .KkxPLb, .LgGVmb) {
+  --gm3-sys-color-surface: var(--ef-surface) !important;
+  --gm3-sys-color-surface-rgb: var(--ef-surface-rgb) !important;
+  --gm3-sys-color-surface-bright: var(--ef-bright) !important;
+  --gm3-sys-color-surface-bright-rgb: var(--ef-bright-rgb) !important;
+  --gm3-sys-color-surface-dim: var(--ef-dim) !important;
+  --gm3-sys-color-surface-dim-rgb: var(--ef-dim-rgb) !important;
+  --gm3-sys-color-surface-variant: var(--ef-variant) !important;
+  --gm3-sys-color-surface-variant-rgb: var(--ef-variant-rgb) !important;
+  --gm3-sys-color-surface-container-lowest: var(--ef-c-lowest) !important;
+  --gm3-sys-color-surface-container-lowest-rgb: var(--ef-c-lowest-rgb) !important;
+  --gm3-sys-color-surface-container-low: var(--ef-c-low) !important;
+  --gm3-sys-color-surface-container-low-rgb: var(--ef-c-low-rgb) !important;
+  --gm3-sys-color-surface-container: var(--ef-c) !important;
+  --gm3-sys-color-surface-container-rgb: var(--ef-c-rgb) !important;
+  --gm3-sys-color-surface-container-high: var(--ef-c-high) !important;
+  --gm3-sys-color-surface-container-high-rgb: var(--ef-c-high-rgb) !important;
+  --gm3-sys-color-surface-container-highest: var(--ef-c-highest) !important;
+  --gm3-sys-color-surface-container-highest-rgb: var(--ef-c-highest-rgb) !important;
+  --gm3-sys-color-on-surface: var(--ef-fg) !important;
+  --gm3-sys-color-on-surface-rgb: var(--ef-fg-rgb) !important;
+  --gm3-sys-color-on-surface-variant: var(--ef-fg-var) !important;
+  --gm3-sys-color-on-surface-variant-rgb: var(--ef-fg-var-rgb) !important;
+  --gm3-sys-color-outline: var(--ef-outline) !important;
+  --gm3-sys-color-outline-rgb: var(--ef-outline-rgb) !important;
+  --gm3-sys-color-outline-variant: var(--ef-outline-var) !important;
+  --gm3-sys-color-outline-variant-rgb: var(--ef-outline-var-rgb) !important;
+  --gm3-sys-color-primary: var(--ef-green) !important;
+  --gm3-sys-color-primary-rgb: var(--ef-green-rgb) !important;
+  --gm3-sys-color-on-primary: var(--ef-on-green) !important;
+  --gm3-sys-color-on-primary-rgb: var(--ef-on-green-rgb) !important;
+  --gm3-sys-color-primary-container: var(--ef-green-c) !important;
+  --gm3-sys-color-primary-container-rgb: var(--ef-green-c-rgb) !important;
+  --gm3-sys-color-on-primary-container: var(--ef-on-green-c) !important;
+  --gm3-sys-color-on-primary-container-rgb: var(--ef-on-green-c-rgb) !important;
+  --gm3-sys-color-secondary: var(--ef-blue) !important;
+  --gm3-sys-color-secondary-rgb: var(--ef-blue-rgb) !important;
+  --gm3-sys-color-on-secondary: var(--ef-on-blue) !important;
+  --gm3-sys-color-on-secondary-rgb: var(--ef-on-blue-rgb) !important;
+  --gm3-sys-color-secondary-container: var(--ef-blue-c) !important;
+  --gm3-sys-color-secondary-container-rgb: var(--ef-blue-c-rgb) !important;
+  --gm3-sys-color-on-secondary-container: var(--ef-on-blue-c) !important;
+  --gm3-sys-color-on-secondary-container-rgb: var(--ef-on-blue-c-rgb) !important;
+  --gm3-sys-color-tertiary: var(--ef-purple) !important;
+  --gm3-sys-color-tertiary-rgb: var(--ef-purple-rgb) !important;
+  --gm3-sys-color-on-tertiary: var(--ef-on-purple) !important;
+  --gm3-sys-color-on-tertiary-rgb: var(--ef-on-purple-rgb) !important;
+  --gm3-sys-color-tertiary-container: var(--ef-purple-c) !important;
+  --gm3-sys-color-tertiary-container-rgb: var(--ef-purple-c-rgb) !important;
+  --gm3-sys-color-on-tertiary-container: var(--ef-on-purple-c) !important;
+  --gm3-sys-color-on-tertiary-container-rgb: var(--ef-on-purple-c-rgb) !important;
+  --gm3-sys-color-error: var(--ef-red) !important;
+  --gm3-sys-color-error-rgb: var(--ef-red-rgb) !important;
+  --gm3-sys-color-on-error: var(--ef-on-red) !important;
+  --gm3-sys-color-on-error-rgb: var(--ef-on-red-rgb) !important;
+  --gm3-sys-color-error-container: var(--ef-red-c) !important;
+  --gm3-sys-color-error-container-rgb: var(--ef-red-c-rgb) !important;
+  --gm3-sys-color-inverse-surface: var(--ef-inv) !important;
+  --gm3-sys-color-inverse-surface-rgb: var(--ef-inv-rgb) !important;
+  --gm3-sys-color-inverse-on-surface: var(--ef-on-inv) !important;
+  --gm3-sys-color-inverse-on-surface-rgb: var(--ef-on-inv-rgb) !important;
+  --gm3-sys-color-surface-tint: var(--ef-green) !important;
+  --gm3-sys-color-surface-tint-rgb: var(--ef-green-rgb) !important;
 }
 
 /* ── safety paints for shell surfaces not driven by --dt-* ─────────────────

@@ -4,6 +4,7 @@ import { YoutubeThemeSync, youtubeDarkForMode } from "../src/youtube-theme";
 import { XThemeSync, xDataThemeForMode } from "../src/x-theme";
 import manifest from "../manifest.json";
 
+const chatgptCss = await Bun.file(`${import.meta.dir}/../src/chatgpt.css`).text();
 const docsCss = await Bun.file(`${import.meta.dir}/../src/docs.css`).text();
 const googleCss = await Bun.file(`${import.meta.dir}/../src/google.css`).text();
 const xCss = await Bun.file(`${import.meta.dir}/../src/x.css`).text();
@@ -208,6 +209,18 @@ describe("X theme synchronisation", () => {
   });
 });
 
+describe("ChatGPT visual regressions", () => {
+  test("does not reuse the user-bubble fill for text selection", () => {
+    expect(chatgptCss).toContain("--theme-user-msg-bg: var(--ef-bubble) !important");
+    expect(chatgptCss).toMatch(/--ef-side-active:\s*#e6ead0/);
+    expect(chatgptCss).toMatch(/--ef-bubble:\s*#e6ead0/);
+    expect(chatgptCss).toMatch(/--ef-side-active:\s*#425047/);
+    expect(chatgptCss).toMatch(/--ef-bubble:\s*#425047/);
+    expect(chatgptCss).toContain("color-mix(in srgb, var(--ef-green) 32%, transparent)");
+    expect(chatgptCss).not.toMatch(/::selection\s*\{[^}]*background:\s*var\(--ef-side-active\)/);
+  });
+});
+
 describe("Google visual regressions", () => {
   test("keeps native contrast on sports knowledge-panel brand headers", () => {
     expect(googleCss).toContain("#rcnt .imso-loa.imso-thor");
@@ -274,13 +287,13 @@ describe("Grok visual regressions", () => {
     expect(grokCss).toContain(":is(.light, .dark, .wd-refresh)");
     expect(grokCss).toContain(".bg-sidebar");
     expect(grokCss).toContain("--sidebar-background: var(--eft-side) !important");
-    expect(grokCss).toContain("--surface-elevated: var(--eft-s1) !important");
+    expect(grokCss).toContain("--surface-elevated: hsl(var(--eft-s1)) !important");
     expect(grokCss).toContain("--warm-white: var(--eft-s1) !important");
     expect(grokCss).toContain("--wd-composer-bg: var(--eft-composer) !important");
     expect(grokCss).toContain("--wd-user-bubble: var(--eft-bubble) !important");
     expect(grokCss).toContain("--wd-accent: var(--eft-green) !important");
     expect(grokCss).toContain("--button-primary: var(--efh-green) !important");
-    expect(grokCss).toContain("--fg-link: var(--eft-blue) !important");
+    expect(grokCss).toContain("--fg-link: hsl(var(--eft-blue)) !important");
     expect(grokCss).toContain("--efh-side: #efebd4");
     expect(grokCss).toContain("--efh-bubble: #e6ead0");
     expect(grokCss).toContain("--foreground: var(--efh-fg) !important");
@@ -295,11 +308,11 @@ describe("Grok visual regressions", () => {
     expect(contentTs).toContain('GROK_PAGE_STYLE_ID = "ef-grok-page"');
     expect(contentTs).toContain("syncGrokPageStyle");
     expect(contentTs).toContain("html:not([data-ef=off]).light body.wd-refresh");
-    expect(contentTs).toContain("--surface-base:var(--eft-bg)!important");
+    expect(contentTs).toContain("--surface-base:hsl(var(--eft-bg))!important");
     expect(contentTs).toContain("--sidebar-background:var(--eft-side)!important");
     expect(contentTs).toContain("--wd-user-bubble:var(--eft-bubble)!important");
     expect(contentTs).toContain("--wd-accent:var(--eft-green)!important");
-    expect(contentTs).toContain("--fg-primary:var(--eft-fg)!important");
+    expect(contentTs).toContain("--fg-primary:hsl(var(--eft-fg))!important");
     expect(contentTs).toContain("if (site === \"grok\") syncGrokPageStyle(on)");
   });
 });

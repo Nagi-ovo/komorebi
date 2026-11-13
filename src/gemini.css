@@ -11,7 +11,7 @@ html:not([data-ef="off"]) :is(body, .theme-host, .lm-component-theme) {
   --ef-c-lowest: #fffbef; --ef-c-low: #fdf6e3; --ef-c: #f4f0d9;
   --ef-c-high: #efebd4; --ef-c-highest: #e6e2cc; --ef-variant: #e6e2cc;
   --ef-sidebar: #efebd4; --ef-sidebar-hover: #e6e2cc;
-  --ef-on: #5c6a72; --ef-on-var: #708089; --ef-on-low: #829181;
+  --ef-on: #4b5b63; --ef-on-var: #5b696e; --ef-on-low: #647267;
   --ef-outline: #939f91; --ef-outline-var: #e0dcc7;
   --ef-primary: #5f7100; --ef-on-primary: #fdf6e3;
   --ef-secondary: #286f96; --ef-secondary-c: #e9f0e9;
@@ -27,7 +27,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] :is(body, .theme-host, .lm-compon
   --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
   --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-variant: #3d484d;
   --ef-sidebar: #232a2e; --ef-sidebar-hover: #343f44;
-  --ef-on: #d3c6aa; --ef-on-var: #9da9a0; --ef-on-low: #859289;
+  --ef-on: #d3c6aa; --ef-on-var: #a3afa5; --ef-on-low: #859289;
   --ef-outline: #859289; --ef-outline-var: #4f585e;
   --ef-primary: #a7c080; --ef-on-primary: #2d353b;
   --ef-secondary: #7fbbb3; --ef-secondary-c: #3a515d;
@@ -44,7 +44,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] :is(body, .theme-host, .lm-compon
     --ef-c-lowest: #1e2326; --ef-c-low: #232a2e; --ef-c: #272e33;
     --ef-c-high: #343f44; --ef-c-highest: #3d484d; --ef-variant: #3d484d;
     --ef-sidebar: #232a2e; --ef-sidebar-hover: #343f44;
-    --ef-on: #d3c6aa; --ef-on-var: #9da9a0; --ef-on-low: #859289;
+    --ef-on: #d3c6aa; --ef-on-var: #a3afa5; --ef-on-low: #859289;
     --ef-outline: #859289; --ef-outline-var: #4f585e;
     --ef-primary: #a7c080; --ef-on-primary: #2d353b;
     --ef-secondary: #7fbbb3; --ef-secondary-c: #3a515d;
@@ -190,4 +190,36 @@ html:not([data-ef="off"]) a.gem-nav-list-item:is(.is-active, [aria-current="page
 html:not([data-ef="off"]) a.gem-nav-list-item:is(.is-active, [aria-current="page"], .mdc-list-item--activated)
   :is(.mdc-list-item__primary-text, .label-and-badge, .title-text, mat-icon) {
   color: var(--ef-on-primary-c) !important;
+}
+
+/* "Islands" (the 2026 Search chats dialog and other lazily loaded panels) are
+   StyleX bundles with hashed theme variables, declared on :root and re-declared
+   on their own theme roots (.x1wv52q2 light, .x1e045gs dark). They hard-code
+   stock greys, so the dialog stayed pure white in both modes. Map the neutral
+   roles onto the Gemini palette above; brand/illustration hues stay native. */
+html:not([data-ef="off"]) :is(body, .x1wv52q2, .x1e045gs) {
+  --x1lxru9b: var(--ef-bright) !important;          /* dialog / card surface */
+  --x12ijoim: var(--ef-c-lowest) !important;
+  --x1rx2a60: var(--ef-surface) !important;
+  --xhrugro: var(--ef-c-low) !important;
+  --xes8i4n: var(--ef-c) !important;
+  --xzkn3nr: var(--ef-c-low) !important;
+  --x1diqisq: var(--ef-c) !important;
+  --x1oyaoqk: var(--ef-c-high) !important;          /* skeleton / hover rows */
+  --xr86lwc: var(--ef-c-highest) !important;
+  --x13pcbat: var(--ef-on) !important;              /* primary ink */
+  --xjzgp2m: var(--ef-on) !important;
+  --x183vj29: var(--ef-on) !important;
+  --xxvc16v: var(--ef-on-var) !important;           /* secondary ink */
+  --xzzcrc8: var(--ef-on-low) !important;
+  --x10pk9ts: var(--ef-outline-var) !important;
+  --x1ht9wpk: color-mix(in srgb, var(--ef-on) 8%, transparent) !important;
+  --xun3vkn: color-mix(in srgb, var(--ef-on) 12%, transparent) !important;
+  --xuw4o75: color-mix(in srgb, var(--ef-on) 38%, transparent) !important;
+  --xnrwq6w: color-mix(in srgb, var(--ef-on) 4%, transparent) !important;
+  --xcqyusi: color-mix(in srgb, var(--ef-on) 11%, transparent) !important;
+  --x1uyhldl: var(--ef-secondary) !important;       /* primary blue */
+  --x1fm5spw: var(--ef-on-primary) !important;
+  --x1nh6le8: var(--ef-secondary-c) !important;
+  --xxmoypt: var(--ef-on) !important;
 }

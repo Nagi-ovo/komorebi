@@ -4,7 +4,7 @@
    and tabs. Best-effort + fragile by nature. Mode = popup, or the OS on "sync". */
 
 html:not([data-ef="off"]) {
-  --ef-bg: #fdf6e3; --ef-fg: #5c6a72; --ef-muted: #687568;
+  --ef-bg: #fdf6e3; --ef-fg: #4b5b63; --ef-muted: #5b696e;
   --ef-bg-0: rgba(253, 246, 227, 0);
   --ef-blue: #28678a; --ef-purple: #9b4f82; --ef-green: #5f7100; --ef-border: #e0dcc7;
   --ef-surface: #f4f0d9; --ef-control: #efebd4; --ef-shadow: rgba(92, 106, 114, 0.14);
@@ -82,6 +82,25 @@ html:not([data-ef="off"]) .RNNXgb {
   background-color: var(--ef-surface) !important;
   border-color: var(--ef-border) !important;
   box-shadow: 0 2px 10px var(--ef-shadow) !important;
+}
+
+/* Search Tools and its nested time/result filters live outside #rso. */
+html:not([data-ef="off"]) .vH6rvf.FJCJfd {
+  background-color: var(--ef-bg) !important;
+  color: var(--ef-fg) !important;
+  border-color: var(--ef-border) !important;
+  box-shadow: 0 2px 10px var(--ef-shadow) !important;
+}
+html:not([data-ef="off"]) .vH6rvf.FJCJfd [role="button"] {
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]) .vH6rvf.FJCJfd [role="button"]:hover {
+  background-color: var(--ef-control) !important;
+}
+html:not([data-ef="off"]) [role="dialog"]:has(.goog-date-picker) {
+  background-color: var(--ef-bg) !important;
+  color: var(--ef-fg) !important;
+  border-color: var(--ef-border) !important;
 }
 html:not([data-ef="off"]) :is(#searchform, form[action="/search"], form[role="search"]) :is(.A8xzab, .Ty0Rrc) {
   background-color: var(--ef-control) !important;
@@ -328,4 +347,38 @@ html:not([data-ef="off"]) ::selection { background: color-mix(in srgb, var(--ef-
 html:not([data-ef="off"]) #rcnt :where(a, button, [role="button"], [tabindex]):focus-visible {
   outline: 2px solid var(--ef-blue) !important;
   outline-offset: 2px;
+}
+
+/* The "More" overflow under the search tabs (Forums / Maps / Web / Books)
+   reuses the tab label class .R1QWuf/.M5dSnd, which hardcodes
+   rgb(112,117,122) instead of a token: 2.7:1 on the dark page. Hover and
+   [selected] already read --YLNNHc (remapped above). */
+html:not([data-ef="off"]) .rNHry :is(.R1QWuf, .M5dSnd) {
+  color: var(--ef-muted) !important;
+}
+html:not([data-ef="off"]) .rNHry .mXwfNd:hover :is(.R1QWuf, .M5dSnd) {
+  color: var(--ef-fg) !important;
+}
+
+/* "About this result" side panel: the Share / Save / Remove result / Feedback
+   chips (.qj3Bo) hardcode #e8f0fe / #c3d8f9 rather than a token, so in dark
+   mode they turn into pale-blue pills under light ink. */
+html:not([data-ef="off"]) .qj3Bo {
+  background-color: var(--ef-control) !important;
+  border-color: var(--ef-border) !important;
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]) .qj3Bo:hover {
+  background-color: var(--ef-surface) !important;
+}
+
+/* Search-box autocomplete: suggestion text (.wM6W7d) hardcodes #212121 and the
+   entity subtitle (.ClJ9Yb / .dKU7sc, e.g. "Town in Louisiana") hardcodes
+   rgb(112,117,122). Readable on cream, invisible on the dark page. */
+html:not([data-ef="off"]) .wM6W7d,
+html:not([data-ef="off"]) .wM6W7d :is(span, b) {
+  color: var(--ef-fg) !important;
+}
+html:not([data-ef="off"]) :is(.ClJ9Yb, .dKU7sc) {
+  color: var(--ef-muted) !important;
 }

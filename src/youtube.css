@@ -8,7 +8,7 @@ html:not([data-ef="off"]) {
   --ef-s1: #fdf6e3; --ef-s2: #fffbef; --ef-s3: #f4f0d9;
   --ef-hover: #efebd4; --ef-tint: #f0f1d2;
   --ef-accent: #5f7100; --ef-accent-ink: #5f7100; --ef-on-accent: #fdf6e3;
-  --ef-fg1: #5c6a72; --ef-fg2: #708089; --ef-fg3: #939f91;
+  --ef-fg1: #4b5b63; --ef-fg2: #5b696e; --ef-fg3: #939f91;
   --ef-stroke: #e0dcc7; --ef-link: #3a94c5; --ef-link-inv: #7fbbb3; --ef-red: #f85552;
   --ef-inv-bg: #2d353b; --ef-inv-hover: #3d484d; --ef-inv-fg: #fdf6e3;
   color-scheme: light !important;
@@ -17,7 +17,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   --ef-s1: #2d353b; --ef-s2: #343f44; --ef-s3: #272e33;
   --ef-hover: #3d484d; --ef-tint: #425047;
   --ef-accent: #a7c080; --ef-accent-ink: color-mix(in srgb, #a7c080 60%, var(--ef-fg1)); --ef-on-accent: #2d353b;
-  --ef-fg1: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #7a8478;
+  --ef-fg1: #d3c6aa; --ef-fg2: #a3afa5; --ef-fg3: #7a8478;
   --ef-stroke: #4f585e; --ef-link: #7fbbb3; --ef-link-inv: #3a94c5; --ef-red: #e67e80;
   --ef-inv-bg: #fdf6e3; --ef-inv-hover: #efebd4; --ef-inv-fg: #2d353b;
   color-scheme: dark !important;
@@ -27,7 +27,7 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
     --ef-s1: #2d353b; --ef-s2: #343f44; --ef-s3: #272e33;
     --ef-hover: #3d484d; --ef-tint: #425047;
     --ef-accent: #a7c080; --ef-accent-ink: color-mix(in srgb, #a7c080 60%, var(--ef-fg1)); --ef-on-accent: #2d353b;
-    --ef-fg1: #d3c6aa; --ef-fg2: #9da9a0; --ef-fg3: #7a8478;
+    --ef-fg1: #d3c6aa; --ef-fg2: #a3afa5; --ef-fg3: #7a8478;
     --ef-stroke: #4f585e; --ef-link: #7fbbb3; --ef-link-inv: #3a94c5; --ef-red: #e67e80;
     --ef-inv-bg: #fdf6e3; --ef-inv-hover: #efebd4; --ef-inv-fg: #2d353b;
     color-scheme: dark !important;
@@ -106,6 +106,25 @@ html:not([data-ef="off"]) .ytSearchboxComponentSearchButton {
   border-color: var(--ef-stroke) !important;
 }
 
+/* Account/appearance submenus and the shortcuts dialog use literal colors
+   despite inheriting the remapped --yt-spec-* tokens. */
+html:not([data-ef="off"]) :is(ytd-multi-page-menu-renderer, ytd-simple-menu-header-renderer, tp-yt-paper-dialog) {
+  background-color: var(--ef-s2) !important;
+  color: var(--ef-fg1) !important;
+  --paper-dialog-background-color: var(--ef-s2) !important;
+  --paper-dialog-color: var(--ef-fg1) !important;
+}
+html:not([data-ef="off"]) ytd-multi-page-menu-renderer :is(yt-formatted-string, .yt-core-attributed-string, yt-icon, h2),
+html:not([data-ef="off"]) ytd-hotkey-dialog-renderer :is(h2, #title, td) {
+  color: var(--ef-fg1) !important;
+}
+html:not([data-ef="off"]) ytd-hotkey-dialog-renderer :is(th, .section-title) {
+  color: var(--ef-fg2) !important;
+}
+html:not([data-ef="off"]) :is(ytd-simple-menu-header-renderer, ytd-hotkey-dialog-renderer td) {
+  border-color: var(--ef-stroke) !important;
+}
+
 /* feed / history / playlist page headers default to white */
 html:not([data-ef="off"]) div.ytd-tabbed-page-header,
 html:not([data-ef="off"]) .page-header-view-model-wiz { background-color: var(--ef-s1) !important; }
@@ -149,4 +168,44 @@ html:not([data-ef="off"]) button.ytChipShapeButtonReset[role="tab"][aria-selecte
 }
 html:not([data-ef="off"]) button.ytChipShapeButtonReset[role="tab"][aria-selected="true"] > .ytChipShapeChip.ytChipShapeActive :is(div, span, yt-icon) {
   color: var(--ef-on-accent) !important;
+}
+
+/* YouTube's newer view-model components (yt-sheet-view-model menus, list
+   items, search suggestions, spec dialogs, bottom sheets) no longer read the
+   --yt-spec-* layer. They consume hashed literal tokens (--t<hash>) defined on
+   :root / [light] / [dark], e.g. .ytContextualSheetLayoutHost {
+   background-color: var(--t08a7c6c176cbc5c2) } = #fff. Remap the neutral ones
+   at the root; subtrees that force their own [light]/[dark] (player overlays)
+   keep YouTube's values. Hash names come from YouTube's token names, so they
+   are stable across deploys but not guaranteed; the class fallbacks below
+   cover the popup surfaces if a hash rotates. */
+html:not([data-ef="off"]) {
+  /* surfaces: base, menu, raised, secondary base */
+  --t3e41d7b17b187f69: var(--ef-s1) !important;
+  --t6216186c28b3834b: var(--ef-s1) !important;
+  --t08a7c6c176cbc5c2: var(--ef-s2) !important;
+  --t518e925f61bdcb91: var(--ef-s2) !important;
+  --tbdeaf5bc17152abc: var(--ef-s3) !important;
+  /* text: primary, secondary */
+  --tffc2fd3a644f6275: var(--ef-fg1) !important;
+  --t1405e70a39276293: var(--ef-fg1) !important;
+  --t4a6da19e16bf221a: var(--ef-fg2) !important;
+  /* tonal hover + hairline outline */
+  --t7f4f2c6d54836ce0: var(--ef-hover) !important;
+  --t7c4965c11f8537c0: var(--ef-hover) !important;
+  --tf3fc855af2285f5f: var(--ef-stroke) !important;
+  --t416e5931fc464589: var(--ef-stroke) !important;
+  --t20480717de80f555: color-mix(in srgb, var(--ef-fg1) 12%, transparent) !important;
+  /* call to action / link */
+  --t2d807bb79e75606d: var(--ef-link) !important;
+}
+html:not([data-ef="off"]) :is(.ytContextualSheetLayoutHost, .ytSearchboxComponentSuggestionsContainer, .ytSpecDialogLayoutHost, .ytSpecBottomSheetLayoutContainer) {
+  background-color: var(--ef-s2) !important;
+  color: var(--ef-fg1) !important;
+}
+html:not([data-ef="off"]) .ytContextualSheetLayoutHost :is(.ytListItemViewModelTitle, .ytListItemViewModelTrailingLabel, .ytListItemViewModelAccessory):not(.ytListItemViewModelIsOverlay *) {
+  color: var(--ef-fg1) !important;
+}
+html:not([data-ef="off"]) .ytContextualSheetLayoutHost :is(.ytListItemViewModelSubtitle, .ytListItemViewModelSuperlabel, .ytListItemViewModelSelectionText) {
+  color: var(--ef-fg2) !important;
 }
