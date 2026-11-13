@@ -275,8 +275,8 @@ html:not([data-ef="off"]) :is(body, .KkxPLb, .LgGVmb) {
   --gm3-sys-color-on-primary-rgb: var(--ef-on-green-rgb) !important;
   --gm3-sys-color-primary-container: var(--ef-green-c) !important;
   --gm3-sys-color-primary-container-rgb: var(--ef-green-c-rgb) !important;
-  --gm3-sys-color-on-primary-container: var(--ef-on-green-c) !important;
-  --gm3-sys-color-on-primary-container-rgb: var(--ef-on-green-c-rgb) !important;
+  --gm3-sys-color-on-primary-container: var(--ef-fg) !important;
+  --gm3-sys-color-on-primary-container-rgb: var(--ef-fg-rgb) !important;
   --gm3-sys-color-secondary: var(--ef-blue) !important;
   --gm3-sys-color-secondary-rgb: var(--ef-blue-rgb) !important;
   --gm3-sys-color-on-secondary: var(--ef-on-blue) !important;
