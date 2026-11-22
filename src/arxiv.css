@@ -28,7 +28,9 @@ html:not([data-ef="off"])[data-ef-mode="dark"] {
   }
 }
 
-/* page + content surfaces */
+/* page + content surfaces — arxivstyle.css paints html itself white, so it
+   must be repainted too or the canvas shows white edges around body. */
+html:not([data-ef="off"]) { background-color: var(--ef-bg) !important; }
 html:not([data-ef="off"]) body { background-color: var(--ef-bg) !important; color: var(--ef-fg) !important; }
 html:not([data-ef="off"]) :is(#content, .content, main, #main-container, .container, #abs, .leftcolumn, .endorsers) {
   background-color: var(--ef-bg) !important;
@@ -61,10 +63,26 @@ html:not([data-ef="off"]) :where(p, li, dd, dt, h1, h2, h3, h4, h5, blockquote,
 }
 html:not([data-ef="off"]) :where(.descriptor, .dateline, .subheader, .gray, .is-size-7) { color: var(--ef-muted) !important; }
 
-/* links */
+/* Bulma hard-coded text colors (search results page): black-bis is #363636 and
+   grey-dark is #4a4a4a — both unreadable on the dark background. */
+html:not([data-ef="off"]) :is(.has-text-black, .has-text-black-bis, .has-text-black-ter,
+  .has-text-grey-darker, .has-text-grey-dark) { color: var(--ef-fg) !important; }
+html:not([data-ef="off"]) :is(.has-text-grey, .has-text-grey-light, .has-text-grey-lighter,
+  .has-text-white-ter, .has-text-white-bis) { color: var(--ef-muted) !important; }
+
+/* search results: matched-term highlight and Bulma tags */
+html:not([data-ef="off"]) .search-hit {
+  color: var(--ef-selected-ink) !important;
+  background-color: var(--ef-selected) !important;
+}
+html:not([data-ef="off"]) .tag { background-color: var(--ef-surface) !important; color: var(--ef-muted) !important; }
+html:not([data-ef="off"]) .tag.is-link { background-color: var(--ef-action) !important; color: var(--ef-on-action) !important; }
+
+/* links — Bulma's global a:hover turns links #2d2d2d, invisible on dark */
 html:not([data-ef="off"]) :is(#content, main, .content, #abs, footer) a:link,
 html:not([data-ef="off"]) :is(#content, main, .content, #abs) a:visited { color: var(--ef-link) !important; }
 html:not([data-ef="off"]) :is(#content, main, .content) a:visited { color: var(--ef-visited) !important; }
+html:not([data-ef="off"]) :is(#content, main, .content, #abs, footer) a:hover { color: var(--ef-visited) !important; }
 
 /* form fields — native inputs default to white, which is a jarring light box on
    the dark theme; give them an Everforest surface, border and readable text. */
